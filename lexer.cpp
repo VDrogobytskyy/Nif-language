@@ -57,6 +57,50 @@ class Lexer {
         void printTables() const;
 };
 
+Lexer::Lexer(const std::string &source){
+    sourceCode = source;
+    lenCode = source.length();
+    numChar = -1;
+    numLine = 1;
+    state = 0;
+    currentChar = '\0';
+    lexeme.clear();
+
+    F = {
+        2, 5, 6, 11, 13, 14, 15, 17, 18, 20, 22, 24, 25, 27, 
+        29, 30, 32, 34, 36, 37, 40, 41, 42, 
+        101, 103, 104, 105
+    };
+
+    Fstar = {2, 5, 6, 13, 18, 25, 29, 32, 36, 40, 41, 42};
+
+    Ferror = {101, 103, 104, 105};
+
+    tokenTable = {
+        {"var", "keyword"}, {"let", "keyword"}, {"fun", "keyword"},
+        {"if", "keyword"}, {"else", "keyword"}, {"while", "keyword"},
+        {"for", "keyword"}, {"in", "keyword"}, {"return", "keyword"},
+        {"break", "keyword"}, {"continue", "keyword"}, {"import", "keyword"},
+        {"record", "keyword"}, {"typealias", "keyword"}, {"ref", "keyword"},
+        {"print", "keyword"}, {"read", "keyword"},
+        {"Int", "type_name"}, {"Double", "type_name"}, 
+        {"Bool", "type_name"}, {"String", "type_name"}, {"Void", "type_name"},
+        {"true", "bool_const"}, {"false", "bool_const"},
+        {"+", "add_op"}, {"-", "add_op"},
+        {"*", "mult_op"}, {"/", "mult_op"}, {"%", "mult_op"},
+        {"**", "exp_op"},
+        {"=", "assign_op"},
+        {"==", "rel_op"}, {"!=", "rel_op"},
+        {"<", "rel_op"}, {"<=", "rel_op"},
+        {">", "rel_op"}, {">=", "rel_op"},
+        {"&&", "logical_op"}, {"||", "logical_op"}, {"!", "logical_op"},
+        {"..", "range_op"}, {"&", "ref_op"},
+        {"(", "brackets_op"}, {")", "brackets_op"},
+        {"{", "brackets_op"}, {"}", "brackets_op"},
+        {"[", "brackets_op"}, {"]", "brackets_op"},
+        {":", "punct"}, {",", "punct"}, {".", "punct"}
+    };
+}
 
 int main(int argc, char* argv[]){
 
@@ -101,6 +145,8 @@ int main(int argc, char* argv[]){
         
         return 1;
     }
+
+    Lexer lexer(source);
 
     return 0;
 }
