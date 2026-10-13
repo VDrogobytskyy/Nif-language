@@ -4,6 +4,59 @@
 #include <string>
 #include <stdexcept>
 #include <sstream>
+#include <set>
+#include <map>
+#include <vector>
+#include <unordered_map>
+
+struct SymbolRow {
+    int line;            // номер рядка у файлі
+    std::string lexeme;  // текст лексеми "x", "10", "var", "=="
+    std::string token;   // тип токена
+    std::string index;   // індекс у таблиці ідентифікаторів/констант (або пустий рядок)
+};
+
+class Lexer {
+    private:
+
+        std::string sourceCode;
+        int lenCode;
+        int numChar;
+        int numLine;
+        int state;
+        char currentChar;
+        std::string lexeme;
+
+        std::unordered_map<std::string, std::string> tokenTable;
+        std::set<int> F;      
+        std::set<int> Fstar;   
+        std::set<int> Ferror;
+
+        std::vector<SymbolRow> tableOfSymb;
+        std::map<std::string, int> tableOfId;
+        std::map<std::string, std::pair<std::string, int>> tableOfConst;
+
+
+        char nextChar();
+
+        void putCharBack();
+
+        std::string classOfChar(char c);
+
+        int nextState(int curState, const std::string& cls);
+
+        void processing();
+
+        void fail(int errorState);
+
+    public:
+        Lexer(const std::string& source);
+
+        bool run();
+
+        void printTables() const;
+};
+
 
 int main(int argc, char* argv[]){
 
