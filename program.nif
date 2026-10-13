@@ -1,0 +1,8 @@
+let pi: Double = 3.14
+var radius: Double = 5.0
+var area: Double
+
+area = pi * radius ** 2
+
+print("Area:")
+print(area)
