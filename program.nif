@@ -1,8 +1,25 @@
-let pi: Double = 3.14
-var radius: Double = 5.0
-var area: Double
+import Standard
 
-area = pi * radius ** 2
+record Point {
+    var x: Double
+    var y: Double
+}
 
-print("Area:")
-print(area)
+fun move(ref p: Point, dx: Double, dy: Double): Void {
+    p.x = p.x + dx
+    p.y = p.y + dy
+}
+
+fun distanceSquare(p: Point): Double {
+    return p.x ** 2 + p.y ** 2
+}
+
+var point: Point
+point.x = 3.0
+point.y = 4.0
+
+move(&point, 1.0, 2.0)
+
+print(point.x)
+print(point.y)
+print(distanceSquare(point))
