@@ -40,9 +40,9 @@ void Parser::failParse(const std::string& errorType, const std::string& expected
     std::cerr << "\n[Parser ERROR] In line " << s.line << ": " << errorType << "\n";
     std::cerr << "\"Found: '" << s.lexeme << "' (token: " << s.token << ")\n";
     if (!expected.empty()) {
-        std::cerr << "\tWaited: " << expected << "\n";
+        std::cerr << "\tExpected: " << expected << "\n";
     }
-    std::cerr << "\tPosition in table of symbol: record № " << (numRow + 1) << " з " << len_tableOfSymb << "\n";
+    std::cerr << "\tPosition in table of symbol: record № " << (numRow + 1) << " of " << len_tableOfSymb << "\n";
     exit(1);
 }
 
@@ -72,7 +72,7 @@ bool Parser::parseToken(const std::string& lexeme, const std::string& token) {
         numRow++; // зсуваємо курсор на наступний токен
         return true;
     } else {
-        std::string exp = (!lexeme.empty() ? ("'" + lexeme + "' with token " + token) : ("token " + token));
+        std::string exp = (!lexeme.empty() ? ("'" + lexeme + "' (token: " + token + ")") : ("token " + token));
         failParse("token mismatch", exp);
         return false;
     }
@@ -202,7 +202,7 @@ void Parser::parseType() {
     } else if (s.token == "identifier") {
         parseToken("", "identifier"); // Користувацький тип (наприклад Circle)
     } else {
-        failParse("некоректний тип даних", "Int, Double, Bool, String, [Type] або користувацький тип");
+        failParse("Incorrect data type", "Int, Double, Bool, String, [Type] or user type");
     }
     if (trace) predIndt();
 }
@@ -281,7 +281,7 @@ void Parser::parseStatement() {
     else if (s.lexeme == "{") parseBlock();
     else if (s.token == "identifier") parseIdentifierStatement();
     else {
-        failParse("неочікуваний початок інструкції", "if, while, for, print, read, return, { або ідентифікатор");
+        failParse("unexpected start of the instructions", "if, while, for, print, read, return, { or identifier");
     }
     if (trace) predIndt();
 }
@@ -407,7 +407,7 @@ void Parser::parseIdentifierStatement() {
         }
         parseToken(")", "brackets_op");
     } else {
-        failParse("неочікуваний знак після ідентифікатора", "'=' (присвоювання) або '(' (виклик функції)");
+        failParse("unexpected token after identifier", "'=' (appropriation) або '(' (function call)");
     }
     if (trace) predIndt();
 }
@@ -554,7 +554,7 @@ void Parser::parsePrimaryExpr() {
         parseExpression();
         parseToken(")", "brackets_op");
     } else {
-        failParse("неочікуваний елемент у виразі", "константа, ідентифікатор або '('");
+        failParse("unexpected element in an expression", "constant, identifier or '('");
     }
     if (trace) predIndt();
 }
