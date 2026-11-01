@@ -1,6 +1,106 @@
-varr valid_name: Int = 100
-var bad_char: Int = valid_name . 5
-var bad_real: Double = 12_3..14
-var unclosed_str: String = "This string is not closed"
-=
-12. var
+// 1. Оголошення імпорту (ImportDeclaration)
+import Standard
+
+// 2. Псевдоніми типів (TypeAliasDeclaration)
+typealias Coordinate = Double
+typealias Score = Int
+
+// 3. Оголошення користувацьких записів (RecordDeclaration)
+record Point {
+    var x: Coordinate
+    var y: Coordinate
+}
+
+record Circle {
+    var center: Point
+    var radius: Double
+}
+
+// 4. Оголошення іменованих констант (ConstantDeclaration)
+let PI: Double = 3.14159
+let MAX_ITER: Int = 1_000
+let APP_TITLE: String = "Comprehensive Nif Demo\n"
+let DEBUG_MODE: Bool = true
+
+// 5. Оголошення функцій (FunctionDeclaration)
+
+// Функція з параметром за посиланням (ref) та типом повернення Void
+fun resetPoint(ref p: Point): Void {
+    p.x = 0.0
+    p.y = 0.0
+    return
+}
+
+// Функція з параметрами-записами, обчисленням виразів та поверненням Double
+fun distanceSquared(p1: Point, p2: Point): Double {
+    var dx: Double = p2.x - p1.x
+    var dy: Double = p2.y - p1.y
+    return dx ** 2 + dy ** 2
+}
+
+// Рекурсивна функція з розгалуженням if-else
+fun factorial(n: Int): Int {
+    if n <= 1 {
+        return 1
+    } else {
+        return n * factorial(n - 1)
+    }
+}
+
+// 6. Оголошення змінних (VariableDeclaration)
+var origin: Point
+var myCircle: Circle
+var isActive: Bool = !DEBUG_MODE || true
+var totalSum: Int = 0
+var scores: [Int]
+
+// 7. Виклики функцій та інструкції присвоювання (LValue: поля і масиви)
+resetPoint(&origin)
+
+myCircle.center.x = 10.5
+myCircle.center.y = 20.0
+myCircle.radius = 5.0
+
+scores[0] = 100
+scores[1] = factorial(5) % 50
+
+// 8. Обчислення з усіма рівнями пріоритетів операцій (Expressions)
+// Піднесення до степеня (**), унарний мінус, дужки, множення і додавання
+var area: Double = PI * myCircle.radius ** 2 + -(1.5 * 2.0)
+
+// 9. Логічні операції (&&, ||, !) та операції порівняння (>=, ==, <)
+var checkCondition: Bool = (area >= 50.0 && totalSum == 0) || !(scores[0] < 50)
+
+// 10. Інструкція введення за посиланням (InputStatement)
+print("Enter new coordinate for origin.x:")
+read(&origin.x)
+
+// 11. Цикл for з оператором діапазону '..' та інструкціями break / continue
+for i in 1..10 {
+    totalSum = totalSum + i
+    if totalSum > 20 {
+        break
+    } else {
+        continue
+    }
+}
+
+// 12. Цикл while з вкладеним локальним блоком (вкладені дужки { ... })
+var counter: Int = 3
+while counter > 0 && isActive == true {
+    counter = counter - 1
+    // Вкладений блок зі своїм локальним оголошенням
+    {
+        var tempMsg: String = "Loop step"
+        print(tempMsg)
+    }
+}
+
+// 13. Інструкція виведення значень різних типів (OutputStatement)
+print(APP_TITLE)
+print("Circle area:")
+print(area)
+print("Total sum:")
+print(totalSum)
+print("Scores at index 1:")
+print(scores[1])

@@ -1,57 +1,8 @@
-#include <iostream>
-#include <fstream>
-#include <cstdlib>
-#include <string>
-#include <stdexcept>
-#include <sstream>
-#include <set>
-#include <map>
-#include <vector>
-#include <unordered_map>
+#include "parser.h"
+#include "lexer.h"
+#include "multi.h"
+
 #include <iomanip>
-#include <algorithm>
-
-struct SymbolRow {
-    int line;            // номер рядка у файлі
-    std::string lexeme;  // текст лексеми "x", "10", "var", "=="
-    std::string token;   // тип токена
-    std::string index;   // індекс у таблиці ідентифікаторів/констант (або пустий рядок)
-};
-
-class Lexer {
-private:
-    std::string sourceCode;
-    int lenCode;
-    int numChar;
-    int numLine;
-    int state;
-    char currentChar;
-    std::string lexeme;
-
-    std::unordered_map<std::string, std::string> tokenTable;
-    std::set<int> F;      
-    std::set<int> Fstar;   
-    std::set<int> Ferror;
-
-    std::map<std::pair<int, std::string>, int> stf;
-
-    std::vector<SymbolRow> tableOfSymb;
-    std::map<std::string, int> tableOfId;
-    std::map<std::string, std::pair<std::string, int>> tableOfConst;
-
-    char nextChar();
-    void putCharBack();
-    char peekChar();
-    std::string classOfChar(char c);
-    int nextState(int curState, const std::string& cls);
-    void processing();
-    void fail(int errorState);
-
-public:
-    Lexer(const std::string& source);
-    bool run();
-    void printTables() const;
-};
 
 Lexer::Lexer(const std::string &source) {
     sourceCode = source;
@@ -469,42 +420,3 @@ void Lexer::printTables() const {
     std::cout << "=======================================================\n";
 }
 
-int main(int argc, char* argv[]) {
-    if (argc != 2) {
-        std::cerr << "incorrect amount of argc" << std::endl;
-        return 1;
-    }
-
-    std::string source;
-    try {
-        std::ifstream file(argv[1]);
-        if (!file.is_open()) {
-            throw std::runtime_error("ERROR! Couldn`t find file: " + std::string(argv[1]));
-        }
-
-        std::string file_name = argv[1];
-        if (file_name.find(".nif") == std::string::npos) {
-            throw std::runtime_error("incorrect file type! Expected .nif file.");
-        }
-
-        std::stringstream buffer;
-        buffer << file.rdbuf();
-        source = buffer.str();
-
-        if (source.empty()) {
-            std::cout << "File is empty" << std::endl;
-            return 0;
-        }
-        std::cout << "File: " << argv[1] << " opened succesfully! And contained " << source.length() << " bytes!\n";
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << '\n';
-        return 1;
-    }
-
-    Lexer lexer(source);
-    if (lexer.run()) {
-        std::cout << "\n>>> Лексичний аналіз завершено успішно! <<<\n";
-        lexer.printTables();
-    }
-    return 0;
-}
