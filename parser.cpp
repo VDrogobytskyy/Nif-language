@@ -191,21 +191,29 @@ void Parser::parseParameter() {
 }
 
 // Type = ScalarType | ArrayType '[' Type ']' | UserType
-void Parser::parseType() {
+std::string Parser::parseType() {
     if (trace) std::cout << nextIndt() << "parseType():" << std::endl;
     SymbolRow s = getSymb();
+
+    std::string returned_type_value = "";
+
     if (s.lexeme == "[") {
         parseToken("[", "brackets_op");
-        parseType();
+        std::string innerType = parseType();
         parseToken("]", "brackets_op");
+        returned_type_value = "[" + innerType + "]"; 
     } else if (s.token == "type_name") {
+        returned_type_value = s.lexeme;
         parseToken(s.lexeme, "type_name");
     } else if (s.token == "identifier") {
+        returned_type_value = s.lexeme;
         parseToken("", "identifier"); // Користувацький тип (наприклад Circle)
     } else {
         failParse("Incorrect data type", "Int, Double, Bool, String, [Type] or user type");
     }
     if (trace) predIndt();
+
+    return returned_type_value;
 }
 
 void Parser::parseReturnType() {
@@ -224,9 +232,9 @@ void Parser::parseVariableDeclaration() {
     parseToken("var", "keyword");
 
     SymbolRow id = getSymb();
-    
     parseToken("", "identifier");
     parseToken(":", "punct");
+
     parseType();
     if (getSymb().lexeme == "=") {
         parseToken("=", "assign_op");

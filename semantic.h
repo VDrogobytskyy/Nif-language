@@ -8,7 +8,7 @@ struct VarSymb{
     std::string VarName;
     std::string VarType;
     bool isConst;
-    bool isAsigned;
+    bool isAssigned;
     int lineNum;
 };
 

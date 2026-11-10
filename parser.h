@@ -33,7 +33,7 @@ class Parser {
         void parseFunctionDeclaration();
         void parseParameters();
         void parseParameter();
-        void parseType();
+        std::string parseType();
         void parseReturnType();
         void parseVariableDeclaration();
         void parseConstantDeclaration();
