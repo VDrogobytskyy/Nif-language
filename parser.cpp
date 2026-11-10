@@ -590,6 +590,7 @@ std::string Parser::parseLogicalOrExpr() {
     while (getSymb().lexeme == "||") {
         parseToken("||", "logical_op");
         parseLogicalAndExpr();
+        type = "Bool";
     }
     if (trace) predIndt();
 
@@ -603,6 +604,7 @@ std::string Parser::parseLogicalAndExpr() {
     while (getSymb().lexeme == "&&") {
         parseToken("&&", "logical_op");
         parseEqualityExpr();
+        type = "Bool";
     }
     if (trace) predIndt();
 
@@ -616,6 +618,7 @@ std::string Parser::parseEqualityExpr() {
     while (getSymb().lexeme == "==" || getSymb().lexeme == "!=") {
         parseToken(getSymb().lexeme, "rel_op");
         parseRelationalExpr();
+        type = "Bool";
     }
     if (trace) predIndt();
 
@@ -630,6 +633,7 @@ std::string Parser::parseRelationalExpr() {
            getSymb().lexeme == ">" || getSymb().lexeme == ">=") {
         parseToken(getSymb().lexeme, "rel_op");
         parseAddExpr();
+        type = "Bool";
     }
     if (trace) predIndt();
 

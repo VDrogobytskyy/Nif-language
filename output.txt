@@ -439,3 +439,766 @@ Lexical analyse finished succesfully
                                   parsePostfixExpr():
                                     parsePrimaryExpr():
                                       parseToken: In line 15 found ('0.0', unsigned_double)
+          parseBlockItem():
+            parseStatement():
+              parseIdentifierStatement():
+                parseToken: In line 16 found ('p', identifier)
+                parseToken: In line 16 found ('.', punct)
+                parseToken: In line 16 found ('y', identifier)
+                parseToken: In line 16 found ('=', assign_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 16 found ('0.0', unsigned_double)
+          parseBlockItem():
+            parseStatement():
+              parseReturnStatement():
+                parseToken: In line 17 found ('return', keyword)
+          parseToken: In line 18 found ('}', brackets_op)
+    parseModuleItem():
+      parseFunctionDeclaration():
+        parseToken: In line 20 found ('fun', keyword)
+        parseToken: In line 20 found ('distanceSquared', identifier)
+        parseToken: In line 20 found ('(', brackets_op)
+        parseParameters():
+          parseParameter():
+            parseToken: In line 20 found ('p1', identifier)
+            parseToken: In line 20 found (':', punct)
+            parseType():
+              parseToken: In line 20 found ('Point', identifier)
+          parseToken: In line 20 found (',', punct)
+          parseParameter():
+            parseToken: In line 20 found ('p2', identifier)
+            parseToken: In line 20 found (':', punct)
+            parseType():
+              parseToken: In line 20 found ('Point', identifier)
+        parseToken: In line 20 found (')', brackets_op)
+        parseToken: In line 20 found (':', punct)
+        parseReturnType():
+          parseType():
+            parseToken: In line 20 found ('Double', type_name)
+        parseBlock():
+          parseToken: In line 20 found ('{', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 21 found ('var', keyword)
+              parseToken: In line 21 found ('dx', identifier)
+              parseToken: In line 21 found (':', punct)
+              parseType():
+                parseToken: In line 21 found ('Double', type_name)
+              parseToken: In line 21 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 21 found ('p2', identifier)
+                                  parseToken: In line 21 found ('.', punct)
+                                  parseToken: In line 21 found ('x', identifier)
+                          parseToken: In line 21 found ('-', add_op)
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 21 found ('p1', identifier)
+                                  parseToken: In line 21 found ('.', punct)
+                                  parseToken: In line 21 found ('x', identifier)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 22 found ('var', keyword)
+              parseToken: In line 22 found ('dy', identifier)
+              parseToken: In line 22 found (':', punct)
+              parseType():
+                parseToken: In line 22 found ('Double', type_name)
+              parseToken: In line 22 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 22 found ('p2', identifier)
+                                  parseToken: In line 22 found ('.', punct)
+                                  parseToken: In line 22 found ('y', identifier)
+                          parseToken: In line 22 found ('-', add_op)
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 22 found ('p1', identifier)
+                                  parseToken: In line 22 found ('.', punct)
+                                  parseToken: In line 22 found ('y', identifier)
+          parseBlockItem():
+            parseStatement():
+              parseReturnStatement():
+                parseToken: In line 23 found ('return', keyword)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 23 found ('dx', identifier)
+                                parseToken: In line 23 found ('**', exp_op)
+                                parsePowerExpr():
+                                  parseUnaryExpr():
+                                    parsePostfixExpr():
+                                      parsePrimaryExpr():
+                                        parseToken: In line 23 found ('2.0', unsigned_double)
+                            parseToken: In line 23 found ('+', add_op)
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 23 found ('dy', identifier)
+                                parseToken: In line 23 found ('**', exp_op)
+                                parsePowerExpr():
+                                  parseUnaryExpr():
+                                    parsePostfixExpr():
+                                      parsePrimaryExpr():
+                                        parseToken: In line 23 found ('2.0', unsigned_double)
+          parseToken: In line 24 found ('}', brackets_op)
+    parseModuleItem():
+      parseFunctionDeclaration():
+        parseToken: In line 26 found ('fun', keyword)
+        parseToken: In line 26 found ('factorial', identifier)
+        parseToken: In line 26 found ('(', brackets_op)
+        parseParameters():
+          parseParameter():
+            parseToken: In line 26 found ('n', identifier)
+            parseToken: In line 26 found (':', punct)
+            parseType():
+              parseToken: In line 26 found ('Int', type_name)
+        parseToken: In line 26 found (')', brackets_op)
+        parseToken: In line 26 found (':', punct)
+        parseReturnType():
+          parseType():
+            parseToken: In line 26 found ('Int', type_name)
+        parseBlock():
+          parseToken: In line 26 found ('{', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseIfStatement():
+                parseToken: In line 27 found ('if', keyword)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 27 found ('n', identifier)
+                          parseToken: In line 27 found ('<=', rel_op)
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 27 found ('1', unsigned_int)
+                parseBlock():
+                  parseToken: In line 27 found ('{', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseReturnStatement():
+                        parseToken: In line 28 found ('return', keyword)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 28 found ('1', unsigned_int)
+                  parseToken: In line 29 found ('}', brackets_op)
+                parseToken: In line 29 found ('else', keyword)
+                parseBlock():
+                  parseToken: In line 29 found ('{', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseReturnStatement():
+                        parseToken: In line 30 found ('return', keyword)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 30 found ('n', identifier)
+                                      parseToken: In line 30 found ('*', mult_op)
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 30 found ('factorial', identifier)
+                                            parseToken: In line 30 found ('(', brackets_op)
+                                            parseArguments():
+                                              parseArgument():
+                                                parseExpression():
+                                                  parseLogicalOrExpr():
+                                                    parseLogicalAndExpr():
+                                                      parseEqualityExpr():
+                                                        parseRelationalExpr():
+                                                          parseAddExpr():
+                                                            parseMultExpr():
+                                                              parsePowerExpr():
+                                                                parseUnaryExpr():
+                                                                  parsePostfixExpr():
+                                                                    parsePrimaryExpr():
+                                                                      parseToken: In line 30 found ('n', identifier)
+                                                            parseToken: In line 30 found ('-', add_op)
+                                                            parseMultExpr():
+                                                              parsePowerExpr():
+                                                                parseUnaryExpr():
+                                                                  parsePostfixExpr():
+                                                                    parsePrimaryExpr():
+                                                                      parseToken: In line 30 found ('1', unsigned_int)
+                                            parseToken: In line 30 found (')', brackets_op)
+                  parseToken: In line 31 found ('}', brackets_op)
+          parseToken: In line 32 found ('}', brackets_op)
+    parseModuleItem():
+      parseFunctionDeclaration():
+        parseToken: In line 34 found ('fun', keyword)
+        parseToken: In line 34 found ('main', identifier)
+        parseToken: In line 34 found ('(', brackets_op)
+        parseToken: In line 34 found (')', brackets_op)
+        parseToken: In line 34 found (':', punct)
+        parseReturnType():
+          parseToken: In line 34 found ('Void', type_name)
+        parseBlock():
+          parseToken: In line 34 found ('{', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 35 found ('var', keyword)
+              parseToken: In line 35 found ('origin', identifier)
+              parseToken: In line 35 found (':', punct)
+              parseType():
+                parseToken: In line 35 found ('Point', identifier)
+          parseBlockItem():
+            parseStatement():
+              parseIdentifierStatement():
+                parseToken: In line 36 found ('origin', identifier)
+                parseToken: In line 36 found ('.', punct)
+                parseToken: In line 36 found ('x', identifier)
+                parseToken: In line 36 found ('=', assign_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 36 found ('10.5', unsigned_double)
+          parseBlockItem():
+            parseStatement():
+              parseIdentifierStatement():
+                parseToken: In line 37 found ('origin', identifier)
+                parseToken: In line 37 found ('.', punct)
+                parseToken: In line 37 found ('y', identifier)
+                parseToken: In line 37 found ('=', assign_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 37 found ('20.5', unsigned_double)
+          parseBlockItem():
+            parseStatement():
+              parseIdentifierStatement():
+                parseToken: In line 38 found ('resetPoint', identifier)
+                parseToken: In line 38 found ('(', brackets_op)
+                parseArguments():
+                  parseArgument():
+                    parseToken: In line 38 found ('&', ref_op)
+                    parseExpression():
+                      parseLogicalOrExpr():
+                        parseLogicalAndExpr():
+                          parseEqualityExpr():
+                            parseRelationalExpr():
+                              parseAddExpr():
+                                parseMultExpr():
+                                  parsePowerExpr():
+                                    parseUnaryExpr():
+                                      parsePostfixExpr():
+                                        parsePrimaryExpr():
+                                          parseToken: In line 38 found ('origin', identifier)
+                parseToken: In line 38 found (')', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 40 found ('var', keyword)
+              parseToken: In line 40 found ('target', identifier)
+              parseToken: In line 40 found (':', punct)
+              parseType():
+                parseToken: In line 40 found ('Point', identifier)
+          parseBlockItem():
+            parseStatement():
+              parseIdentifierStatement():
+                parseToken: In line 41 found ('target', identifier)
+                parseToken: In line 41 found ('.', punct)
+                parseToken: In line 41 found ('x', identifier)
+                parseToken: In line 41 found ('=', assign_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 41 found ('3.0', unsigned_double)
+          parseBlockItem():
+            parseStatement():
+              parseIdentifierStatement():
+                parseToken: In line 42 found ('target', identifier)
+                parseToken: In line 42 found ('.', punct)
+                parseToken: In line 42 found ('y', identifier)
+                parseToken: In line 42 found ('=', assign_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 42 found ('4.0', unsigned_double)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 44 found ('var', keyword)
+              parseToken: In line 44 found ('dist', identifier)
+              parseToken: In line 44 found (':', punct)
+              parseType():
+                parseToken: In line 44 found ('Double', type_name)
+              parseToken: In line 44 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 44 found ('distanceSquared', identifier)
+                                  parseToken: In line 44 found ('(', brackets_op)
+                                  parseArguments():
+                                    parseArgument():
+                                      parseExpression():
+                                        parseLogicalOrExpr():
+                                          parseLogicalAndExpr():
+                                            parseEqualityExpr():
+                                              parseRelationalExpr():
+                                                parseAddExpr():
+                                                  parseMultExpr():
+                                                    parsePowerExpr():
+                                                      parseUnaryExpr():
+                                                        parsePostfixExpr():
+                                                          parsePrimaryExpr():
+                                                            parseToken: In line 44 found ('origin', identifier)
+                                    parseToken: In line 44 found (',', punct)
+                                    parseArgument():
+                                      parseExpression():
+                                        parseLogicalOrExpr():
+                                          parseLogicalAndExpr():
+                                            parseEqualityExpr():
+                                              parseRelationalExpr():
+                                                parseAddExpr():
+                                                  parseMultExpr():
+                                                    parsePowerExpr():
+                                                      parseUnaryExpr():
+                                                        parsePostfixExpr():
+                                                          parsePrimaryExpr():
+                                                            parseToken: In line 44 found ('target', identifier)
+                                  parseToken: In line 44 found (')', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 46 found ('var', keyword)
+              parseToken: In line 46 found ('numbers', identifier)
+              parseToken: In line 46 found (':', punct)
+              parseType():
+                parseToken: In line 46 found ('[', brackets_op)
+                parseType():
+                  parseToken: In line 46 found ('Int', type_name)
+                parseToken: In line 46 found (']', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseForStatement():
+                parseToken: In line 47 found ('for', keyword)
+                parseToken: In line 47 found ('i', identifier)
+                parseToken: In line 47 found ('in', keyword)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 47 found ('0', unsigned_int)
+                parseToken: In line 47 found ('..', range_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 47 found ('5', unsigned_int)
+                parseBlock():
+                  parseToken: In line 47 found ('{', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseIdentifierStatement():
+                        parseToken: In line 48 found ('numbers', identifier)
+                        parseToken: In line 48 found ('[', brackets_op)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 48 found ('i', identifier)
+                        parseToken: In line 48 found (']', brackets_op)
+                        parseToken: In line 48 found ('=', assign_op)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 48 found ('factorial', identifier)
+                                            parseToken: In line 48 found ('(', brackets_op)
+                                            parseArguments():
+                                              parseArgument():
+                                                parseExpression():
+                                                  parseLogicalOrExpr():
+                                                    parseLogicalAndExpr():
+                                                      parseEqualityExpr():
+                                                        parseRelationalExpr():
+                                                          parseAddExpr():
+                                                            parseMultExpr():
+                                                              parsePowerExpr():
+                                                                parseUnaryExpr():
+                                                                  parsePostfixExpr():
+                                                                    parsePrimaryExpr():
+                                                                      parseToken: In line 48 found ('i', identifier)
+                                            parseToken: In line 48 found (')', brackets_op)
+                  parseToken: In line 49 found ('}', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 51 found ('var', keyword)
+              parseToken: In line 51 found ('idx', identifier)
+              parseToken: In line 51 found (':', punct)
+              parseType():
+                parseToken: In line 51 found ('Int', type_name)
+              parseToken: In line 51 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 51 found ('0', unsigned_int)
+          parseBlockItem():
+            parseStatement():
+              parseWhileStatement():
+                parseToken: In line 52 found ('while', keyword)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 52 found ('idx', identifier)
+                          parseToken: In line 52 found ('<', rel_op)
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 52 found ('5', unsigned_int)
+                parseBlock():
+                  parseToken: In line 52 found ('{', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseIfStatement():
+                        parseToken: In line 53 found ('if', keyword)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 53 found ('numbers', identifier)
+                                            parseToken: In line 53 found ('[', brackets_op)
+                                            parseExpression():
+                                              parseLogicalOrExpr():
+                                                parseLogicalAndExpr():
+                                                  parseEqualityExpr():
+                                                    parseRelationalExpr():
+                                                      parseAddExpr():
+                                                        parseMultExpr():
+                                                          parsePowerExpr():
+                                                            parseUnaryExpr():
+                                                              parsePostfixExpr():
+                                                                parsePrimaryExpr():
+                                                                  parseToken: In line 53 found ('idx', identifier)
+                                            parseToken: In line 53 found (']', brackets_op)
+                                  parseToken: In line 53 found ('>', rel_op)
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 53 found ('10', unsigned_int)
+                        parseBlock():
+                          parseToken: In line 53 found ('{', brackets_op)
+                          parseBlockItem():
+                            parseStatement():
+                              parseOutputStatement():
+                                parseToken: In line 54 found ('print', keyword)
+                                parseToken: In line 54 found ('(', brackets_op)
+                                parseArguments():
+                                  parseArgument():
+                                    parseExpression():
+                                      parseLogicalOrExpr():
+                                        parseLogicalAndExpr():
+                                          parseEqualityExpr():
+                                            parseRelationalExpr():
+                                              parseAddExpr():
+                                                parseMultExpr():
+                                                  parsePowerExpr():
+                                                    parseUnaryExpr():
+                                                      parsePostfixExpr():
+                                                        parsePrimaryExpr():
+                                                          parseToken: In line 54 found ('numbers', identifier)
+                                                        parseToken: In line 54 found ('[', brackets_op)
+                                                        parseExpression():
+                                                          parseLogicalOrExpr():
+                                                            parseLogicalAndExpr():
+                                                              parseEqualityExpr():
+                                                                parseRelationalExpr():
+                                                                  parseAddExpr():
+                                                                    parseMultExpr():
+                                                                      parsePowerExpr():
+                                                                        parseUnaryExpr():
+                                                                          parsePostfixExpr():
+                                                                            parsePrimaryExpr():
+                                                                              parseToken: In line 54 found ('idx', identifier)
+                                                        parseToken: In line 54 found (']', brackets_op)
+                                parseToken: In line 54 found (')', brackets_op)
+                          parseToken: In line 55 found ('}', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseIdentifierStatement():
+                        parseToken: In line 56 found ('idx', identifier)
+                        parseToken: In line 56 found ('=', assign_op)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 56 found ('idx', identifier)
+                                    parseToken: In line 56 found ('+', add_op)
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 56 found ('1', unsigned_int)
+                  parseToken: In line 57 found ('}', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 59 found ('var', keyword)
+              parseToken: In line 59 found ('userInput', identifier)
+              parseToken: In line 59 found (':', punct)
+              parseType():
+                parseToken: In line 59 found ('Int', type_name)
+              parseToken: In line 59 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 59 found ('0', unsigned_int)
+          parseBlockItem():
+            parseStatement():
+              parseInputStatement():
+                parseToken: In line 60 found ('read', keyword)
+                parseToken: In line 60 found ('(', brackets_op)
+                parseToken: In line 60 found ('&', ref_op)
+                parseToken: In line 60 found ('userInput', identifier)
+                parseToken: In line 60 found (')', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseOutputStatement():
+                parseToken: In line 61 found ('print', keyword)
+                parseToken: In line 61 found ('(', brackets_op)
+                parseArguments():
+                  parseArgument():
+                    parseExpression():
+                      parseLogicalOrExpr():
+                        parseLogicalAndExpr():
+                          parseEqualityExpr():
+                            parseRelationalExpr():
+                              parseAddExpr():
+                                parseMultExpr():
+                                  parsePowerExpr():
+                                    parseUnaryExpr():
+                                      parsePostfixExpr():
+                                        parsePrimaryExpr():
+                                          parseToken: In line 61 found ('origin', identifier)
+                                        parseToken: In line 61 found ('.', punct)
+                                        parseToken: In line 61 found ('x', identifier)
+                  parseToken: In line 61 found (',', punct)
+                  parseArgument():
+                    parseExpression():
+                      parseLogicalOrExpr():
+                        parseLogicalAndExpr():
+                          parseEqualityExpr():
+                            parseRelationalExpr():
+                              parseAddExpr():
+                                parseMultExpr():
+                                  parsePowerExpr():
+                                    parseUnaryExpr():
+                                      parsePostfixExpr():
+                                        parsePrimaryExpr():
+                                          parseToken: In line 61 found ('origin', identifier)
+                                        parseToken: In line 61 found ('.', punct)
+                                        parseToken: In line 61 found ('y', identifier)
+                  parseToken: In line 61 found (',', punct)
+                  parseArgument():
+                    parseExpression():
+                      parseLogicalOrExpr():
+                        parseLogicalAndExpr():
+                          parseEqualityExpr():
+                            parseRelationalExpr():
+                              parseAddExpr():
+                                parseMultExpr():
+                                  parsePowerExpr():
+                                    parseUnaryExpr():
+                                      parsePostfixExpr():
+                                        parsePrimaryExpr():
+                                          parseToken: In line 61 found ('dist', identifier)
+                  parseToken: In line 61 found (',', punct)
+                  parseArgument():
+                    parseExpression():
+                      parseLogicalOrExpr():
+                        parseLogicalAndExpr():
+                          parseEqualityExpr():
+                            parseRelationalExpr():
+                              parseAddExpr():
+                                parseMultExpr():
+                                  parsePowerExpr():
+                                    parseUnaryExpr():
+                                      parsePostfixExpr():
+                                        parsePrimaryExpr():
+                                          parseToken: In line 61 found ('userInput', identifier)
+                parseToken: In line 61 found (')', brackets_op)
+          parseToken: In line 62 found ('}', brackets_op)
+
+>>> Семантичний аналіз завершився успішно! <<<
