@@ -65,7 +65,7 @@ class Parser {
         std::string parseUnaryExpr();
         std::string parsePostfixExpr();
         std::string parsePrimaryExpr();
-        void parseArguments();
+        int parseArguments();
         void parseArgument();
 
         semantic sem;

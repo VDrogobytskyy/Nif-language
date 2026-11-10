@@ -1,10 +1,9 @@
-fun computeArea(radius: Double): Double {
-    var area: Double = 3.14159 * radius * radius
-    // Помилка: функція повертає Double, але не містить оператора return
-    return
+fun calculateSum(x: Int, y: Int): Int {
+    return x + y
 }
 
 fun main(): Void {
-    var s: Double = computeArea(5.0)
-    print(s)
+    // Помилка: функція вимагає 2 аргументи, а передано лише 1
+    var res: Int = calculateSum(10, 2)
+    print(res)
 }

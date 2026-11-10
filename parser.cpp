@@ -513,11 +513,26 @@ void Parser::parseIdentifierStatement() {
             sem.checkAssignType(id.lexeme, expr_Type, id.line);
         }
     } else if (getSymb().lexeme == "(") {
+        SymbolRow paren = getSymb();
+
         parseToken("(", "brackets_op");
+        int argCount = 0;
         if (getSymb().lexeme != ")") {
-            parseArguments();
+            argCount = parseArguments();
         }
         parseToken(")", "brackets_op");
+        
+        FuncSymb* fn = sem.findFunc(id.lexeme);
+        if (fn) {
+            if (argCount != fn->params.size()) {
+                std::cerr << "[Semantic Error]\nIn line: " << paren.line 
+                          << ": ArgumentCountMismatch - function '" << fn->name 
+                          << "' expects " << fn->params.size() 
+                          << " arguments, got " << argCount << "\n" << std::endl;
+                exit(1);
+            }
+        }
+
     } else {
         failParse("unexpected token after identifier", "'=' (appropriation) або '(' (function call)");
     }
@@ -648,14 +663,29 @@ std::string Parser::parseUnaryExpr() {
 // Рівень 10: PostfixExpr -> PrimaryExpr { FunctionCall | ArrayAccess | FieldAccess }
 std::string Parser::parsePostfixExpr() {
     if (trace) std::cout << nextIndt() << "parsePostfixExpr():" << std::endl;
+
+    SymbolRow fnRow = getSymb();
+
     std::string type = parsePrimaryExpr();
     while (true) {
         if (getSymb().lexeme == "(") {
+            SymbolRow paren = getSymb();
             parseToken("(", "brackets_op");
+            int argCount = 0;
             if (getSymb().lexeme != ")") {
-                parseArguments();
+                argCount = parseArguments();
             }
             parseToken(")", "brackets_op");
+            FuncSymb* fn = sem.findFunc(fnRow.lexeme);
+            if (fn) {
+                if (argCount != fn->params.size()) {
+                    std::cerr << "[Semantic Error]\nIn line: " << paren.line 
+                              << ": ArgumentCountMismatch - function '" << fn->name 
+                              << "' expects " << fn->params.size() 
+                              << " arguments, got " << argCount << "\n" << std::endl;
+                    exit(1);
+                }
+            }
         } else if (getSymb().lexeme == "[") {
             SymbolRow bracket = getSymb();
             parseToken("[", "brackets_op");
@@ -722,14 +752,18 @@ std::string Parser::parsePrimaryExpr() {
 }
 
 // Arguments = Argument { ',' Argument }
-void Parser::parseArguments() {
+int Parser::parseArguments() {
     if (trace) std::cout << nextIndt() << "parseArguments():" << std::endl;
+    int count = 1;
     parseArgument();
     while (getSymb().lexeme == ",") {
         parseToken(",", "punct");
         parseArgument();
+        count++;
     }
     if (trace) predIndt();
+
+    return count;
 }
 
 // Argument = [ '&' ] Expression
