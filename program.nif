@@ -1,4 +1,6 @@
-
-
-var a: Int = 123
-var a: Int = 3
+fun main(): Void {
+    var score: Int = 100
+    // Помилка: повторне оголошення змінної з ім'ям 'score' в одному блоці
+    var score: Double = 50.5
+    print(score)
+}

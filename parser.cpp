@@ -399,6 +399,7 @@ void Parser::parseContinueStatement() {
 // LValue '=' Expression  АБО  FunctionCall
 void Parser::parseIdentifierStatement() {
     if (trace) std::cout << nextIndt() << "parseIdentifierStatement():" << std::endl;
+    SymbolRow id = getSymb();
     parseToken("", "identifier");
 
     // Обробка суфіксів доступу до масиву [expr] або поля .field
@@ -415,7 +416,8 @@ void Parser::parseIdentifierStatement() {
 
     if (getSymb().lexeme == "=") {
         parseToken("=", "assign_op");
-        parseExpression();
+        std::string expr_Type = parseExpression();
+        sem.checkAssignType(id.lexeme, expr_Type, id.line);
     } else if (getSymb().lexeme == "(") {
         parseToken("(", "brackets_op");
         if (getSymb().lexeme != ")") {
