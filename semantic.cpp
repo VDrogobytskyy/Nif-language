@@ -64,3 +64,19 @@ void semantic::checkAssignType(std::string lexem, std::string exprType, int line
 
     s->isAssigned = true;
 }
+
+std::string semantic::useVar(std::string lexem, int line){
+    VarSymb* s = findVar(lexem);
+
+    if(!s){
+        std::cerr << "[Semantic Error]\nUndeclared variable!\nvariable: " << lexem << " in line: " << line << std::endl;
+        exit(1);
+    }
+
+    if(s->isAssigned == false){
+        std::cerr << "[Semantic Error]\nIn line: " << line << ": Unassigned variable - cannot use: " << lexem << "\n" << std::endl;
+        exit(1);
+    }
+
+    return s->VarType;
+}

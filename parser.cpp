@@ -606,6 +606,7 @@ std::string Parser::parsePrimaryExpr() {
         returned_value = "String";
         parseToken(s.lexeme, s.token);
     } else if (s.token == "identifier") {
+        sem.useVar(s.lexeme, s.line);
         parseToken("", "identifier");
     } else if (s.lexeme == "(") {
         parseToken("(", "brackets_op");
