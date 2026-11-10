@@ -1,4 +1,4 @@
-File: program.nif opened succesfully! And contained 20 bytes!
+File: program.nif opened succesfully! And contained 21 bytes!
 
 Lexical analyse finished succesfully
 

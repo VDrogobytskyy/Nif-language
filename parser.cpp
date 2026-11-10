@@ -235,7 +235,11 @@ void Parser::parseVariableDeclaration() {
     parseToken("", "identifier");
     parseToken(":", "punct");
 
-    parseType();
+    std::string delcared_type = parseType();
+
+    sem.declareVar(id.lexeme, delcared_type, false, id.line);
+
+    //parseType();
     if (getSymb().lexeme == "=") {
         parseToken("=", "assign_op");
         parseExpression();

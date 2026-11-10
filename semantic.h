@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <unordered_map>
+#include <cstdlib>
 
 struct VarSymb{
     std::string VarName;
@@ -21,5 +22,5 @@ class semantic{
             scope.push_back({});
         }
 
-        void declareVar();
+        void declareVar(std::string lexem, std::string type, bool ifconst, int line);
 };
