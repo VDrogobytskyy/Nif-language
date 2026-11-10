@@ -13,11 +13,23 @@ struct VarSymb{
     int lineNum;
 };
 
+struct FuncParam {
+    std::string name;
+    std::string type;
+    bool isRef;
+};
+struct FuncSymb {
+    std::string name;
+    std::string returnType;
+    std::vector<FuncParam> params;
+    int line;
+};
 
 class semantic{
     private:
         std::vector<std::unordered_map<std::string, VarSymb>> scope;
         int loop_depth = 0;
+        std::unordered_map<std::string, FuncSymb> tableOfFuncs;
     public:
         semantic(){
             scope.push_back({});
@@ -35,4 +47,7 @@ class semantic{
         void checkAssignType(std::string lexem, std::string exprType, int line);
 
         std::string useVar(std::string lexem, int line);
+
+        void declareFunc(const std::string& name, const std::string& returnType, const std::vector<FuncParam>& params, int line);
+        FuncSymb* findFunc(const std::string& name);
 };

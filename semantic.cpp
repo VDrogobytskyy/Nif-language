@@ -97,3 +97,18 @@ void semantic::loop_control(const std::string op, int line){
         exit(1); 
     }
 }
+
+void semantic::declareFunc(const std::string& name, const std::string& returnType, const std::vector<FuncParam>& params, int line) {
+    if (tableOfFuncs.find(name) != tableOfFuncs.end()) {
+        std::cerr << "[Semantic Error]\nIn line: " << line << ": Duplicate function declaration: " << name << std::endl;
+        exit(1);
+    }
+    tableOfFuncs[name] = {name, returnType, params, line};
+}
+FuncSymb* semantic::findFunc(const std::string& name) {
+    auto it = tableOfFuncs.find(name);
+    if (it != tableOfFuncs.end()) {
+        return &(it->second);
+    }
+    return nullptr;
+}

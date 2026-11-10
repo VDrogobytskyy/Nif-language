@@ -15,7 +15,7 @@ class Parser {
         const int stepIndt = 2; // крок відступу
         bool trace;          // чи друкувати красиве дерево розбору
 
-        std::vector<std::pair<std::string, std::string>> pendingParams;
+        std::vector<FuncParam> pendingParams;
         bool hasReturn = false;
         // Допоміжні методи навігації та відступів
         std::string nextIndt();

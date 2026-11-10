@@ -169,6 +169,10 @@ void Parser::parseFunctionDeclaration() {
     parseToken(")", "brackets_op");
     parseToken(":", "punct");
     std::string return_type = parseReturnType();
+
+    sem.declareFunc(fn.lexeme, return_type, pendingParams, fn.line);
+    pendingParams.clear();
+
     hasReturn = false;
     parseBlock();
 
@@ -195,7 +199,10 @@ void Parser::parseParameters() {
 // [ 'ref' ] Identifier ':' Type
 void Parser::parseParameter() {
     if (trace) std::cout << nextIndt() << "parseParameter():" << std::endl;
+    bool isRef = false;
+
     if (getSymb().lexeme == "ref") {
+        isRef = true;
         parseToken("ref", "keyword");
     }
     SymbolRow id = getSymb();
@@ -203,7 +210,7 @@ void Parser::parseParameter() {
     parseToken(":", "punct");
     std::string type = parseType();
     
-    pendingParams.push_back({id.lexeme, type});;
+    pendingParams.push_back({id.lexeme, type, isRef});;
 
     if (trace) predIndt();
 }
@@ -293,11 +300,10 @@ void Parser::parseBlock() {
     sem.enter_scope();
 
     for (const auto& p : pendingParams) {
-        sem.declareVar(p.first, p.second, false, getSymb().line);
-        VarSymb* v = sem.findVar(p.first);
+        sem.declareVar(p.name, p.type, false, getSymb().line);
+        VarSymb* v = sem.findVar(p.name);
         if (v) v->isAssigned = true;
     }
-    pendingParams.clear();
 
     parseToken("{", "brackets_op");
     while (numRow < len_tableOfSymb && getSymb().lexeme != "}") {
@@ -694,8 +700,14 @@ std::string Parser::parsePrimaryExpr() {
         returned_value = "String";
         parseToken(s.lexeme, s.token);
     } else if (s.token == "identifier") {
-        returned_value = sem.useVar(s.lexeme, s.line);
-        parseToken("", "identifier");
+        FuncSymb* fn = sem.findFunc(s.lexeme);
+        if (fn) {
+            returned_value = fn->returnType;
+            parseToken("", "identifier");
+        } else {
+            returned_value = sem.useVar(s.lexeme, s.line);
+            parseToken("", "identifier");
+        }
     } else if (s.lexeme == "(") {
         parseToken("(", "brackets_op");
         returned_value = parseExpression();
