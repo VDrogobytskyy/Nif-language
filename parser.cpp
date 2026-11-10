@@ -124,9 +124,12 @@ void Parser::parseImportDeclaration() {
 void Parser::parseTypeAliasDeclaration() {
     if (trace) std::cout << nextIndt() << "parseTypeAliasDeclaration():" << std::endl;
     parseToken("typealias", "keyword");
+    SymbolRow aliasId = getSymb();
     parseToken("", "identifier");
     parseToken("=", "assign_op");
-    parseType();
+    std::string realType = parseType();
+    
+    sem.declareTypealias(aliasId.lexeme, realType);
     if (trace) predIndt();
 }
 
@@ -244,7 +247,11 @@ std::string Parser::parseType() {
         parseToken(s.lexeme, "type_name");
     } else if (s.token == "identifier") {
         returned_type_value = s.lexeme;
-        parseToken("", "identifier"); // Користувацький тип (наприклад Circle)
+        parseToken("", "identifier");
+        
+        if (sem.hasTypealias(returned_type_value)) {
+            returned_type_value = sem.getTypealias(returned_type_value);
+        }
     } else {
         failParse("Incorrect data type", "Int, Double, Bool, String, [Type] or user type");
     }
@@ -409,11 +416,14 @@ void Parser::parseForStatement() {
     if (trace) std::cout << nextIndt() << "parseForStatement():" << std::endl;
     parseToken("for", "keyword");
     sem.enter_loop();
+    SymbolRow iter = getSymb();
     parseToken("", "identifier");
     parseToken("in", "keyword");
     parseExpression();
     parseToken("..", "range_op");
     parseExpression();
+
+    pendingParams.push_back({iter.lexeme, "Int", false});
     parseBlock();
     sem.exit_loop();
     if (trace) predIndt();

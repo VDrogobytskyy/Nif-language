@@ -1,13 +1,62 @@
+import Standard
+
+typealias Coordinate = Double
+typealias Counter = Int
+
 record Point {
-    var x: Double
-    var y: Double
+    var x: Coordinate
+    var y: Coordinate
+}
+
+let PI: Double = 3.14159
+let MAX_POINTS: Int = 100
+
+fun resetPoint(ref p: Point): Void {
+    p.x = 0.0
+    p.y = 0.0
+    return
+}
+
+fun distanceSquared(p1: Point, p2: Point): Double {
+    var dx: Double = p2.x - p1.x
+    var dy: Double = p2.y - p1.y
+    return dx ** 2.0 + dy ** 2.0
+}
+
+fun factorial(n: Int): Int {
+    if n <= 1 {
+        return 1
+    } else {
+        return n * factorial(n - 1)
+    }
 }
 
 fun main(): Void {
-    var p: Point
-    p.x = 10.0
-    p.y = 20.0
-    // Помилка: звернення до неоголошеного поля 'z' у записі Point
-    p.z = 30.0
-    print(p.x, p.y)
+    var origin: Point
+    origin.x = 10.5
+    origin.y = 20.5
+    resetPoint(&origin)
+
+    var target: Point
+    target.x = 3.0
+    target.y = 4.0
+
+    var dist: Double = distanceSquared(origin, target)
+
+    var numbers: [Int]
+    for i in 0..5 {
+        numbers[i] = factorial(i)
+    }
+
+    var idx: Int = 0
+    while idx < 5 {
+        if numbers[idx] > 10 {
+            print(numbers[idx])
+        }
+        idx = idx + 1
+    }
+
+    var userInput: Int = 0
+    read(&userInput)
+    print(origin.x, origin.y, dist, userInput)
 }

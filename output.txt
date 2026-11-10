@@ -1,4 +1,4 @@
-File: program.nif opened succesfully! And contained 251 bytes!
+File: program.nif opened succesfully! And contained 1086 bytes!
 
 Lexical analyse finished succesfully
 
@@ -7,114 +7,426 @@ Lexical analyse finished succesfully
 ===========================================================================
 №   РядокЛексема        Токен          Індекс (Id/Const)
 ---------------------------------------------------------------------------
-1     1       record                keyword                         
-2     1       Point                 identifier          1           
-3     1       {                     brackets_op                     
-4     2       var                   keyword                         
-5     2       x                     identifier          2           
-6     2       :                     punct                           
-7     2       Double                type_name                       
-8     3       var                   keyword                         
-9     3       y                     identifier          3           
-10    3       :                     punct                           
-11    3       Double                type_name                       
-12    4       }                     brackets_op                     
-13    6       fun                   keyword                         
-14    6       main                  identifier          4           
-15    6       (                     brackets_op                     
-16    6       )                     brackets_op                     
-17    6       :                     punct                           
-18    6       Void                  type_name                       
-19    6       {                     brackets_op                     
-20    7       var                   keyword                         
-21    7       p                     identifier          5           
-22    7       :                     punct                           
-23    7       Point                 identifier          1           
-24    8       p                     identifier          5           
-25    8       .                     punct                           
-26    8       x                     identifier          2           
-27    8       =                     assign_op                       
-28    8       10.0                  unsigned_double     1           
-29    9       p                     identifier          5           
-30    9       .                     punct                           
-31    9       y                     identifier          3           
-32    9       =                     assign_op                       
-33    9       20.0                  unsigned_double     2           
-34    11      print                 keyword                         
-35    11      (                     brackets_op                     
-36    11      p                     identifier          5           
-37    11      .                     punct                           
-38    11      x                     identifier          2           
-39    11      ,                     punct                           
-40    11      p                     identifier          5           
-41    11      .                     punct                           
-42    11      y                     identifier          3           
-43    11      )                     brackets_op                     
-44    12      }                     brackets_op                     
+1     1       import                keyword                         
+2     1       Standard              identifier          1           
+3     3       typealias             keyword                         
+4     3       Coordinate            identifier          2           
+5     3       =                     assign_op                       
+6     3       Double                type_name                       
+7     4       typealias             keyword                         
+8     4       Counter               identifier          3           
+9     4       =                     assign_op                       
+10    4       Int                   type_name                       
+11    6       record                keyword                         
+12    6       Point                 identifier          4           
+13    6       {                     brackets_op                     
+14    7       var                   keyword                         
+15    7       x                     identifier          5           
+16    7       :                     punct                           
+17    7       Coordinate            identifier          2           
+18    8       var                   keyword                         
+19    8       y                     identifier          6           
+20    8       :                     punct                           
+21    8       Coordinate            identifier          2           
+22    9       }                     brackets_op                     
+23    11      let                   keyword                         
+24    11      PI                    identifier          7           
+25    11      :                     punct                           
+26    11      Double                type_name                       
+27    11      =                     assign_op                       
+28    11      3.14159               unsigned_double     1           
+29    12      let                   keyword                         
+30    12      MAX_POINTS            identifier          8           
+31    12      :                     punct                           
+32    12      Int                   type_name                       
+33    12      =                     assign_op                       
+34    12      100                   unsigned_int        2           
+35    14      fun                   keyword                         
+36    14      resetPoint            identifier          9           
+37    14      (                     brackets_op                     
+38    14      ref                   keyword                         
+39    14      p                     identifier          10          
+40    14      :                     punct                           
+41    14      Point                 identifier          4           
+42    14      )                     brackets_op                     
+43    14      :                     punct                           
+44    14      Void                  type_name                       
+45    14      {                     brackets_op                     
+46    15      p                     identifier          10          
+47    15      .                     punct                           
+48    15      x                     identifier          5           
+49    15      =                     assign_op                       
+50    15      0.0                   unsigned_double     3           
+51    16      p                     identifier          10          
+52    16      .                     punct                           
+53    16      y                     identifier          6           
+54    16      =                     assign_op                       
+55    16      0.0                   unsigned_double     3           
+56    17      return                keyword                         
+57    18      }                     brackets_op                     
+58    20      fun                   keyword                         
+59    20      distanceSquared       identifier          11          
+60    20      (                     brackets_op                     
+61    20      p1                    identifier          12          
+62    20      :                     punct                           
+63    20      Point                 identifier          4           
+64    20      ,                     punct                           
+65    20      p2                    identifier          13          
+66    20      :                     punct                           
+67    20      Point                 identifier          4           
+68    20      )                     brackets_op                     
+69    20      :                     punct                           
+70    20      Double                type_name                       
+71    20      {                     brackets_op                     
+72    21      var                   keyword                         
+73    21      dx                    identifier          14          
+74    21      :                     punct                           
+75    21      Double                type_name                       
+76    21      =                     assign_op                       
+77    21      p2                    identifier          13          
+78    21      .                     punct                           
+79    21      x                     identifier          5           
+80    21      -                     add_op                          
+81    21      p1                    identifier          12          
+82    21      .                     punct                           
+83    21      x                     identifier          5           
+84    22      var                   keyword                         
+85    22      dy                    identifier          15          
+86    22      :                     punct                           
+87    22      Double                type_name                       
+88    22      =                     assign_op                       
+89    22      p2                    identifier          13          
+90    22      .                     punct                           
+91    22      y                     identifier          6           
+92    22      -                     add_op                          
+93    22      p1                    identifier          12          
+94    22      .                     punct                           
+95    22      y                     identifier          6           
+96    23      return                keyword                         
+97    23      dx                    identifier          14          
+98    23      **                    exp_op                          
+99    23      2.0                   unsigned_double     4           
+100   23      +                     add_op                          
+101   23      dy                    identifier          15          
+102   23      **                    exp_op                          
+103   23      2.0                   unsigned_double     4           
+104   24      }                     brackets_op                     
+105   26      fun                   keyword                         
+106   26      factorial             identifier          16          
+107   26      (                     brackets_op                     
+108   26      n                     identifier          17          
+109   26      :                     punct                           
+110   26      Int                   type_name                       
+111   26      )                     brackets_op                     
+112   26      :                     punct                           
+113   26      Int                   type_name                       
+114   26      {                     brackets_op                     
+115   27      if                    keyword                         
+116   27      n                     identifier          17          
+117   27      <=                    rel_op                          
+118   27      1                     unsigned_int        5           
+119   27      {                     brackets_op                     
+120   28      return                keyword                         
+121   28      1                     unsigned_int        5           
+122   29      }                     brackets_op                     
+123   29      else                  keyword                         
+124   29      {                     brackets_op                     
+125   30      return                keyword                         
+126   30      n                     identifier          17          
+127   30      *                     mult_op                         
+128   30      factorial             identifier          16          
+129   30      (                     brackets_op                     
+130   30      n                     identifier          17          
+131   30      -                     add_op                          
+132   30      1                     unsigned_int        5           
+133   30      )                     brackets_op                     
+134   31      }                     brackets_op                     
+135   32      }                     brackets_op                     
+136   34      fun                   keyword                         
+137   34      main                  identifier          18          
+138   34      (                     brackets_op                     
+139   34      )                     brackets_op                     
+140   34      :                     punct                           
+141   34      Void                  type_name                       
+142   34      {                     brackets_op                     
+143   35      var                   keyword                         
+144   35      origin                identifier          19          
+145   35      :                     punct                           
+146   35      Point                 identifier          4           
+147   36      origin                identifier          19          
+148   36      .                     punct                           
+149   36      x                     identifier          5           
+150   36      =                     assign_op                       
+151   36      10.5                  unsigned_double     6           
+152   37      origin                identifier          19          
+153   37      .                     punct                           
+154   37      y                     identifier          6           
+155   37      =                     assign_op                       
+156   37      20.5                  unsigned_double     7           
+157   38      resetPoint            identifier          9           
+158   38      (                     brackets_op                     
+159   38      &                     ref_op                          
+160   38      origin                identifier          19          
+161   38      )                     brackets_op                     
+162   40      var                   keyword                         
+163   40      target                identifier          20          
+164   40      :                     punct                           
+165   40      Point                 identifier          4           
+166   41      target                identifier          20          
+167   41      .                     punct                           
+168   41      x                     identifier          5           
+169   41      =                     assign_op                       
+170   41      3.0                   unsigned_double     8           
+171   42      target                identifier          20          
+172   42      .                     punct                           
+173   42      y                     identifier          6           
+174   42      =                     assign_op                       
+175   42      4.0                   unsigned_double     9           
+176   44      var                   keyword                         
+177   44      dist                  identifier          21          
+178   44      :                     punct                           
+179   44      Double                type_name                       
+180   44      =                     assign_op                       
+181   44      distanceSquared       identifier          11          
+182   44      (                     brackets_op                     
+183   44      origin                identifier          19          
+184   44      ,                     punct                           
+185   44      target                identifier          20          
+186   44      )                     brackets_op                     
+187   46      var                   keyword                         
+188   46      numbers               identifier          22          
+189   46      :                     punct                           
+190   46      [                     brackets_op                     
+191   46      Int                   type_name                       
+192   46      ]                     brackets_op                     
+193   47      for                   keyword                         
+194   47      i                     identifier          23          
+195   47      in                    keyword                         
+196   47      0                     unsigned_int        10          
+197   47      ..                    range_op                        
+198   47      5                     unsigned_int        11          
+199   47      {                     brackets_op                     
+200   48      numbers               identifier          22          
+201   48      [                     brackets_op                     
+202   48      i                     identifier          23          
+203   48      ]                     brackets_op                     
+204   48      =                     assign_op                       
+205   48      factorial             identifier          16          
+206   48      (                     brackets_op                     
+207   48      i                     identifier          23          
+208   48      )                     brackets_op                     
+209   49      }                     brackets_op                     
+210   51      var                   keyword                         
+211   51      idx                   identifier          24          
+212   51      :                     punct                           
+213   51      Int                   type_name                       
+214   51      =                     assign_op                       
+215   51      0                     unsigned_int        10          
+216   52      while                 keyword                         
+217   52      idx                   identifier          24          
+218   52      <                     rel_op                          
+219   52      5                     unsigned_int        11          
+220   52      {                     brackets_op                     
+221   53      if                    keyword                         
+222   53      numbers               identifier          22          
+223   53      [                     brackets_op                     
+224   53      idx                   identifier          24          
+225   53      ]                     brackets_op                     
+226   53      >                     rel_op                          
+227   53      10                    unsigned_int        12          
+228   53      {                     brackets_op                     
+229   54      print                 keyword                         
+230   54      (                     brackets_op                     
+231   54      numbers               identifier          22          
+232   54      [                     brackets_op                     
+233   54      idx                   identifier          24          
+234   54      ]                     brackets_op                     
+235   54      )                     brackets_op                     
+236   55      }                     brackets_op                     
+237   56      idx                   identifier          24          
+238   56      =                     assign_op                       
+239   56      idx                   identifier          24          
+240   56      +                     add_op                          
+241   56      1                     unsigned_int        5           
+242   57      }                     brackets_op                     
+243   59      var                   keyword                         
+244   59      userInput             identifier          25          
+245   59      :                     punct                           
+246   59      Int                   type_name                       
+247   59      =                     assign_op                       
+248   59      0                     unsigned_int        10          
+249   60      read                  keyword                         
+250   60      (                     brackets_op                     
+251   60      &                     ref_op                          
+252   60      userInput             identifier          25          
+253   60      )                     brackets_op                     
+254   61      print                 keyword                         
+255   61      (                     brackets_op                     
+256   61      origin                identifier          19          
+257   61      .                     punct                           
+258   61      x                     identifier          5           
+259   61      ,                     punct                           
+260   61      origin                identifier          19          
+261   61      .                     punct                           
+262   61      y                     identifier          6           
+263   61      ,                     punct                           
+264   61      dist                  identifier          21          
+265   61      ,                     punct                           
+266   61      userInput             identifier          25          
+267   61      )                     brackets_op                     
+268   62      }                     brackets_op                     
 
 =======================================================
           ТАБЛИЦЯ ІДЕНТИФІКАТОРІВ (tableOfId)          
 =======================================================
 ІндексІдентифікатор
 -------------------------------------------------------
-1         Point                    
-4         main                     
-5         p                        
-2         x                        
-3         y                        
+2         Coordinate               
+3         Counter                  
+8         MAX_POINTS               
+7         PI                       
+4         Point                    
+1         Standard                 
+21        dist                     
+11        distanceSquared          
+14        dx                       
+15        dy                       
+16        factorial                
+23        i                        
+24        idx                      
+18        main                     
+17        n                        
+22        numbers                  
+19        origin                   
+10        p                        
+12        p1                       
+13        p2                       
+9         resetPoint               
+20        target                   
+25        userInput                
+5         x                        
+6         y                        
 
 =======================================================
              ТАБЛИЦЯ КОНСТАНТ (tableOfConst)           
 =======================================================
 ІндексТип         Значення         
 -------------------------------------------------------
-1         Double         10.0                     
-2         Double         20.0                     
+10        Int            0                        
+3         Double         0.0                      
+5         Int            1                        
+12        Int            10                       
+6         Double         10.5                     
+2         Int            100                      
+4         Double         2.0                      
+7         Double         20.5                     
+8         Double         3.0                      
+1         Double         3.14159                  
+9         Double         4.0                      
+11        Int            5                        
 =======================================================
 
 >>> Початок семантичного аналізу <<<
   parseProgram():
     parseModuleItem():
-      parseRecordDeclaration():
-        parseToken: In line 1 found ('record', keyword)
-        parseToken: In line 1 found ('Point', identifier)
-        parseToken: In line 1 found ('{', brackets_op)
-        parseToken: In line 2 found ('var', keyword)
-        parseToken: In line 2 found ('x', identifier)
-        parseToken: In line 2 found (':', punct)
-        parseType():
-          parseToken: In line 2 found ('Double', type_name)
-        parseToken: In line 3 found ('var', keyword)
-        parseToken: In line 3 found ('y', identifier)
-        parseToken: In line 3 found (':', punct)
+      parseImportDeclaration():
+        parseToken: In line 1 found ('import', keyword)
+        parseToken: In line 1 found ('Standard', identifier)
+    parseModuleItem():
+      parseTypeAliasDeclaration():
+        parseToken: In line 3 found ('typealias', keyword)
+        parseToken: In line 3 found ('Coordinate', identifier)
+        parseToken: In line 3 found ('=', assign_op)
         parseType():
           parseToken: In line 3 found ('Double', type_name)
-        parseToken: In line 4 found ('}', brackets_op)
+    parseModuleItem():
+      parseTypeAliasDeclaration():
+        parseToken: In line 4 found ('typealias', keyword)
+        parseToken: In line 4 found ('Counter', identifier)
+        parseToken: In line 4 found ('=', assign_op)
+        parseType():
+          parseToken: In line 4 found ('Int', type_name)
+    parseModuleItem():
+      parseRecordDeclaration():
+        parseToken: In line 6 found ('record', keyword)
+        parseToken: In line 6 found ('Point', identifier)
+        parseToken: In line 6 found ('{', brackets_op)
+        parseToken: In line 7 found ('var', keyword)
+        parseToken: In line 7 found ('x', identifier)
+        parseToken: In line 7 found (':', punct)
+        parseType():
+          parseToken: In line 7 found ('Coordinate', identifier)
+        parseToken: In line 8 found ('var', keyword)
+        parseToken: In line 8 found ('y', identifier)
+        parseToken: In line 8 found (':', punct)
+        parseType():
+          parseToken: In line 8 found ('Coordinate', identifier)
+        parseToken: In line 9 found ('}', brackets_op)
+    parseModuleItem():
+      parseConstantDeclaration():
+        parseToken: In line 11 found ('let', keyword)
+        parseToken: In line 11 found ('PI', identifier)
+        parseToken: In line 11 found (':', punct)
+        parseType():
+          parseToken: In line 11 found ('Double', type_name)
+        parseToken: In line 11 found ('=', assign_op)
+        parseExpression():
+          parseLogicalOrExpr():
+            parseLogicalAndExpr():
+              parseEqualityExpr():
+                parseRelationalExpr():
+                  parseAddExpr():
+                    parseMultExpr():
+                      parsePowerExpr():
+                        parseUnaryExpr():
+                          parsePostfixExpr():
+                            parsePrimaryExpr():
+                              parseToken: In line 11 found ('3.14159', unsigned_double)
+    parseModuleItem():
+      parseConstantDeclaration():
+        parseToken: In line 12 found ('let', keyword)
+        parseToken: In line 12 found ('MAX_POINTS', identifier)
+        parseToken: In line 12 found (':', punct)
+        parseType():
+          parseToken: In line 12 found ('Int', type_name)
+        parseToken: In line 12 found ('=', assign_op)
+        parseExpression():
+          parseLogicalOrExpr():
+            parseLogicalAndExpr():
+              parseEqualityExpr():
+                parseRelationalExpr():
+                  parseAddExpr():
+                    parseMultExpr():
+                      parsePowerExpr():
+                        parseUnaryExpr():
+                          parsePostfixExpr():
+                            parsePrimaryExpr():
+                              parseToken: In line 12 found ('100', unsigned_int)
     parseModuleItem():
       parseFunctionDeclaration():
-        parseToken: In line 6 found ('fun', keyword)
-        parseToken: In line 6 found ('main', identifier)
-        parseToken: In line 6 found ('(', brackets_op)
-        parseToken: In line 6 found (')', brackets_op)
-        parseToken: In line 6 found (':', punct)
+        parseToken: In line 14 found ('fun', keyword)
+        parseToken: In line 14 found ('resetPoint', identifier)
+        parseToken: In line 14 found ('(', brackets_op)
+        parseParameters():
+          parseParameter():
+            parseToken: In line 14 found ('ref', keyword)
+            parseToken: In line 14 found ('p', identifier)
+            parseToken: In line 14 found (':', punct)
+            parseType():
+              parseToken: In line 14 found ('Point', identifier)
+        parseToken: In line 14 found (')', brackets_op)
+        parseToken: In line 14 found (':', punct)
         parseReturnType():
-          parseToken: In line 6 found ('Void', type_name)
+          parseToken: In line 14 found ('Void', type_name)
         parseBlock():
-          parseToken: In line 6 found ('{', brackets_op)
-          parseBlockItem():
-            parseVariableDeclaration():
-              parseToken: In line 7 found ('var', keyword)
-              parseToken: In line 7 found ('p', identifier)
-              parseToken: In line 7 found (':', punct)
-              parseType():
-                parseToken: In line 7 found ('Point', identifier)
+          parseToken: In line 14 found ('{', brackets_op)
           parseBlockItem():
             parseStatement():
               parseIdentifierStatement():
-                parseToken: In line 8 found ('p', identifier)
-                parseToken: In line 8 found ('.', punct)
-                parseToken: In line 8 found ('x', identifier)
-                parseToken: In line 8 found ('=', assign_op)
+                parseToken: In line 15 found ('p', identifier)
+                parseToken: In line 15 found ('.', punct)
+                parseToken: In line 15 found ('x', identifier)
+                parseToken: In line 15 found ('=', assign_op)
                 parseExpression():
                   parseLogicalOrExpr():
                     parseLogicalAndExpr():
@@ -126,64 +438,4 @@ Lexical analyse finished succesfully
                                 parseUnaryExpr():
                                   parsePostfixExpr():
                                     parsePrimaryExpr():
-                                      parseToken: In line 8 found ('10.0', unsigned_double)
-          parseBlockItem():
-            parseStatement():
-              parseIdentifierStatement():
-                parseToken: In line 9 found ('p', identifier)
-                parseToken: In line 9 found ('.', punct)
-                parseToken: In line 9 found ('y', identifier)
-                parseToken: In line 9 found ('=', assign_op)
-                parseExpression():
-                  parseLogicalOrExpr():
-                    parseLogicalAndExpr():
-                      parseEqualityExpr():
-                        parseRelationalExpr():
-                          parseAddExpr():
-                            parseMultExpr():
-                              parsePowerExpr():
-                                parseUnaryExpr():
-                                  parsePostfixExpr():
-                                    parsePrimaryExpr():
-                                      parseToken: In line 9 found ('20.0', unsigned_double)
-          parseBlockItem():
-            parseStatement():
-              parseOutputStatement():
-                parseToken: In line 11 found ('print', keyword)
-                parseToken: In line 11 found ('(', brackets_op)
-                parseArguments():
-                  parseArgument():
-                    parseExpression():
-                      parseLogicalOrExpr():
-                        parseLogicalAndExpr():
-                          parseEqualityExpr():
-                            parseRelationalExpr():
-                              parseAddExpr():
-                                parseMultExpr():
-                                  parsePowerExpr():
-                                    parseUnaryExpr():
-                                      parsePostfixExpr():
-                                        parsePrimaryExpr():
-                                          parseToken: In line 11 found ('p', identifier)
-                                        parseToken: In line 11 found ('.', punct)
-                                        parseToken: In line 11 found ('x', identifier)
-                  parseToken: In line 11 found (',', punct)
-                  parseArgument():
-                    parseExpression():
-                      parseLogicalOrExpr():
-                        parseLogicalAndExpr():
-                          parseEqualityExpr():
-                            parseRelationalExpr():
-                              parseAddExpr():
-                                parseMultExpr():
-                                  parsePowerExpr():
-                                    parseUnaryExpr():
-                                      parsePostfixExpr():
-                                        parsePrimaryExpr():
-                                          parseToken: In line 11 found ('p', identifier)
-                                        parseToken: In line 11 found ('.', punct)
-                                        parseToken: In line 11 found ('y', identifier)
-                parseToken: In line 11 found (')', brackets_op)
-          parseToken: In line 12 found ('}', brackets_op)
-
->>> Семантичний аналіз завершився успішно! <<<
+                                      parseToken: In line 15 found ('0.0', unsigned_double)

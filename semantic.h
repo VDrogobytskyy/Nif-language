@@ -33,6 +33,8 @@ class semantic{
         std::unordered_map<std::string, FuncSymb> tableOfFuncs;
 
         std::unordered_map<std::string, std::unordered_map<std::string, std::string>> tableOfRecords;
+
+        std::unordered_map<std::string, std::string> tableOfTypealiases;
     public:
         semantic(){
             scope.push_back({});
@@ -58,4 +60,14 @@ class semantic{
         bool hasRecord(const std::string& recName);
         bool hasRecordField(const std::string& recName, const std::string& fieldName);
         std::string getRecordFieldType(const std::string& recName, const std::string& fieldName);
+
+        void declareTypealias(const std::string& alias, const std::string& realType) {
+            tableOfTypealiases[alias] = realType;
+        }
+        bool hasTypealias(const std::string& alias) {
+            return tableOfTypealiases.find(alias) != tableOfTypealiases.end();
+        }
+        std::string getTypealias(const std::string& alias) {
+            return tableOfTypealiases[alias];
+        }
 };
