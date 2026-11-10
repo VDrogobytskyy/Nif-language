@@ -251,11 +251,16 @@ void Parser::parseVariableDeclaration() {
 void Parser::parseConstantDeclaration() {
     if (trace) std::cout << nextIndt() << "parseConstantDeclaration():" << std::endl;
     parseToken("let", "keyword");
+
+    SymbolRow id = getSymb();
     parseToken("", "identifier");
     parseToken(":", "punct");
-    parseType();
+
+    std::string delcared_type = parseType();
+    sem.declareVar(id.lexeme, delcared_type, true, id.line);
     parseToken("=", "assign_op");
-    parseExpression();
+    std::string expr_Type = parseExpression();
+    sem.checkAssignType(id.lexeme, expr_Type, id.line);
     if (trace) predIndt();
 }
 

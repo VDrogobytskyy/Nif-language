@@ -1,6 +1,7 @@
+let MAX_LIMIT: Int = 1000
+
 fun main(): Void {
-    var score: Int = 100
-    // Помилка: повторне оголошення змінної з ім'ям 'score' в одному блоці
-    var score: Double = 50.5
-    print(score)
+    // Помилка: спроба повторного присвоєння значення константі let
+    MAX_LIMIT = 2000
+    print(MAX_LIMIT)
 }

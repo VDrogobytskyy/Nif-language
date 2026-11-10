@@ -29,8 +29,14 @@ void semantic::checkAssignType(std::string lexem, std::string exprType, int line
         exit(1);
     }
 
+    
     VarSymb &s = curScope[lexem];
     bool all_good = (s.VarType == exprType) || (s.VarType == "Double" && exprType == "Int");
+
+    if(s.isConst && s.isAssigned == true){
+        std::cerr << "[Semantic Error]\nIn line: " << line << ": ConstantModification - cannor reassign const variable: " << lexem << std::endl;
+        exit(1);
+    }
 
     if(!all_good){
         std::cerr << "[Semantic Error]\nIn line: " << line << ": TypeMismatch - cannot assign: " << exprType 
