@@ -1,4 +1,4 @@
-File: program.nif opened succesfully! And contained 241 bytes!
+File: program.nif opened succesfully! And contained 205 bytes!
 
 Lexical analyse finished succesfully
 
@@ -8,66 +8,53 @@ Lexical analyse finished succesfully
 №   РядокЛексема        Токен          Індекс (Id/Const)
 ---------------------------------------------------------------------------
 1     1       fun                   keyword                         
-2     1       calculateSum          identifier          1           
+2     1       increment             identifier          1           
 3     1       (                     brackets_op                     
-4     1       x                     identifier          2           
-5     1       :                     punct                           
-6     1       Int                   type_name                       
-7     1       ,                     punct                           
-8     1       y                     identifier          3           
+4     1       ref                   keyword                         
+5     1       x                     identifier          2           
+6     1       :                     punct                           
+7     1       Int                   type_name                       
+8     1       )                     brackets_op                     
 9     1       :                     punct                           
-10    1       Int                   type_name                       
-11    1       )                     brackets_op                     
-12    1       :                     punct                           
-13    1       Int                   type_name                       
-14    1       {                     brackets_op                     
-15    2       return                keyword                         
-16    2       x                     identifier          2           
-17    2       +                     add_op                          
-18    2       y                     identifier          3           
-19    3       }                     brackets_op                     
-20    5       fun                   keyword                         
-21    5       main                  identifier          4           
-22    5       (                     brackets_op                     
-23    5       )                     brackets_op                     
-24    5       :                     punct                           
-25    5       Void                  type_name                       
-26    5       {                     brackets_op                     
-27    7       var                   keyword                         
-28    7       res                   identifier          5           
-29    7       :                     punct                           
-30    7       Int                   type_name                       
-31    7       =                     assign_op                       
-32    7       calculateSum          identifier          1           
-33    7       (                     brackets_op                     
-34    7       10                    unsigned_int        1           
-35    7       ,                     punct                           
-36    7       2                     unsigned_int        2           
-37    7       )                     brackets_op                     
-38    8       print                 keyword                         
-39    8       (                     brackets_op                     
-40    8       res                   identifier          5           
-41    8       )                     brackets_op                     
-42    9       }                     brackets_op                     
+10    1       Void                  type_name                       
+11    1       {                     brackets_op                     
+12    2       x                     identifier          2           
+13    2       =                     assign_op                       
+14    2       x                     identifier          2           
+15    2       +                     add_op                          
+16    2       1                     unsigned_int        1           
+17    3       return                keyword                         
+18    4       }                     brackets_op                     
+19    6       fun                   keyword                         
+20    6       main                  identifier          3           
+21    6       (                     brackets_op                     
+22    6       )                     brackets_op                     
+23    6       :                     punct                           
+24    6       Void                  type_name                       
+25    6       {                     brackets_op                     
+26    9       increment             identifier          1           
+27    9       (                     brackets_op                     
+28    9       &                     ref_op                          
+29    9       10                    unsigned_int        2           
+30    9       )                     brackets_op                     
+31    10      }                     brackets_op                     
 
 =======================================================
           ТАБЛИЦЯ ІДЕНТИФІКАТОРІВ (tableOfId)          
 =======================================================
 ІндексІдентифікатор
 -------------------------------------------------------
-1         calculateSum             
-4         main                     
-5         res                      
+1         increment                
+3         main                     
 2         x                        
-3         y                        
 
 =======================================================
              ТАБЛИЦЯ КОНСТАНТ (tableOfConst)           
 =======================================================
 ІндексТип         Значення         
 -------------------------------------------------------
-1         Int            10                       
-2         Int            2                        
+1         Int            1                        
+2         Int            10                       
 =======================================================
 
 >>> Початок семантичного аналізу <<<
@@ -75,31 +62,26 @@ Lexical analyse finished succesfully
     parseModuleItem():
       parseFunctionDeclaration():
         parseToken: In line 1 found ('fun', keyword)
-        parseToken: In line 1 found ('calculateSum', identifier)
+        parseToken: In line 1 found ('increment', identifier)
         parseToken: In line 1 found ('(', brackets_op)
         parseParameters():
           parseParameter():
+            parseToken: In line 1 found ('ref', keyword)
             parseToken: In line 1 found ('x', identifier)
-            parseToken: In line 1 found (':', punct)
-            parseType():
-              parseToken: In line 1 found ('Int', type_name)
-          parseToken: In line 1 found (',', punct)
-          parseParameter():
-            parseToken: In line 1 found ('y', identifier)
             parseToken: In line 1 found (':', punct)
             parseType():
               parseToken: In line 1 found ('Int', type_name)
         parseToken: In line 1 found (')', brackets_op)
         parseToken: In line 1 found (':', punct)
         parseReturnType():
-          parseType():
-            parseToken: In line 1 found ('Int', type_name)
+          parseToken: In line 1 found ('Void', type_name)
         parseBlock():
           parseToken: In line 1 found ('{', brackets_op)
           parseBlockItem():
             parseStatement():
-              parseReturnStatement():
-                parseToken: In line 2 found ('return', keyword)
+              parseIdentifierStatement():
+                parseToken: In line 2 found ('x', identifier)
+                parseToken: In line 2 found ('=', assign_op)
                 parseExpression():
                   parseLogicalOrExpr():
                     parseLogicalAndExpr():
@@ -118,89 +100,28 @@ Lexical analyse finished succesfully
                                 parseUnaryExpr():
                                   parsePostfixExpr():
                                     parsePrimaryExpr():
-                                      parseToken: In line 2 found ('y', identifier)
-          parseToken: In line 3 found ('}', brackets_op)
-    parseModuleItem():
-      parseFunctionDeclaration():
-        parseToken: In line 5 found ('fun', keyword)
-        parseToken: In line 5 found ('main', identifier)
-        parseToken: In line 5 found ('(', brackets_op)
-        parseToken: In line 5 found (')', brackets_op)
-        parseToken: In line 5 found (':', punct)
-        parseReturnType():
-          parseToken: In line 5 found ('Void', type_name)
-        parseBlock():
-          parseToken: In line 5 found ('{', brackets_op)
-          parseBlockItem():
-            parseVariableDeclaration():
-              parseToken: In line 7 found ('var', keyword)
-              parseToken: In line 7 found ('res', identifier)
-              parseToken: In line 7 found (':', punct)
-              parseType():
-                parseToken: In line 7 found ('Int', type_name)
-              parseToken: In line 7 found ('=', assign_op)
-              parseExpression():
-                parseLogicalOrExpr():
-                  parseLogicalAndExpr():
-                    parseEqualityExpr():
-                      parseRelationalExpr():
-                        parseAddExpr():
-                          parseMultExpr():
-                            parsePowerExpr():
-                              parseUnaryExpr():
-                                parsePostfixExpr():
-                                  parsePrimaryExpr():
-                                    parseToken: In line 7 found ('calculateSum', identifier)
-                                  parseToken: In line 7 found ('(', brackets_op)
-                                  parseArguments():
-                                    parseArgument():
-                                      parseExpression():
-                                        parseLogicalOrExpr():
-                                          parseLogicalAndExpr():
-                                            parseEqualityExpr():
-                                              parseRelationalExpr():
-                                                parseAddExpr():
-                                                  parseMultExpr():
-                                                    parsePowerExpr():
-                                                      parseUnaryExpr():
-                                                        parsePostfixExpr():
-                                                          parsePrimaryExpr():
-                                                            parseToken: In line 7 found ('10', unsigned_int)
-                                    parseToken: In line 7 found (',', punct)
-                                    parseArgument():
-                                      parseExpression():
-                                        parseLogicalOrExpr():
-                                          parseLogicalAndExpr():
-                                            parseEqualityExpr():
-                                              parseRelationalExpr():
-                                                parseAddExpr():
-                                                  parseMultExpr():
-                                                    parsePowerExpr():
-                                                      parseUnaryExpr():
-                                                        parsePostfixExpr():
-                                                          parsePrimaryExpr():
-                                                            parseToken: In line 7 found ('2', unsigned_int)
-                                  parseToken: In line 7 found (')', brackets_op)
+                                      parseToken: In line 2 found ('1', unsigned_int)
           parseBlockItem():
             parseStatement():
-              parseOutputStatement():
-                parseToken: In line 8 found ('print', keyword)
-                parseToken: In line 8 found ('(', brackets_op)
+              parseReturnStatement():
+                parseToken: In line 3 found ('return', keyword)
+          parseToken: In line 4 found ('}', brackets_op)
+    parseModuleItem():
+      parseFunctionDeclaration():
+        parseToken: In line 6 found ('fun', keyword)
+        parseToken: In line 6 found ('main', identifier)
+        parseToken: In line 6 found ('(', brackets_op)
+        parseToken: In line 6 found (')', brackets_op)
+        parseToken: In line 6 found (':', punct)
+        parseReturnType():
+          parseToken: In line 6 found ('Void', type_name)
+        parseBlock():
+          parseToken: In line 6 found ('{', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseIdentifierStatement():
+                parseToken: In line 9 found ('increment', identifier)
+                parseToken: In line 9 found ('(', brackets_op)
                 parseArguments():
                   parseArgument():
-                    parseExpression():
-                      parseLogicalOrExpr():
-                        parseLogicalAndExpr():
-                          parseEqualityExpr():
-                            parseRelationalExpr():
-                              parseAddExpr():
-                                parseMultExpr():
-                                  parsePowerExpr():
-                                    parseUnaryExpr():
-                                      parsePostfixExpr():
-                                        parsePrimaryExpr():
-                                          parseToken: In line 8 found ('res', identifier)
-                parseToken: In line 8 found (')', brackets_op)
-          parseToken: In line 9 found ('}', brackets_op)
-
->>> Семантичний аналіз завершився успішно! <<<
+                    parseToken: In line 9 found ('&', ref_op)

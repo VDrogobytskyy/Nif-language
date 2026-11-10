@@ -1,9 +1,10 @@
-fun calculateSum(x: Int, y: Int): Int {
-    return x + y
+fun increment(ref x: Int): Void {
+    x = x + 1
+    return
 }
 
 fun main(): Void {
-    // Помилка: функція вимагає 2 аргументи, а передано лише 1
-    var res: Int = calculateSum(10, 2)
-    print(res)
+    
+    // Помилка: літерал 10 не є адресною змінною (не є LValue)
+    increment(&10)
 }

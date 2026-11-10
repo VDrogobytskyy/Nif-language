@@ -521,7 +521,7 @@ void Parser::parseIdentifierStatement() {
             argCount = parseArguments();
         }
         parseToken(")", "brackets_op");
-        
+
         FuncSymb* fn = sem.findFunc(id.lexeme);
         if (fn) {
             if (argCount != fn->params.size()) {
@@ -771,7 +771,16 @@ void Parser::parseArgument() {
     if (trace) std::cout << nextIndt() << "parseArgument():" << std::endl;
     SymbolRow s = getSymb();
     if (getSymb().lexeme == "&") {
+        SymbolRow amp = getSymb();
         parseToken("&", "ref_op");
+
+        SymbolRow next = getSymb();
+        if (next.token != "identifier") {
+            std::cerr << "[Semantic Error]\nIn line: " << amp.line 
+                      << ": InvalidRefArgument - expected LValue variable for ref parameter, got " << next.token << "\n" << std::endl;
+            exit(1);
+        }
+
     }
     parseExpression();
     if (trace) predIndt();
