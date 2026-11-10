@@ -1,5 +1,6 @@
 #include "parser.h"
 
+
 // Конструктор: приймає вектор карток-токенів від Lexer
 Parser::Parser(const std::vector<SymbolRow>& symbols, bool enableTrace) 
     : tableOfSymb(symbols), len_tableOfSymb(symbols.size()), numRow(0), indt(0), trace(enableTrace) {}
@@ -221,6 +222,9 @@ void Parser::parseReturnType() {
 void Parser::parseVariableDeclaration() {
     if (trace) std::cout << nextIndt() << "parseVariableDeclaration():" << std::endl;
     parseToken("var", "keyword");
+
+    SymbolRow id = getSymb();
+    
     parseToken("", "identifier");
     parseToken(":", "punct");
     parseType();
