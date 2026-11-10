@@ -171,7 +171,6 @@ void Parser::parseFunctionDeclaration() {
     std::string return_type = parseReturnType();
 
     sem.declareFunc(fn.lexeme, return_type, pendingParams, fn.line);
-    pendingParams.clear();
 
     hasReturn = false;
     parseBlock();
@@ -304,6 +303,8 @@ void Parser::parseBlock() {
         VarSymb* v = sem.findVar(p.name);
         if (v) v->isAssigned = true;
     }
+
+    pendingParams.clear();
 
     parseToken("{", "brackets_op");
     while (numRow < len_tableOfSymb && getSymb().lexeme != "}") {
