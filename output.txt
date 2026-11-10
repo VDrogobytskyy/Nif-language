@@ -1,4 +1,4 @@
-File: program.nif opened succesfully! And contained 224 bytes!
+File: program.nif opened succesfully! And contained 377 bytes!
 
 Lexical analyse finished succesfully
 
@@ -15,38 +15,52 @@ Lexical analyse finished succesfully
 6     1       Void                  type_name                       
 7     1       {                     brackets_op                     
 8     2       var                   keyword                         
-9     2       total                 identifier          2           
+9     2       i                     identifier          2           
 10    2       :                     punct                           
 11    2       Int                   type_name                       
-12    4       var                   keyword                         
-13    4       nextVal               identifier          3           
-14    4       :                     punct                           
-15    4       Int                   type_name                       
-16    4       =                     assign_op                       
-17    4       total                 identifier          2           
-18    4       +                     add_op                          
-19    4       5                     unsigned_int        1           
-20    5       print                 keyword                         
-21    5       (                     brackets_op                     
-22    5       nextVal               identifier          3           
-23    5       )                     brackets_op                     
-24    6       }                     brackets_op                     
+12    2       =                     assign_op                       
+13    2       0                     unsigned_int        1           
+14    5       while                 keyword                         
+15    5       i                     identifier          2           
+16    5       <                     rel_op                          
+17    5       100                   unsigned_int        2           
+18    5       {                     brackets_op                     
+19    6       if                    keyword                         
+20    6       i                     identifier          2           
+21    6       ==                    rel_op                          
+22    6       5                     unsigned_int        3           
+23    6       {                     brackets_op                     
+24    9       break                 keyword                         
+25    10      }                     brackets_op                     
+26    11      i                     identifier          2           
+27    11      =                     assign_op                       
+28    11      i                     identifier          2           
+29    11      +                     add_op                          
+30    11      1                     unsigned_int        4           
+31    12      }                     brackets_op                     
+32    14      print                 keyword                         
+33    14      (                     brackets_op                     
+34    14      i                     identifier          2           
+35    14      )                     brackets_op                     
+36    15      }                     brackets_op                     
 
 =======================================================
           ТАБЛИЦЯ ІДЕНТИФІКАТОРІВ (tableOfId)          
 =======================================================
 ІндексІдентифікатор
 -------------------------------------------------------
+2         i                        
 1         main                     
-3         nextVal                  
-2         total                    
 
 =======================================================
              ТАБЛИЦЯ КОНСТАНТ (tableOfConst)           
 =======================================================
 ІндексТип         Значення         
 -------------------------------------------------------
-1         Int            5                        
+1         Int            0                        
+4         Int            1                        
+2         Int            100                      
+3         Int            5                        
 =======================================================
 
 >>> Початок синтаксичного аналізу (рекурсивний спуск) <<<
@@ -65,18 +79,11 @@ Lexical analyse finished succesfully
           parseBlockItem():
             parseVariableDeclaration():
               parseToken: In line 2 found ('var', keyword)
-              parseToken: In line 2 found ('total', identifier)
+              parseToken: In line 2 found ('i', identifier)
               parseToken: In line 2 found (':', punct)
               parseType():
                 parseToken: In line 2 found ('Int', type_name)
-          parseBlockItem():
-            parseVariableDeclaration():
-              parseToken: In line 4 found ('var', keyword)
-              parseToken: In line 4 found ('nextVal', identifier)
-              parseToken: In line 4 found (':', punct)
-              parseType():
-                parseToken: In line 4 found ('Int', type_name)
-              parseToken: In line 4 found ('=', assign_op)
+              parseToken: In line 2 found ('=', assign_op)
               parseExpression():
                 parseLogicalOrExpr():
                   parseLogicalAndExpr():
@@ -88,3 +95,110 @@ Lexical analyse finished succesfully
                               parseUnaryExpr():
                                 parsePostfixExpr():
                                   parsePrimaryExpr():
+                                    parseToken: In line 2 found ('0', unsigned_int)
+          parseBlockItem():
+            parseStatement():
+              parseWhileStatement():
+                parseToken: In line 5 found ('while', keyword)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 5 found ('i', identifier)
+                          parseToken: In line 5 found ('<', rel_op)
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 5 found ('100', unsigned_int)
+                parseBlock():
+                  parseToken: In line 5 found ('{', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseIfStatement():
+                        parseToken: In line 6 found ('if', keyword)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 6 found ('i', identifier)
+                                parseToken: In line 6 found ('==', rel_op)
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 6 found ('5', unsigned_int)
+                        parseBlock():
+                          parseToken: In line 6 found ('{', brackets_op)
+                          parseBlockItem():
+                            parseStatement():
+                              parseBreakStatement():
+                                parseToken: In line 9 found ('break', keyword)
+                          parseToken: In line 10 found ('}', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseIdentifierStatement():
+                        parseToken: In line 11 found ('i', identifier)
+                        parseToken: In line 11 found ('=', assign_op)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 11 found ('i', identifier)
+                                    parseToken: In line 11 found ('+', add_op)
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 11 found ('1', unsigned_int)
+                  parseToken: In line 12 found ('}', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseOutputStatement():
+                parseToken: In line 14 found ('print', keyword)
+                parseToken: In line 14 found ('(', brackets_op)
+                parseArguments():
+                  parseArgument():
+                    parseExpression():
+                      parseLogicalOrExpr():
+                        parseLogicalAndExpr():
+                          parseEqualityExpr():
+                            parseRelationalExpr():
+                              parseAddExpr():
+                                parseMultExpr():
+                                  parsePowerExpr():
+                                    parseUnaryExpr():
+                                      parsePostfixExpr():
+                                        parsePrimaryExpr():
+                                          parseToken: In line 14 found ('i', identifier)
+                parseToken: In line 14 found (')', brackets_op)
+          parseToken: In line 15 found ('}', brackets_op)
+
+>>> Синтаксичний аналіз завершився успішно! <<<

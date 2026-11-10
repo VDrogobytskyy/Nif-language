@@ -1,6 +1,15 @@
 fun main(): Void {
-    var total: Int
-    // Помилка: читання змінної 'total' до її першого присвоєння (статус undefined)
-    var nextVal: Int = total + 5
-    print(nextVal)
+    var i: Int = 0
+
+    // Є ЦИКЛ while!
+    while i < 100 {
+        if i == 5 {
+            // ПРАВИЛЬНО! break каже комп'ютеру:
+            // "Зупини цикл while прямо зараз і більше не повторюй його!"
+            break 
+        }
+        i = i + 1
+    }
+
+    print(i) // виведе 5
 }

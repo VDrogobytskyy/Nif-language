@@ -330,8 +330,10 @@ void Parser::parseIfStatement() {
 void Parser::parseWhileStatement() {
     if (trace) std::cout << nextIndt() << "parseWhileStatement():" << std::endl;
     parseToken("while", "keyword");
+    sem.enter_loop();
     parseExpression();
     parseBlock();
+    sem.exit_loop();
     if (trace) predIndt();
 }
 
@@ -339,12 +341,14 @@ void Parser::parseWhileStatement() {
 void Parser::parseForStatement() {
     if (trace) std::cout << nextIndt() << "parseForStatement():" << std::endl;
     parseToken("for", "keyword");
+    sem.enter_loop();
     parseToken("", "identifier");
     parseToken("in", "keyword");
     parseExpression();
     parseToken("..", "range_op");
     parseExpression();
     parseBlock();
+    sem.exit_loop();
     if (trace) predIndt();
 }
 
@@ -393,12 +397,16 @@ void Parser::parseReturnStatement() {
 
 void Parser::parseBreakStatement() {
     if (trace) std::cout << nextIndt() << "parseBreakStatement():" << std::endl;
+    SymbolRow s = getSymb();
+    sem.loop_control(s.lexeme, s.line);
     parseToken("break", "keyword");
     if (trace) predIndt();
 }
 
 void Parser::parseContinueStatement() {
     if (trace) std::cout << nextIndt() << "parseContinueStatement():" << std::endl;
+    SymbolRow s = getSymb();
+    sem.loop_control(s.lexeme, s.line);
     parseToken("continue", "keyword");
     if (trace) predIndt();
 }
@@ -606,7 +614,7 @@ std::string Parser::parsePrimaryExpr() {
         returned_value = "String";
         parseToken(s.lexeme, s.token);
     } else if (s.token == "identifier") {
-        sem.useVar(s.lexeme, s.line);
+        returned_value = sem.useVar(s.lexeme, s.line);
         parseToken("", "identifier");
     } else if (s.lexeme == "(") {
         parseToken("(", "brackets_op");

@@ -17,6 +17,7 @@ struct VarSymb{
 class semantic{
     private:
         std::vector<std::unordered_map<std::string, VarSymb>> scope;
+        int loop_depth = 0;
     public:
         semantic(){
             scope.push_back({});
@@ -25,6 +26,10 @@ class semantic{
         VarSymb* findVar(const std::string& lexem);
         void enter_scope();
         void exit_scope();
+
+        void enter_loop();
+        void exit_loop();
+        void loop_control(const std::string op, int line);
 
         void declareVar(std::string lexem, std::string type, bool ifconst, int line);
         void checkAssignType(std::string lexem, std::string exprType, int line);

@@ -45,7 +45,7 @@ void semantic::checkAssignType(std::string lexem, std::string exprType, int line
     VarSymb* s = findVar(lexem);
 
     if(!s){
-        std::cerr << "[Semantic Error]\nUndeclared variable!\nvariable: " << lexem << " in line: " << line << std::endl;
+        std::cerr << "[Semantic Error]\nIn line: " << line << "Undeclared variable!\nvariable: " << lexem << std::endl;
         exit(1);
     }
 
@@ -69,7 +69,7 @@ std::string semantic::useVar(std::string lexem, int line){
     VarSymb* s = findVar(lexem);
 
     if(!s){
-        std::cerr << "[Semantic Error]\nUndeclared variable!\nvariable: " << lexem << " in line: " << line << std::endl;
+        std::cerr << "[Semantic Error]\nIn line: " << line << ": Undeclared variable!\nvariable: " << lexem << std::endl;
         exit(1);
     }
 
@@ -79,4 +79,21 @@ std::string semantic::useVar(std::string lexem, int line){
     }
 
     return s->VarType;
+}
+
+void semantic::enter_loop(){
+    loop_depth++;
+}
+
+void semantic::exit_loop(){
+    if(loop_depth > 0){
+        loop_depth--;
+    }
+}
+
+void semantic::loop_control(const std::string op, int line){
+    if(loop_depth == 0){
+        std::cerr << "[Semantic Error]\nIn line: " << line << ": IllegalLoopControl - operator: " << op << ", outside loop\n" << std::endl;
+        exit(1); 
+    }
 }
