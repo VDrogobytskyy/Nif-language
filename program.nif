@@ -1,15 +1,8 @@
 fun main(): Void {
-    var i: Int = 0
-
-    // Є ЦИКЛ while!
-    while i < 100 {
-        if i == 5 {
-            // ПРАВИЛЬНО! break каже комп'ютеру:
-            // "Зупини цикл while прямо зараз і більше не повторюй його!"
-            break 
-        }
-        i = i + 1
+    var counter: Int = 10
+    // Помилка: умова циклу while має тип Int замість обов'язкового Bool
+    while counter {
+        print(counter)
+        counter = counter - 1
     }
-
-    print(i) // виведе 5
 }

@@ -81,9 +81,9 @@ bool Parser::parseToken(const std::string& lexeme, const std::string& token) {
 
 // Головна функція запуску
 bool Parser::run() {
-    if (trace) std::cout << "\n>>> Початок синтаксичного аналізу (рекурсивний спуск) <<<\n";
+    if (trace) std::cout << "\n>>> Початок семантичного аналізу <<<\n";
     parseProgram();
-    if (trace) std::cout << "\n>>> Синтаксичний аналіз завершився успішно! <<<\n";
+    if (trace) std::cout << "\n>>> Семантичний аналіз завершився успішно! <<<\n";
     return true;
 }
 
@@ -312,8 +312,16 @@ void Parser::parseStatement() {
 // if Expression Block [ else ( Block | IfStatement ) ]
 void Parser::parseIfStatement() {
     if (trace) std::cout << nextIndt() << "parseIfStatement():" << std::endl;
+
+    SymbolRow s = getSymb();
     parseToken("if", "keyword");
-    parseExpression();
+
+    std::string type = parseExpression();
+    if(type != "Bool"){
+        std::cerr << "[Semantic Error]\nIn line: " << s.line << ": NonBooleanCondition - require Bool type, got " << type << "\n" << std::endl;
+        exit(1);
+    }
+
     parseBlock();
     if (numRow < len_tableOfSymb && getSymb().lexeme == "else") {
         parseToken("else", "keyword");
@@ -329,9 +337,17 @@ void Parser::parseIfStatement() {
 // while Expression Block
 void Parser::parseWhileStatement() {
     if (trace) std::cout << nextIndt() << "parseWhileStatement():" << std::endl;
+
+    SymbolRow s = getSymb();
     parseToken("while", "keyword");
     sem.enter_loop();
-    parseExpression();
+
+    std::string type = parseExpression();
+    if(type != "Bool"){
+        std::cerr << "[Semantic Error]\nIn line: " << s.line << ": NonBooleanCondition - require Bool type, got " << type << "\n" << std::endl;
+        exit(1);
+    }
+
     parseBlock();
     sem.exit_loop();
     if (trace) predIndt();
