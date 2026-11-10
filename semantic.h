@@ -22,6 +22,10 @@ class semantic{
             scope.push_back({});
         }
 
+        VarSymb* findVar(const std::string& lexem);
+        void enter_scope();
+        void exit_scope();
+
         void declareVar(std::string lexem, std::string type, bool ifconst, int line);
         void checkAssignType(std::string lexem, std::string exprType, int line);
 };

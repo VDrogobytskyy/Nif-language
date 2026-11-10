@@ -267,11 +267,13 @@ void Parser::parseConstantDeclaration() {
 // Block = '{' { BlockItem } '}'
 void Parser::parseBlock() {
     if (trace) std::cout << nextIndt() << "parseBlock():" << std::endl;
+    sem.enter_scope();
     parseToken("{", "brackets_op");
     while (numRow < len_tableOfSymb && getSymb().lexeme != "}") {
         parseBlockItem();
     }
     parseToken("}", "brackets_op");
+    sem.exit_scope();
     if (trace) predIndt();
 }
 
