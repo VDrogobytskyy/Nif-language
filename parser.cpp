@@ -430,15 +430,29 @@ void Parser::parseContinueStatement() {
 // LValue '=' Expression  АБО  FunctionCall
 void Parser::parseIdentifierStatement() {
     if (trace) std::cout << nextIndt() << "parseIdentifierStatement():" << std::endl;
+    
     SymbolRow id = getSymb();
+
+    VarSymb* varInfo = sem.findVar(id.lexeme);
+    std::string currentType = varInfo ? varInfo->VarType : "";
+
     parseToken("", "identifier");
 
     // Обробка суфіксів доступу до масиву [expr] або поля .field
     while (getSymb().lexeme == "[" || getSymb().lexeme == ".") {
         if (getSymb().lexeme == "[") {
+            SymbolRow bracket = getSymb();
             parseToken("[", "brackets_op");
-            parseExpression();
+            std::string type = parseExpression();
+            if(type != "Int"){
+                std::cerr << "[Semantic Error]\nIn line: " << bracket.line << ": InvalidIndexType - must be Int, got: " << type << "\n" << std::endl;
+                exit(1);
+            }
             parseToken("]", "brackets_op");
+
+            if (currentType.size() > 2 && currentType.front() == '[' && currentType.back() == ']') {
+                currentType = currentType.substr(1, currentType.size() - 2);
+            }
         } else {
             parseToken(".", "punct");
             parseToken("", "identifier");
@@ -448,7 +462,16 @@ void Parser::parseIdentifierStatement() {
     if (getSymb().lexeme == "=") {
         parseToken("=", "assign_op");
         std::string expr_Type = parseExpression();
-        sem.checkAssignType(id.lexeme, expr_Type, id.line);
+        if (currentType != "" && currentType != (varInfo ? varInfo->VarType : "")) {
+            bool all_good = (currentType == expr_Type) || (currentType == "Double" && expr_Type == "Int");
+            if (!all_good) {
+                std::cerr << "[Semantic Error]\nIn line: " << id.line << ": TypeMismatch - cannot assign: " << expr_Type 
+                          << " to element of type: " << currentType << "\n" << std::endl; 
+                exit(1);
+            }
+        } else {
+            sem.checkAssignType(id.lexeme, expr_Type, id.line);
+        }
     } else if (getSymb().lexeme == "(") {
         parseToken("(", "brackets_op");
         if (getSymb().lexeme != ")") {

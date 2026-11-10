@@ -1,4 +1,4 @@
-File: program.nif opened succesfully! And contained 241 bytes!
+File: program.nif opened succesfully! And contained 217 bytes!
 
 Lexical analyse finished succesfully
 
@@ -15,32 +15,39 @@ Lexical analyse finished succesfully
 6     1       Void                  type_name                       
 7     1       {                     brackets_op                     
 8     2       var                   keyword                         
-9     2       counter               identifier          2           
+9     2       data                  identifier          2           
 10    2       :                     punct                           
-11    2       Int                   type_name                       
-12    2       =                     assign_op                       
-13    2       10                    unsigned_int        1           
-14    4       while                 keyword                         
-15    4       counter               identifier          2           
-16    4       {                     brackets_op                     
-17    5       print                 keyword                         
-18    5       (                     brackets_op                     
-19    5       counter               identifier          2           
-20    5       )                     brackets_op                     
-21    6       counter               identifier          2           
-22    6       =                     assign_op                       
-23    6       counter               identifier          2           
-24    6       -                     add_op                          
-25    6       1                     unsigned_int        2           
-26    7       }                     brackets_op                     
-27    8       }                     brackets_op                     
+11    2       [                     brackets_op                     
+12    2       Double                type_name                       
+13    2       ]                     brackets_op                     
+14    3       var                   keyword                         
+15    3       idx                   identifier          3           
+16    3       :                     punct                           
+17    3       Double                type_name                       
+18    3       =                     assign_op                       
+19    3       1.5                   unsigned_double     1           
+20    5       data                  identifier          2           
+21    5       [                     brackets_op                     
+22    5       idx                   identifier          3           
+23    5       ]                     brackets_op                     
+24    5       =                     assign_op                       
+25    5       100.0                 unsigned_double     2           
+26    6       print                 keyword                         
+27    6       (                     brackets_op                     
+28    6       data                  identifier          2           
+29    6       [                     brackets_op                     
+30    6       0                     unsigned_int        3           
+31    6       ]                     brackets_op                     
+32    6       )                     brackets_op                     
+33    7       }                     brackets_op                     
 
 =======================================================
           ТАБЛИЦЯ ІДЕНТИФІКАТОРІВ (tableOfId)          
 =======================================================
 ІндексІдентифікатор
 -------------------------------------------------------
-2         counter                  
+2         data                     
+3         idx                      
 1         main                     
 
 =======================================================
@@ -48,8 +55,9 @@ Lexical analyse finished succesfully
 =======================================================
 ІндексТип         Значення         
 -------------------------------------------------------
-2         Int            1                        
-1         Int            10                       
+3         Int            0                        
+1         Double         1.5                      
+2         Double         100.0                    
 =======================================================
 
 >>> Початок семантичного аналізу <<<
@@ -68,11 +76,21 @@ Lexical analyse finished succesfully
           parseBlockItem():
             parseVariableDeclaration():
               parseToken: In line 2 found ('var', keyword)
-              parseToken: In line 2 found ('counter', identifier)
+              parseToken: In line 2 found ('data', identifier)
               parseToken: In line 2 found (':', punct)
               parseType():
-                parseToken: In line 2 found ('Int', type_name)
-              parseToken: In line 2 found ('=', assign_op)
+                parseToken: In line 2 found ('[', brackets_op)
+                parseType():
+                  parseToken: In line 2 found ('Double', type_name)
+                parseToken: In line 2 found (']', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 3 found ('var', keyword)
+              parseToken: In line 3 found ('idx', identifier)
+              parseToken: In line 3 found (':', punct)
+              parseType():
+                parseToken: In line 3 found ('Double', type_name)
+              parseToken: In line 3 found ('=', assign_op)
               parseExpression():
                 parseLogicalOrExpr():
                   parseLogicalAndExpr():
@@ -84,11 +102,12 @@ Lexical analyse finished succesfully
                               parseUnaryExpr():
                                 parsePostfixExpr():
                                   parsePrimaryExpr():
-                                    parseToken: In line 2 found ('10', unsigned_int)
+                                    parseToken: In line 3 found ('1.5', unsigned_double)
           parseBlockItem():
             parseStatement():
-              parseWhileStatement():
-                parseToken: In line 4 found ('while', keyword)
+              parseIdentifierStatement():
+                parseToken: In line 5 found ('data', identifier)
+                parseToken: In line 5 found ('[', brackets_op)
                 parseExpression():
                   parseLogicalOrExpr():
                     parseLogicalAndExpr():
@@ -100,4 +119,4 @@ Lexical analyse finished succesfully
                                 parseUnaryExpr():
                                   parsePostfixExpr():
                                     parsePrimaryExpr():
-                                      parseToken: In line 4 found ('counter', identifier)
+                                      parseToken: In line 5 found ('idx', identifier)

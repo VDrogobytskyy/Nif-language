@@ -1,8 +1,7 @@
 fun main(): Void {
-    var counter: Int = 10
-    // Помилка: умова циклу while має тип Int замість обов'язкового Bool
-    while counter {
-        print(counter)
-        counter = counter - 1
-    }
+    var data: [Double]
+    var idx: Double = 1.5
+    // Помилка: індекс елемента масиву має тип Double замість Int
+    data[idx] = 100.0
+    print(data[0])
 }
