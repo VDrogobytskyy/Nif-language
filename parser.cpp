@@ -435,7 +435,12 @@ void Parser::parseInputStatement() {
     parseToken("read", "keyword");
     parseToken("(", "brackets_op");
     parseToken("&", "ref_op");
+
+    SymbolRow id = getSymb();
     parseToken("", "identifier");
+    VarSymb* v = sem.findVar(id.lexeme);
+    if (v) v->isAssigned = true;
+
     while (getSymb().lexeme == "[" || getSymb().lexeme == ".") {
         if (getSymb().lexeme == "[") {
             parseToken("[", "brackets_op");
@@ -646,10 +651,10 @@ std::string Parser::parseAddExpr() {
     std::string type = parseMultExpr();
     while (getSymb().lexeme == "+" || getSymb().lexeme == "-") {
         parseToken(getSymb().lexeme, "add_op");
-        parseMultExpr();
+        std::string rType = parseMultExpr();
+        if (type == "Double" || rType == "Double") type = "Double";
     }
     if (trace) predIndt();
-
     return type;
 }
 
@@ -659,7 +664,8 @@ std::string Parser::parseMultExpr() {
     std::string type = parsePowerExpr();
     while (getSymb().lexeme == "*" || getSymb().lexeme == "/" || getSymb().lexeme == "%") {
         parseToken(getSymb().lexeme, "mult_op");
-        parsePowerExpr();
+        std::string rType = parsePowerExpr();
+        if (type == "Double" || rType == "Double") type = "Double";
     }
     if (trace) predIndt();
 
@@ -672,7 +678,8 @@ std::string Parser::parsePowerExpr() {
     std::string type = parseUnaryExpr();
     if (getSymb().lexeme == "**") {
         parseToken("**", "exp_op");
-        parsePowerExpr();
+        std::string rType = parsePowerExpr();
+    if (type == "Double" || rType == "Double") type = "Double";
     }
     if (trace) predIndt();
 
