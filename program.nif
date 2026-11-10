@@ -1,7 +1,10 @@
+fun computeArea(radius: Double): Double {
+    var area: Double = 3.14159 * radius * radius
+    // Помилка: функція повертає Double, але не містить оператора return
+    return
+}
+
 fun main(): Void {
-    var data: [Double]
-    var idx: Int = 0
-    // Помилка: індекс елемента масиву має тип Double замість Int
-    data[idx] = 100.0
-    print(data[0])
+    var s: Double = computeArea(5.0)
+    print(s)
 }

@@ -156,15 +156,29 @@ void Parser::parseFieldDeclaration() {
 void Parser::parseFunctionDeclaration() {
     if (trace) std::cout << nextIndt() << "parseFunctionDeclaration():" << std::endl;
     parseToken("fun", "keyword");
+    SymbolRow fn = getSymb();
+
     parseToken("", "identifier");
     parseToken("(", "brackets_op");
+
+    pendingParams.clear();
+
     if (getSymb().lexeme != ")") {
         parseParameters();
     }
     parseToken(")", "brackets_op");
     parseToken(":", "punct");
-    parseReturnType();
+    std::string return_type = parseReturnType();
+    hasReturn = false;
     parseBlock();
+
+    if (return_type != "Void" && !hasReturn) {
+        std::cerr << "[Semantic Error]\nIn line: " << fn.line 
+                  << ": MissingReturnStatement - function '" << fn.lexeme 
+                  << "' with return type '" << return_type << "' must contain a return statement\n" << std::endl;
+        exit(1);
+    }
+
     if (trace) predIndt();
 }
 
@@ -184,9 +198,13 @@ void Parser::parseParameter() {
     if (getSymb().lexeme == "ref") {
         parseToken("ref", "keyword");
     }
+    SymbolRow id = getSymb();
     parseToken("", "identifier");
     parseToken(":", "punct");
-    parseType();
+    std::string type = parseType();
+    
+    pendingParams.push_back({id.lexeme, type});;
+
     if (trace) predIndt();
 }
 
@@ -216,14 +234,19 @@ std::string Parser::parseType() {
     return returned_type_value;
 }
 
-void Parser::parseReturnType() {
+std::string Parser::parseReturnType() {
     if (trace) std::cout << nextIndt() << "parseReturnType():" << std::endl;
+    std::string type = "Void";
+
     if (getSymb().lexeme == "Void") {
         parseToken("Void", "type_name");
+        type = "Void";
     } else {
-        parseType();
+        type = parseType();
     }
     if (trace) predIndt();
+
+    return type;
 }
 
 // var Identifier ':' Type [ '=' Expression ]
@@ -268,6 +291,14 @@ void Parser::parseConstantDeclaration() {
 void Parser::parseBlock() {
     if (trace) std::cout << nextIndt() << "parseBlock():" << std::endl;
     sem.enter_scope();
+
+    for (const auto& p : pendingParams) {
+        sem.declareVar(p.first, p.second, false, getSymb().line);
+        VarSymb* v = sem.findVar(p.first);
+        if (v) v->isAssigned = true;
+    }
+    pendingParams.clear();
+
     parseToken("{", "brackets_op");
     while (numRow < len_tableOfSymb && getSymb().lexeme != "}") {
         parseBlockItem();
@@ -404,6 +435,7 @@ void Parser::parseOutputStatement() {
 // return [ Expression ]
 void Parser::parseReturnStatement() {
     if (trace) std::cout << nextIndt() << "parseReturnStatement():" << std::endl;
+    hasReturn = true;
     parseToken("return", "keyword");
     if (isStartOfExpression(getSymb())) {
         parseExpression();
@@ -469,6 +501,7 @@ void Parser::parseIdentifierStatement() {
                           << " to element of type: " << currentType << "\n" << std::endl; 
                 exit(1);
             }
+            if (varInfo) varInfo->isAssigned = true;
         } else {
             sem.checkAssignType(id.lexeme, expr_Type, id.line);
         }
@@ -483,7 +516,6 @@ void Parser::parseIdentifierStatement() {
     }
     if (trace) predIndt();
 }
-
 
 // Рівень 1: Expression -> LogicalOrExpr
 std::string Parser::parseExpression() {
@@ -690,6 +722,7 @@ void Parser::parseArguments() {
 // Argument = [ '&' ] Expression
 void Parser::parseArgument() {
     if (trace) std::cout << nextIndt() << "parseArgument():" << std::endl;
+    SymbolRow s = getSymb();
     if (getSymb().lexeme == "&") {
         parseToken("&", "ref_op");
     }

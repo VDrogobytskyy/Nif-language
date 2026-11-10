@@ -1,4 +1,4 @@
-File: program.nif opened succesfully! And contained 212 bytes!
+File: program.nif opened succesfully! And contained 292 bytes!
 
 Lexical analyse finished succesfully
 
@@ -8,55 +8,67 @@ Lexical analyse finished succesfully
 №   РядокЛексема        Токен          Індекс (Id/Const)
 ---------------------------------------------------------------------------
 1     1       fun                   keyword                         
-2     1       main                  identifier          1           
+2     1       computeArea           identifier          1           
 3     1       (                     brackets_op                     
-4     1       )                     brackets_op                     
+4     1       radius                identifier          2           
 5     1       :                     punct                           
-6     1       Void                  type_name                       
-7     1       {                     brackets_op                     
-8     2       var                   keyword                         
-9     2       data                  identifier          2           
-10    2       :                     punct                           
-11    2       [                     brackets_op                     
-12    2       Double                type_name                       
-13    2       ]                     brackets_op                     
-14    3       var                   keyword                         
-15    3       idx                   identifier          3           
-16    3       :                     punct                           
-17    3       Int                   type_name                       
-18    3       =                     assign_op                       
-19    3       0                     unsigned_int        1           
-20    5       data                  identifier          2           
-21    5       [                     brackets_op                     
-22    5       idx                   identifier          3           
-23    5       ]                     brackets_op                     
-24    5       =                     assign_op                       
-25    5       100.0                 unsigned_double     2           
-26    6       print                 keyword                         
-27    6       (                     brackets_op                     
-28    6       data                  identifier          2           
-29    6       [                     brackets_op                     
-30    6       0                     unsigned_int        1           
-31    6       ]                     brackets_op                     
-32    6       )                     brackets_op                     
-33    7       }                     brackets_op                     
+6     1       Double                type_name                       
+7     1       )                     brackets_op                     
+8     1       :                     punct                           
+9     1       Double                type_name                       
+10    1       {                     brackets_op                     
+11    2       var                   keyword                         
+12    2       area                  identifier          3           
+13    2       :                     punct                           
+14    2       Double                type_name                       
+15    2       =                     assign_op                       
+16    2       3.14159               unsigned_double     1           
+17    2       *                     mult_op                         
+18    2       radius                identifier          2           
+19    2       *                     mult_op                         
+20    2       radius                identifier          2           
+21    4       return                keyword                         
+22    5       }                     brackets_op                     
+23    7       fun                   keyword                         
+24    7       main                  identifier          4           
+25    7       (                     brackets_op                     
+26    7       )                     brackets_op                     
+27    7       :                     punct                           
+28    7       Void                  type_name                       
+29    7       {                     brackets_op                     
+30    8       var                   keyword                         
+31    8       s                     identifier          5           
+32    8       :                     punct                           
+33    8       Double                type_name                       
+34    8       =                     assign_op                       
+35    8       computeArea           identifier          1           
+36    8       (                     brackets_op                     
+37    8       5.0                   unsigned_double     2           
+38    8       )                     brackets_op                     
+39    9       print                 keyword                         
+40    9       (                     brackets_op                     
+41    9       s                     identifier          5           
+42    9       )                     brackets_op                     
+43    10      }                     brackets_op                     
 
 =======================================================
           ТАБЛИЦЯ ІДЕНТИФІКАТОРІВ (tableOfId)          
 =======================================================
 ІндексІдентифікатор
 -------------------------------------------------------
-2         data                     
-3         idx                      
-1         main                     
+3         area                     
+1         computeArea              
+4         main                     
+2         radius                   
+5         s                        
 
 =======================================================
              ТАБЛИЦЯ КОНСТАНТ (tableOfConst)           
 =======================================================
 ІндексТип         Значення         
 -------------------------------------------------------
-1         Int            0                        
-2         Double         100.0                    
+1         Double         3.14159                  
+2         Double         5.0                      
 =======================================================
 
 >>> Початок семантичного аналізу <<<
@@ -64,32 +76,29 @@ Lexical analyse finished succesfully
     parseModuleItem():
       parseFunctionDeclaration():
         parseToken: In line 1 found ('fun', keyword)
-        parseToken: In line 1 found ('main', identifier)
+        parseToken: In line 1 found ('computeArea', identifier)
         parseToken: In line 1 found ('(', brackets_op)
+        parseParameters():
+          parseParameter():
+            parseToken: In line 1 found ('radius', identifier)
+            parseToken: In line 1 found (':', punct)
+            parseType():
+              parseToken: In line 1 found ('Double', type_name)
         parseToken: In line 1 found (')', brackets_op)
         parseToken: In line 1 found (':', punct)
         parseReturnType():
-          parseToken: In line 1 found ('Void', type_name)
+          parseType():
+            parseToken: In line 1 found ('Double', type_name)
         parseBlock():
           parseToken: In line 1 found ('{', brackets_op)
           parseBlockItem():
             parseVariableDeclaration():
               parseToken: In line 2 found ('var', keyword)
-              parseToken: In line 2 found ('data', identifier)
+              parseToken: In line 2 found ('area', identifier)
               parseToken: In line 2 found (':', punct)
               parseType():
-                parseToken: In line 2 found ('[', brackets_op)
-                parseType():
-                  parseToken: In line 2 found ('Double', type_name)
-                parseToken: In line 2 found (']', brackets_op)
-          parseBlockItem():
-            parseVariableDeclaration():
-              parseToken: In line 3 found ('var', keyword)
-              parseToken: In line 3 found ('idx', identifier)
-              parseToken: In line 3 found (':', punct)
-              parseType():
-                parseToken: In line 3 found ('Int', type_name)
-              parseToken: In line 3 found ('=', assign_op)
+                parseToken: In line 2 found ('Double', type_name)
+              parseToken: In line 2 found ('=', assign_op)
               parseExpression():
                 parseLogicalOrExpr():
                   parseLogicalAndExpr():
@@ -101,53 +110,51 @@ Lexical analyse finished succesfully
                               parseUnaryExpr():
                                 parsePostfixExpr():
                                   parsePrimaryExpr():
-                                    parseToken: In line 3 found ('0', unsigned_int)
+                                    parseToken: In line 2 found ('3.14159', unsigned_double)
+                            parseToken: In line 2 found ('*', mult_op)
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 2 found ('radius', identifier)
+                            parseToken: In line 2 found ('*', mult_op)
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 2 found ('radius', identifier)
           parseBlockItem():
             parseStatement():
-              parseIdentifierStatement():
-                parseToken: In line 5 found ('data', identifier)
-                parseToken: In line 5 found ('[', brackets_op)
-                parseExpression():
-                  parseLogicalOrExpr():
-                    parseLogicalAndExpr():
-                      parseEqualityExpr():
-                        parseRelationalExpr():
-                          parseAddExpr():
-                            parseMultExpr():
-                              parsePowerExpr():
-                                parseUnaryExpr():
-                                  parsePostfixExpr():
-                                    parsePrimaryExpr():
-                                      parseToken: In line 5 found ('idx', identifier)
-                parseToken: In line 5 found (']', brackets_op)
-                parseToken: In line 5 found ('=', assign_op)
-                parseExpression():
-                  parseLogicalOrExpr():
-                    parseLogicalAndExpr():
-                      parseEqualityExpr():
-                        parseRelationalExpr():
-                          parseAddExpr():
-                            parseMultExpr():
-                              parsePowerExpr():
-                                parseUnaryExpr():
-                                  parsePostfixExpr():
-                                    parsePrimaryExpr():
-                                      parseToken: In line 5 found ('100.0', unsigned_double)
+              parseReturnStatement():
+                parseToken: In line 4 found ('return', keyword)
+          parseToken: In line 5 found ('}', brackets_op)
+    parseModuleItem():
+      parseFunctionDeclaration():
+        parseToken: In line 7 found ('fun', keyword)
+        parseToken: In line 7 found ('main', identifier)
+        parseToken: In line 7 found ('(', brackets_op)
+        parseToken: In line 7 found (')', brackets_op)
+        parseToken: In line 7 found (':', punct)
+        parseReturnType():
+          parseToken: In line 7 found ('Void', type_name)
+        parseBlock():
+          parseToken: In line 7 found ('{', brackets_op)
           parseBlockItem():
-            parseStatement():
-              parseOutputStatement():
-                parseToken: In line 6 found ('print', keyword)
-                parseToken: In line 6 found ('(', brackets_op)
-                parseArguments():
-                  parseArgument():
-                    parseExpression():
-                      parseLogicalOrExpr():
-                        parseLogicalAndExpr():
-                          parseEqualityExpr():
-                            parseRelationalExpr():
-                              parseAddExpr():
-                                parseMultExpr():
-                                  parsePowerExpr():
-                                    parseUnaryExpr():
-                                      parsePostfixExpr():
-                                        parsePrimaryExpr():
+            parseVariableDeclaration():
+              parseToken: In line 8 found ('var', keyword)
+              parseToken: In line 8 found ('s', identifier)
+              parseToken: In line 8 found (':', punct)
+              parseType():
+                parseToken: In line 8 found ('Double', type_name)
+              parseToken: In line 8 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
