@@ -1,10 +1,13 @@
-fun increment(ref x: Int): Void {
-    x = x + 1
-    return
+record Point {
+    var x: Double
+    var y: Double
 }
 
 fun main(): Void {
-    
-    // Помилка: літерал 10 не є адресною змінною (не є LValue)
-    increment(&10)
+    var p: Point
+    p.x = 10.0
+    p.y = 20.0
+    // Помилка: звернення до неоголошеного поля 'z' у записі Point
+    p.z = 30.0
+    print(p.x, p.y)
 }

@@ -112,3 +112,20 @@ FuncSymb* semantic::findFunc(const std::string& name) {
     }
     return nullptr;
 }
+
+void semantic::declareRecord(const std::string& recName, const std::unordered_map<std::string, std::string>& fields) {
+    tableOfRecords[recName] = fields;
+}
+bool semantic::hasRecord(const std::string& recName) {
+    return tableOfRecords.find(recName) != tableOfRecords.end();
+}
+bool semantic::hasRecordField(const std::string& recName, const std::string& fieldName) {
+    auto it = tableOfRecords.find(recName);
+    if (it != tableOfRecords.end()) {
+        return it->second.find(fieldName) != it->second.end();
+    }
+    return false;
+}
+std::string semantic::getRecordFieldType(const std::string& recName, const std::string& fieldName) {
+    return tableOfRecords[recName][fieldName];
+}

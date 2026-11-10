@@ -29,7 +29,10 @@ class semantic{
     private:
         std::vector<std::unordered_map<std::string, VarSymb>> scope;
         int loop_depth = 0;
+
         std::unordered_map<std::string, FuncSymb> tableOfFuncs;
+
+        std::unordered_map<std::string, std::unordered_map<std::string, std::string>> tableOfRecords;
     public:
         semantic(){
             scope.push_back({});
@@ -50,4 +53,9 @@ class semantic{
 
         void declareFunc(const std::string& name, const std::string& returnType, const std::vector<FuncParam>& params, int line);
         FuncSymb* findFunc(const std::string& name);
+
+        void declareRecord(const std::string& recName, const std::unordered_map<std::string, std::string>& fields);
+        bool hasRecord(const std::string& recName);
+        bool hasRecordField(const std::string& recName, const std::string& fieldName);
+        std::string getRecordFieldType(const std::string& recName, const std::string& fieldName);
 };

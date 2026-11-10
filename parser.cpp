@@ -134,12 +134,25 @@ void Parser::parseTypeAliasDeclaration() {
 void Parser::parseRecordDeclaration() {
     if (trace) std::cout << nextIndt() << "parseRecordDeclaration():" << std::endl;
     parseToken("record", "keyword");
+    SymbolRow recId = getSymb();
+
     parseToken("", "identifier");
     parseToken("{", "brackets_op");
+
+    std::unordered_map<std::string, std::string> fields;
     while (getSymb().lexeme == "var") {
-        parseFieldDeclaration();
+        parseToken("var", "keyword");
+        SymbolRow fId = getSymb();
+        parseToken("", "identifier");
+        parseToken(":", "punct");
+        std::string fType = parseType();
+        fields[fId.lexeme] = fType;
     }
+
     parseToken("}", "brackets_op");
+
+    sem.declareRecord(recId.lexeme, fields);
+
     if (trace) predIndt();
 }
 
@@ -493,8 +506,20 @@ void Parser::parseIdentifierStatement() {
                 currentType = currentType.substr(1, currentType.size() - 2);
             }
         } else {
+            SymbolRow dot = getSymb();
             parseToken(".", "punct");
+            SymbolRow field = getSymb();
             parseToken("", "identifier");
+
+            if (sem.hasRecord(currentType)) {
+                if (!sem.hasRecordField(currentType, field.lexeme)) {
+                    std::cerr << "[Semantic Error]\nIn line: " << field.line 
+                              << ": NoSuchField - record '" << currentType 
+                              << "' does not contain field '" << field.lexeme << "'\n" << std::endl;
+                    exit(1);
+                }
+                currentType = sem.getRecordFieldType(currentType, field.lexeme);
+            }
         }
     }
 
@@ -700,8 +725,19 @@ std::string Parser::parsePostfixExpr() {
                 type = type.substr(1, type.size() - 2);
             }
         } else if (getSymb().lexeme == ".") {
+            SymbolRow dot = getSymb();
             parseToken(".", "punct");
+            SymbolRow field = getSymb();
             parseToken("", "identifier");
+            if (sem.hasRecord(type)) {
+                if (!sem.hasRecordField(type, field.lexeme)) {
+                    std::cerr << "[Semantic Error]\nIn line: " << field.line 
+                              << ": NoSuchField - record '" << type 
+                              << "' does not contain field '" << field.lexeme << "'\n" << std::endl;
+                    exit(1);
+                }
+                type = sem.getRecordFieldType(type, field.lexeme);
+            }
         } else {
             break;
         }
