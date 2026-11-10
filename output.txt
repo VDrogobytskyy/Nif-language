@@ -1,4 +1,4 @@
-File: program.nif opened succesfully! And contained 217 bytes!
+File: program.nif opened succesfully! And contained 212 bytes!
 
 Lexical analyse finished succesfully
 
@@ -23,9 +23,9 @@ Lexical analyse finished succesfully
 14    3       var                   keyword                         
 15    3       idx                   identifier          3           
 16    3       :                     punct                           
-17    3       Double                type_name                       
+17    3       Int                   type_name                       
 18    3       =                     assign_op                       
-19    3       1.5                   unsigned_double     1           
+19    3       0                     unsigned_int        1           
 20    5       data                  identifier          2           
 21    5       [                     brackets_op                     
 22    5       idx                   identifier          3           
@@ -36,7 +36,7 @@ Lexical analyse finished succesfully
 27    6       (                     brackets_op                     
 28    6       data                  identifier          2           
 29    6       [                     brackets_op                     
-30    6       0                     unsigned_int        3           
+30    6       0                     unsigned_int        1           
 31    6       ]                     brackets_op                     
 32    6       )                     brackets_op                     
 33    7       }                     brackets_op                     
@@ -55,8 +55,7 @@ Lexical analyse finished succesfully
 =======================================================
 ІндексТип         Значення         
 -------------------------------------------------------
-3         Int            0                        
-1         Double         1.5                      
+1         Int            0                        
 2         Double         100.0                    
 =======================================================
 
@@ -89,7 +88,7 @@ Lexical analyse finished succesfully
               parseToken: In line 3 found ('idx', identifier)
               parseToken: In line 3 found (':', punct)
               parseType():
-                parseToken: In line 3 found ('Double', type_name)
+                parseToken: In line 3 found ('Int', type_name)
               parseToken: In line 3 found ('=', assign_op)
               parseExpression():
                 parseLogicalOrExpr():
@@ -102,7 +101,7 @@ Lexical analyse finished succesfully
                               parseUnaryExpr():
                                 parsePostfixExpr():
                                   parsePrimaryExpr():
-                                    parseToken: In line 3 found ('1.5', unsigned_double)
+                                    parseToken: In line 3 found ('0', unsigned_int)
           parseBlockItem():
             parseStatement():
               parseIdentifierStatement():
@@ -120,3 +119,35 @@ Lexical analyse finished succesfully
                                   parsePostfixExpr():
                                     parsePrimaryExpr():
                                       parseToken: In line 5 found ('idx', identifier)
+                parseToken: In line 5 found (']', brackets_op)
+                parseToken: In line 5 found ('=', assign_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 5 found ('100.0', unsigned_double)
+          parseBlockItem():
+            parseStatement():
+              parseOutputStatement():
+                parseToken: In line 6 found ('print', keyword)
+                parseToken: In line 6 found ('(', brackets_op)
+                parseArguments():
+                  parseArgument():
+                    parseExpression():
+                      parseLogicalOrExpr():
+                        parseLogicalAndExpr():
+                          parseEqualityExpr():
+                            parseRelationalExpr():
+                              parseAddExpr():
+                                parseMultExpr():
+                                  parsePowerExpr():
+                                    parseUnaryExpr():
+                                      parsePostfixExpr():
+                                        parsePrimaryExpr():

@@ -618,9 +618,18 @@ std::string Parser::parsePostfixExpr() {
             }
             parseToken(")", "brackets_op");
         } else if (getSymb().lexeme == "[") {
+            SymbolRow bracket = getSymb();
             parseToken("[", "brackets_op");
-            parseExpression();
+            std::string idxType = parseExpression();
+            if (idxType != "Int") {
+                std::cerr << "[Semantic Error]\nIn line: " << bracket.line 
+                          << ": InvalidIndexType - must be Int, got: " << idxType << "\n" << std::endl;
+                exit(1);
+            }
             parseToken("]", "brackets_op");
+            if (type.size() > 2 && type.front() == '[' && type.back() == ']') {
+                type = type.substr(1, type.size() - 2);
+            }
         } else if (getSymb().lexeme == ".") {
             parseToken(".", "punct");
             parseToken("", "identifier");

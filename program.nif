@@ -1,6 +1,6 @@
 fun main(): Void {
     var data: [Double]
-    var idx: Double = 1.5
+    var idx: Int = 0
     // Помилка: індекс елемента масиву має тип Double замість Int
     data[idx] = 100.0
     print(data[0])
