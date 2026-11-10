@@ -23,4 +23,5 @@ class semantic{
         }
 
         void declareVar(std::string lexem, std::string type, bool ifconst, int line);
+        void checkAssignType(std::string lexem, std::string exprType, int line);
 };

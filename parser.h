@@ -52,17 +52,17 @@ class Parser {
         void parseContinueStatement();
         void parseIdentifierStatement(); // Присвоювання LValue = Expr або виклик функції
 
-        void parseExpression();
-        void parseLogicalOrExpr();
-        void parseLogicalAndExpr();
-        void parseEqualityExpr();
-        void parseRelationalExpr();
-        void parseAddExpr();
-        void parseMultExpr();
-        void parsePowerExpr();
-        void parseUnaryExpr();
-        void parsePostfixExpr();
-        void parsePrimaryExpr();
+        std::string parseExpression();
+        std::string parseLogicalOrExpr();
+        std::string parseLogicalAndExpr();
+        std::string parseEqualityExpr();
+        std::string parseRelationalExpr();
+        std::string parseAddExpr();
+        std::string parseMultExpr();
+        std::string parsePowerExpr();
+        std::string parseUnaryExpr();
+        std::string parsePostfixExpr();
+        std::string parsePrimaryExpr();
         void parseArguments();
         void parseArgument();
 

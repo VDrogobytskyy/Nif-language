@@ -1,4 +1,4 @@
-File: program.nif opened succesfully! And contained 21 bytes!
+File: program.nif opened succesfully! And contained 33 bytes!
 
 Lexical analyse finished succesfully
 
@@ -12,7 +12,13 @@ Lexical analyse finished succesfully
 3     3       :                     punct                           
 4     3       Int                   type_name                       
 5     3       =                     assign_op                       
-6     3       "123"                 string_const        1           
+6     3       123                   unsigned_int        1           
+7     4       var                   keyword                         
+8     4       a                     identifier          1           
+9     4       :                     punct                           
+10    4       Int                   type_name                       
+11    4       =                     assign_op                       
+12    4       3                     unsigned_int        2           
 
 =======================================================
           ТАБЛИЦЯ ІДЕНТИФІКАТОРІВ (tableOfId)          
@@ -26,7 +32,8 @@ Lexical analyse finished succesfully
 =======================================================
 ІндексТип         Значення         
 -------------------------------------------------------
-1         String         "123"                    
+1         Int            123                      
+2         Int            3                        
 =======================================================
 
 >>> Початок синтаксичного аналізу (рекурсивний спуск) <<<
@@ -50,6 +57,11 @@ Lexical analyse finished succesfully
                         parseUnaryExpr():
                           parsePostfixExpr():
                             parsePrimaryExpr():
-                              parseToken: In line 3 found ('"123"', string_const)
-
->>> Синтаксичний аналіз завершився успішно! <<<
+                              parseToken: In line 3 found ('123', unsigned_int)
+    parseModuleItem():
+      parseVariableDeclaration():
+        parseToken: In line 4 found ('var', keyword)
+        parseToken: In line 4 found ('a', identifier)
+        parseToken: In line 4 found (':', punct)
+        parseType():
+          parseToken: In line 4 found ('Int', type_name)
