@@ -593,26 +593,26 @@ std::string Parser::parseLogicalOrExpr() {
     if (trace) std::cout << nextIndt() << "parseLogicalOrExpr():" << std::endl;
     std::string type = parseLogicalAndExpr();
     while (getSymb().lexeme == "||") {
+        SymbolRow op = getSymb();
         parseToken("||", "logical_op");
-        parseLogicalAndExpr();
-        type = "Bool";
+        std::string rType = parseLogicalAndExpr();
+        type = checkBinaryOp(type, op.lexeme, rType, op.line);
     }
     if (trace) predIndt();
-
     return type;
 }
 
 // Рівень 3: LogicalAndExpr -> EqualityExpr { '&&' EqualityExpr }
 std::string Parser::parseLogicalAndExpr() {
     if (trace) std::cout << nextIndt() << "parseLogicalAndExpr():" << std::endl;
-   std::string type = parseEqualityExpr();
+    std::string type = parseEqualityExpr();
     while (getSymb().lexeme == "&&") {
+        SymbolRow op = getSymb();
         parseToken("&&", "logical_op");
-        parseEqualityExpr();
-        type = "Bool";
+        std::string rType = parseEqualityExpr();
+        type = checkBinaryOp(type, op.lexeme, rType, op.line);
     }
     if (trace) predIndt();
-
     return type;
 }
 
@@ -621,12 +621,12 @@ std::string Parser::parseEqualityExpr() {
     if (trace) std::cout << nextIndt() << "parseEqualityExpr():" << std::endl;
     std::string type = parseRelationalExpr();
     while (getSymb().lexeme == "==" || getSymb().lexeme == "!=") {
-        parseToken(getSymb().lexeme, "rel_op");
-        parseRelationalExpr();
-        type = "Bool";
+        SymbolRow op = getSymb();
+        parseToken(op.lexeme, "rel_op");
+        std::string rType = parseRelationalExpr();
+        type = checkBinaryOp(type, op.lexeme, rType, op.line);
     }
     if (trace) predIndt();
-
     return type;
 }
 
@@ -636,12 +636,12 @@ std::string Parser::parseRelationalExpr() {
     std::string type = parseAddExpr();
     while (getSymb().lexeme == "<" || getSymb().lexeme == "<=" || 
            getSymb().lexeme == ">" || getSymb().lexeme == ">=") {
-        parseToken(getSymb().lexeme, "rel_op");
-        parseAddExpr();
-        type = "Bool";
+        SymbolRow op = getSymb();
+        parseToken(op.lexeme, "rel_op");
+        std::string rType = parseAddExpr();
+        type = checkBinaryOp(type, op.lexeme, rType, op.line);
     }
     if (trace) predIndt();
-
     return type;
 }
 
@@ -650,9 +650,10 @@ std::string Parser::parseAddExpr() {
     if (trace) std::cout << nextIndt() << "parseAddExpr():" << std::endl;
     std::string type = parseMultExpr();
     while (getSymb().lexeme == "+" || getSymb().lexeme == "-") {
-        parseToken(getSymb().lexeme, "add_op");
+        SymbolRow op = getSymb();
+        parseToken(op.lexeme, "add_op");
         std::string rType = parseMultExpr();
-        if (type == "Double" || rType == "Double") type = "Double";
+        type = checkBinaryOp(type, op.lexeme, rType, op.line);
     }
     if (trace) predIndt();
     return type;
@@ -663,12 +664,12 @@ std::string Parser::parseMultExpr() {
     if (trace) std::cout << nextIndt() << "parseMultExpr():" << std::endl;
     std::string type = parsePowerExpr();
     while (getSymb().lexeme == "*" || getSymb().lexeme == "/" || getSymb().lexeme == "%") {
-        parseToken(getSymb().lexeme, "mult_op");
+        SymbolRow op = getSymb();
+        parseToken(op.lexeme, "mult_op");
         std::string rType = parsePowerExpr();
-        if (type == "Double" || rType == "Double") type = "Double";
+        type = checkBinaryOp(type, op.lexeme, rType, op.line);
     }
     if (trace) predIndt();
-
     return type;
 }
 
@@ -677,12 +678,12 @@ std::string Parser::parsePowerExpr() {
     if (trace) std::cout << nextIndt() << "parsePowerExpr():" << std::endl;
     std::string type = parseUnaryExpr();
     if (getSymb().lexeme == "**") {
+        SymbolRow op = getSymb();
         parseToken("**", "exp_op");
         std::string rType = parsePowerExpr();
-    if (type == "Double" || rType == "Double") type = "Double";
+        type = checkBinaryOp(type, op.lexeme, rType, op.line);
     }
     if (trace) predIndt();
-
     return type;
 }
 
@@ -841,4 +842,55 @@ void Parser::parseArgument() {
     }
     parseExpression();
     if (trace) predIndt();
+}
+
+
+std::string Parser::checkBinaryOp(const std::string& lType, const std::string& op, const std::string& rType, int line) {
+    bool lNum = (lType == "Int" || lType == "Double");
+    bool rNum = (rType == "Int" || rType == "Double");
+
+    // 1. Додавання '+'
+    if (op == "+") {
+        if (lNum && rNum) {
+            return (lType == "Double" || rType == "Double") ? "Double" : "Int";
+        }
+        if (lType == "String" && rType == "String") {
+            return "String";
+        }
+    }
+    // 2. Віднімання '-', множення '*', ділення '/', степінь '**'
+    else if (op == "-" || op == "*" || op == "/" || op == "**") {
+        if (lNum && rNum) {
+            return (lType == "Double" || rType == "Double") ? "Double" : "Int";
+        }
+    }
+    // 3. Остача від ділення '%'
+    else if (op == "%") {
+        if (lType == "Int" && rType == "Int") {
+            return "Int";
+        }
+    }
+    // 4. Порівняння '<', '<=', '>', '>='
+    else if (op == "<" || op == "<=" || op == ">" || op == ">=") {
+        if ((lNum && rNum) || (lType == "String" && rType == "String")) {
+            return "Bool";
+        }
+    }
+    // 5. Рівність '==', '!='
+    else if (op == "==" || op == "!=") {
+        if ((lNum && rNum) || (lType == rType)) {
+            return "Bool";
+        }
+    }
+    // 6. Логічні '&&', '||'
+    else if (op == "&&" || op == "||") {
+        if (lType == "Bool" && rType == "Bool") {
+            return "Bool";
+        }
+    }
+
+    std::cerr << "[Semantic Error]\nIn line: " << line 
+              << ": TypeMismatch - cannot apply operator '" << op 
+              << "' to types: " << lType << " and " << rType << "\n" << std::endl;
+    exit(1);
 }

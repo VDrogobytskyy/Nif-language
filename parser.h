@@ -70,6 +70,8 @@ class Parser {
 
         semantic sem;
 
+        std::string checkBinaryOp(const std::string& lType, const std::string& op, const std::string& rType, int line);
+
     public:
         Parser(const std::vector<SymbolRow>& symbols, bool enableTrace = true);
         bool run();
