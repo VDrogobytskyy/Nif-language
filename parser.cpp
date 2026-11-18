@@ -83,6 +83,7 @@ bool Parser::parseToken(const std::string& lexeme, const std::string& token) {
 bool Parser::run() {
     if (trace) std::cout << "\n>>> Початок семантичного аналізу <<<\n";
     parseProgram();
+    if (!exitLabel.empty()) placeLabel(exitLabel);
     if (trace) std::cout << "\n>>> Семантичний аналіз завершився успішно! <<<\n";
     return true;
 }

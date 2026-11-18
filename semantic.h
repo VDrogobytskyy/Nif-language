@@ -11,6 +11,7 @@ struct VarSymb{
     bool isConst;
     bool isAssigned;
     int lineNum;
+    std::string psmName;
 };
 
 struct FuncParam {

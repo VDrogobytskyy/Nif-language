@@ -58,5 +58,12 @@ int main(int argc, char* argv[]) {
     
     parser.run();
 
+    std::string postfixFile = std::string(argv[1]);
+    postfixFile = postfixFile.substr(0, postfixFile.rfind(".nif")) + ".postfix";
+    parser.printPostfixCode();
+    if (parser.savePostfixCode(postfixFile)) {
+        std::cout << "\nPostfix-code saved in file: " << postfixFile << "\n";
+    }
+
     return 0;
 }

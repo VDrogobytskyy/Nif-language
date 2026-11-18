@@ -5,6 +5,10 @@
 #include <algorithm>
 #include "multi.h"
 #include "semantic.h"
+#include <map>
+#include <utility>
+#include <fstream>
+#include <iomanip>
 
 class Parser {
     private:
@@ -72,7 +76,32 @@ class Parser {
 
         std::string checkBinaryOp(const std::string& lType, const std::string& op, const std::string& rType, int line);
 
+        std::vector<std::pair<std::string, std::string>> postfixCode;   // (лексема, токен)
+        std::map<std::string, int> tableOfLabels;                       // мітка -> індекс у .code
+        std::vector<std::pair<std::string, std::string>> psmVars;       // (ім'я, тип PSM)
+        std::map<std::string, std::string> psmVarTypes;                 // для унікальності імен
+        std::unordered_map<std::string, std::string> pendingPsmNames;   // psm-ім'я ітератора for
+        std::vector<std::pair<std::string, std::string>> loopLabels;    // (мітка continue, мітка break)
+
+        int labelCounter = 0;
+        bool genEnabled = true;       // false - всередині функцій, відмінних від main
+
+        std::string exitLabel;        // мітка кінця програми (для return у main)
+        void postfixCodeGen(const std::string& lex, const std::string& tok);
+        std::string createLabel();
+        void setValLabel(const std::string& label);
+        void placeLabel(const std::string& label);
+        std::string toPsmType(const std::string& nifType, int line);
+        std::string registerPsmVar(const std::string& name, const std::string& nifType, int line);
+        std::string psmName(const std::string& name);
+        void genUnsupported(const std::string& what, int line);
+        void genIntToDoubleAt(size_t pos);
+        std::string genBinaryOp(const std::string& lType, const std::string& op, const std::string& rType, size_t lEnd, int line);
+
     public:
         Parser(const std::vector<SymbolRow>& symbols, bool enableTrace = true);
         bool run();
+
+        void printPostfixCode();
+        bool savePostfixCode(const std::string& fileName);
 };
