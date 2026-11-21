@@ -253,19 +253,20 @@ void Parser::parseParameter() {
     bool isRef = false;
 
     if (getSymb().lexeme == "ref") {
+        SymbolRow refTok = getSymb();
         isRef = true;
         parseToken("ref", "keyword");
+        genUnsupported("pass-by-reference parameter 'ref'", refTok.line); // КП4
     }
     SymbolRow id = getSymb();
     parseToken("", "identifier");
     parseToken(":", "punct");
     std::string type = parseType();
     
-    pendingParams.push_back({id.lexeme, type, isRef});;
+    pendingParams.push_back({id.lexeme, type, isRef});
 
     if (trace) predIndt();
 }
-
 // Type = ScalarType | ArrayType '[' Type ']' | UserType
 std::string Parser::parseType() {
     if (trace) std::cout << nextIndt() << "parseType():" << std::endl;
@@ -490,7 +491,17 @@ void Parser::parseInputStatement() {
     VarSymb* v = sem.findVar(id.lexeme);
     if (v) v->isAssigned = true;
 
+    // КП4: генерація читання з консолі: x l-val INP inp_op [s2i|s2f conv] = assign_op
+    std::string varType = v ? v->VarType : "";
+    postfixCodeGen(psmName(id.lexeme), "l-val");
+    postfixCodeGen("INP", "inp_op");
+    if (varType == "Int")          postfixCodeGen("s2i", "conv");
+    else if (varType == "Double")  postfixCodeGen("s2f", "conv");
+    else if (varType != "String")  genUnsupported("read() for type " + varType, id.line);
+    postfixCodeGen("=", "assign_op");
+
     while (getSymb().lexeme == "[" || getSymb().lexeme == ".") {
+        genUnsupported("read() into array element / record field", id.line); // КП4
         if (getSymb().lexeme == "[") {
             parseToken("[", "brackets_op");
             parseExpression();
@@ -503,7 +514,6 @@ void Parser::parseInputStatement() {
     parseToken(")", "brackets_op");
     if (trace) predIndt();
 }
-
 // print ( [ Arguments ] )
 void Parser::parseOutputStatement() {
     if (trace) std::cout << nextIndt() << "parseOutputStatement():" << std::endl;
@@ -914,12 +924,11 @@ void Parser::parseArgument() {
                       << ": InvalidRefArgument - expected LValue variable for ref parameter, got " << next.token << "\n" << std::endl;
             exit(1);
         }
-
+        genUnsupported("pass-by-reference argument '&'", amp.line); // КП4
     }
     parseExpression();
     if (trace) predIndt();
 }
-
 
 std::string Parser::checkBinaryOp(const std::string& lType, const std::string& op, const std::string& rType, int line) {
     bool lNum = (lType == "Int" || lType == "Double");
