@@ -71,4 +71,8 @@ class semantic{
         std::string getTypealias(const std::string& alias) {
             return tableOfTypealiases[alias];
         }
+
+        std::unordered_map<std::string, FuncSymb> getTableOfFuncs(){
+            return tableOfFuncs;
+        }
 };

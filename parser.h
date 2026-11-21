@@ -9,6 +9,23 @@
 #include <utility>
 #include <fstream>
 #include <iomanip>
+#include <set>
+
+struct CodeModule{
+    std::string name;
+    std::string returnType = "Void";
+    int arity = 0; // к-сть параметрів
+    std::vector<std::pair<std::string, std::string>> postfixCode;
+    std::map<std::string, int> tableOfLabels;
+
+    std::vector<std::pair<std::string, std::string>> psmVars;
+    std::map<std::string, std::string> psmVarTypes;
+    std::vector<std::pair<std::string, std::string>> loopLabels;
+
+    std::unordered_map<std::string, std::string> pendingPsmNames;
+    std::set<std::string> calledFuncs;
+    std::string exitLabel;
+};
 
 class Parser {
     private:
