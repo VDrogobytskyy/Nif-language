@@ -3,7 +3,10 @@
 
 // Конструктор: приймає вектор карток-токенів від Lexer
 Parser::Parser(const std::vector<SymbolRow>& symbols, bool enableTrace) 
-    : tableOfSymb(symbols), len_tableOfSymb(symbols.size()), numRow(0), indt(0), trace(enableTrace) {}
+    : tableOfSymb(symbols), len_tableOfSymb(symbols.size()), numRow(0), indt(0), trace(enableTrace) {
+        modules["main"] = CodeModule{"main", "void", 0};
+        curMod = &modules["main"];
+    }
 
 // Збільшити відступ
 std::string Parser::nextIndt() {
@@ -83,7 +86,12 @@ bool Parser::parseToken(const std::string& lexeme, const std::string& token) {
 bool Parser::run() {
     if (trace) std::cout << "\n>>> Початок семантичного аналізу <<<\n";
     parseProgram();
-    if (!exitLabel.empty()) placeLabel(exitLabel);
+    if (modules.count("main") && !modules["main"].exitLabel.empty()) {
+        CodeModule* saved = curMod;
+        curMod = &modules["main"];
+        placeLabel(modules["main"].exitLabel);
+        curMod = saved;
+    }
     if (trace) std::cout << "\n>>> Семантичний аналіз завершився успішно! <<<\n";
     return true;
 }
@@ -894,4 +902,197 @@ std::string Parser::checkBinaryOp(const std::string& lType, const std::string& o
               << ": TypeMismatch - cannot apply operator '" << op 
               << "' to types: " << lType << " and " << rType << "\n" << std::endl;
     exit(1);
+}
+
+// 1. Додати інструкцію до ПОЛІЗу активного модуля
+void Parser::postfixCodeGen(const std::string& lex, const std::string& tok) {
+    if (curMod) curMod->postfixCode.push_back({lex, tok});
+}
+// 2. Згенерувати унікальну мітку m1, m2, ...
+std::string Parser::createLabel() {
+    return "m" + std::to_string(++labelCounter);
+}
+// 3. Зафіксувати адресу (індекс) мітки у postfixCode
+void Parser::setValLabel(const std::string& label) {
+    if (curMod) curMod->tableOfLabels[label] = static_cast<int>(curMod->postfixCode.size());
+}
+// 4. Поставити мітку у код: m label : colon
+void Parser::placeLabel(const std::string& label) {
+    if (!curMod) return;
+    setValLabel(label);
+    postfixCodeGen(label, "label");
+    postfixCodeGen(":", "colon");
+}
+// 5. Відповідність типів Nif -> PSM v0.3
+std::string Parser::toPsmType(const std::string& nifType, int line) {
+    if (nifType == "Int")    return "int";
+    if (nifType == "Double") return "float";
+    if (nifType == "Bool")   return "bool";
+    if (nifType == "String") return "string";
+    if (nifType == "Void")   return "void";
+    genUnsupported("type " + nifType, line);
+    return "";
+}
+// 6. Зареєструвати змінну для секції .vars; повертає унікальне psm-ім'я (x, x_1, ...)
+std::string Parser::registerPsmVar(const std::string& name, const std::string& nifType, int line) {
+    if (!curMod) return name;
+    std::string type = toPsmType(nifType, line);
+    std::string candidate = name;
+    int k = 0;
+    while (curMod->psmVarTypes.count(candidate)) {
+        candidate = name + "_" + std::to_string(++k);
+    }
+    curMod->psmVarTypes[candidate] = type;
+    curMod->psmVars.push_back({candidate, type});
+    return candidate;
+}
+// 7. Отримати psm-ім'я змінної з урахуванням поточної області видимості
+std::string Parser::psmName(const std::string& name) {
+    VarSymb* v = sem.findVar(name);
+    if (v && !v->psmName.empty()) return v->psmName;
+    return name;
+}
+// 8. Конструкція, не підтримувана PSM
+void Parser::genUnsupported(const std::string& what, int line) {
+    std::cerr << "[CodeGen Error]\nIn line: " << line << ": " << what
+              << " is not supported by postfix translation (PSM v0.3)\n" << std::endl;
+    exit(1);
+}
+// 9. Вставити i2f одразу після лівого операнда (позиція lEnd)
+void Parser::genIntToDoubleAt(size_t pos) {
+    if (!curMod) return;
+    curMod->postfixCode.insert(curMod->postfixCode.begin() + pos, {"i2f", "conv"});
+}
+// 10. Семантична перевірка + генерація бінарного оператора з урахуванням PSM v0.3
+std::string Parser::genBinaryOp(const std::string& lType, const std::string& op,
+                                const std::string& rType, size_t lEnd, int line) {
+    std::string resType = checkBinaryOp(lType, op, rType, line);
+    if (!curMod) return resType;
+    bool lNum = (lType == "Int" || lType == "Double");
+    bool rNum = (rType == "Int" || rType == "Double");
+    bool isRel = (op == "<" || op == "<=" || op == ">" || op == ">=" || op == "==" || op == "!=");
+    // Логічні операції
+    if (op == "&&") { postfixCodeGen("AND", "bool_op"); return resType; }
+    if (op == "||") { postfixCodeGen("OR",  "bool_op"); return resType; }
+    // Конкатенація рядків
+    if (op == "+" && lType == "String") { postfixCodeGen("CAT", "cat_op"); return resType; }
+    // PSM: rel_op не підтримує рядки
+    if (isRel && (lType == "String" || rType == "String")) {
+        genUnsupported("string comparison '" + op + "'", line);
+    }
+    // Степінь: PSM вимагає float для ^
+    if (op == "**") {
+        if (rType == "Int") postfixCodeGen("i2f", "conv");
+        if (lType == "Int") genIntToDoubleAt(lEnd);
+        postfixCodeGen("^", "pow_op");
+        if (resType == "Int") postfixCodeGen("f2i", "conv");
+        return resType;
+    }
+    // Змішані Int/Double -> приводимо Int до float
+    if (lNum && rNum && lType != rType) {
+        if (lType == "Int") genIntToDoubleAt(lEnd);
+        else                postfixCodeGen("i2f", "conv");
+    }
+    if (isRel) {
+        postfixCodeGen(op, "rel_op");
+        return resType;
+    }
+    // Арифметичні операції + - * / %
+    postfixCodeGen(op, "math_op");
+    // У PSM int / int дає float, а в Nif Int / Int = Int -> додаємо f2i
+    if (op == "/" && resType == "Int") postfixCodeGen("f2i", "conv");
+    return resType;
+}
+// 11. Вивести таблиці та ПОЛІЗ усіх модулів у консоль
+void Parser::printPostfixCode() {
+    std::cout << "\n========== КП4: Трансляція у ПОЛІЗ ==========\n";
+    for (const auto& m : modules) {
+        const CodeModule& mod = m.second;
+        std::cout << "\n----------------------------------------\n";
+        std::cout << "Модуль: " << mod.name << " (тип повернення: " << mod.returnType 
+                  << ", параметрів: " << mod.arity << ")\n";
+        std::cout << "----------------------------------------\n";
+        std::cout << "Таблиця змінних (.vars):\n";
+        for (const auto& v : mod.psmVars) {
+            std::cout << "  " << std::left << std::setw(16) << v.first << v.second << "\n";
+        }
+        std::cout << "Таблиця міток (.labels):\n";
+        for (const auto& l : mod.tableOfLabels) {
+            std::cout << "  " << std::left << std::setw(8) << l.first << l.second << "\n";
+        }
+        std::cout << "Код у постфіксній формі (.code):\n";
+        for (size_t i = 0; i < mod.postfixCode.size(); ++i) {
+            std::cout << "  " << std::right << std::setw(4) << i << "  ('"
+                      << mod.postfixCode[i].first << "', '" << mod.postfixCode[i].second << "')\n";
+        }
+    }
+}
+// 12. Зберегти один окремий модуль у файл формату PSM v0.3
+void Parser::saveModule(const CodeModule& mod, const std::string& filePath, const std::string& baseName) {
+    std::ofstream f(filePath);
+    if (!f.is_open()) {
+        std::cerr << "[CodeGen Error] cannot open file: " << filePath << std::endl;
+        return;
+    }
+    f << ".target: Postfix Machine\n";
+    f << ".version: 0.3\n\n";
+    f << ".vars(\n";
+    for (const auto& v : mod.psmVars) {
+        f << "\t" << v.first << "\t" << v.second << "\n";
+    }
+    f << ")\n\n";
+    // Якщо це допоміжна функція, і в main є змінні — передаємо їх у .globVarList
+    if (mod.name != "main" && modules.count("main") && !modules.at("main").psmVars.empty()) {
+        f << ".globVarList(\n";
+        for (const auto& g : modules.at("main").psmVars) {
+            f << "\t" << g.first << "\n";
+        }
+        f << ")\n\n";
+    }
+    // Секція .funcs: записуємо всі оголошені функції
+    const auto& allFuncs = sem.getTableOfFuncs();
+    if (!allFuncs.empty()) {
+        f << ".funcs(\n";
+        for (const auto& entry : allFuncs) {
+            const FuncSymb& fn = entry.second;
+            if (fn.name == "main") continue;
+            std::string retType = toPsmType(fn.returnType, fn.line);
+            f << "\t" << fn.name << "\t" << retType << "\t" << fn.params.size() << "\n";
+        }
+        f << ")\n\n";
+    }
+    f << ".labels(\n";
+    for (const auto& l : mod.tableOfLabels) {
+        f << "\t" << l.first << "\t" << l.second << "\n";
+    }
+    f << ")\n\n";
+    f << ".code(\n";
+    for (const auto& c : mod.postfixCode) {
+        if (c.first == "RET") {
+            f << "\tRET\n";
+        } else {
+            f << "\t" << c.first << "\t" << c.second << "\n";
+        }
+    }
+    f << ")\n";
+}
+// 13. Зберегти всі модулі програми (main -> <base>.postfix, функції -> <base>$<func>.postfix)
+bool Parser::savePostfixCode(const std::string& fileName) {
+    std::string baseName = fileName;
+    size_t dotPos = baseName.rfind(".postfix");
+    if (dotPos != std::string::npos) {
+        baseName = baseName.substr(0, dotPos);
+    }
+    // 1. Головний модуль програми: <baseName>.postfix
+    if (modules.count("main")) {
+        saveModule(modules.at("main"), fileName, baseName);
+    }
+    // 2. Допоміжні функції: <baseName>$<func>.postfix
+    for (const auto& pair : modules) {
+        if (pair.first == "main") continue;
+        std::string fnFileName = baseName + "$" + pair.first + ".postfix";
+        saveModule(pair.second, fnFileName, baseName);
+        std::cout << "Module saved: " << fnFileName << "\n";
+    }
+    return true;
 }
