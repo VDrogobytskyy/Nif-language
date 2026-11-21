@@ -410,12 +410,3 @@ Lexical analyse finished succesfully
         parseParameters():
           parseParameter():
             parseToken: In line 10 found ('ref', keyword)
-            parseToken: In line 10 found ('p', identifier)
-            parseToken: In line 10 found (':', punct)
-            parseType():
-              parseToken: In line 10 found ('Point', identifier)
-        parseToken: In line 10 found (')', brackets_op)
-        parseToken: In line 10 found (':', punct)
-        parseReturnType():
-          parseToken: In line 10 found ('Void', type_name)
-        parseBlock():

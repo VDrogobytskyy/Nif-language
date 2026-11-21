@@ -325,10 +325,19 @@ void Parser::parseVariableDeclaration() {
 
     sem.declareVar(id.lexeme, delcared_type, false, id.line);
 
+    // КП4: реєструємо змінну для секції .vars
+    std::string pName = registerPsmVar(id.lexeme, delcared_type, id.line);
+    VarSymb* v = sem.findVar(id.lexeme);
+    if (v) v->psmName = pName;
+
     if (getSymb().lexeme == "=") {
         parseToken("=", "assign_op");
+        postfixCodeGen(pName, "l-val");                       // КП4
         std::string expr_Type = parseExpression();
         sem.checkAssignType(id.lexeme, expr_Type, id.line);
+        if (delcared_type == "Double" && expr_Type == "Int")  // КП4: Int -> Double
+            postfixCodeGen("i2f", "conv");
+        postfixCodeGen("=", "assign_op");                     // КП4
     }
     if (trace) predIndt();
 }
@@ -344,12 +353,21 @@ void Parser::parseConstantDeclaration() {
 
     std::string delcared_type = parseType();
     sem.declareVar(id.lexeme, delcared_type, true, id.line);
+
+    // КП4: реєструємо константу в секції .vars
+    std::string pName = registerPsmVar(id.lexeme, delcared_type, id.line);
+    VarSymb* v = sem.findVar(id.lexeme);
+    if (v) v->psmName = pName;
+
     parseToken("=", "assign_op");
+    postfixCodeGen(pName, "l-val");                           // КП4
     std::string expr_Type = parseExpression();
     sem.checkAssignType(id.lexeme, expr_Type, id.line);
+    if (delcared_type == "Double" && expr_Type == "Int")      // КП4
+        postfixCodeGen("i2f", "conv");
+    postfixCodeGen("=", "assign_op");                         // КП4
     if (trace) predIndt();
 }
-
 // Block = '{' { BlockItem } '}'
 void Parser::parseBlock() {
     if (trace) std::cout << nextIndt() << "parseBlock():" << std::endl;
@@ -514,18 +532,24 @@ void Parser::parseInputStatement() {
     parseToken(")", "brackets_op");
     if (trace) predIndt();
 }
+
 // print ( [ Arguments ] )
 void Parser::parseOutputStatement() {
     if (trace) std::cout << nextIndt() << "parseOutputStatement():" << std::endl;
     parseToken("print", "keyword");
     parseToken("(", "brackets_op");
     if (getSymb().lexeme != ")") {
-        parseArguments();
+        parseExpression();
+        postfixCodeGen("OUT", "out_op");
+        while (getSymb().lexeme == ",") {
+            parseToken(",", "punct");
+            parseExpression();
+            postfixCodeGen("OUT", "out_op");
+        }
     }
     parseToken(")", "brackets_op");
     if (trace) predIndt();
 }
-
 // return [ Expression ]
 void Parser::parseReturnStatement() {
     if (trace) std::cout << nextIndt() << "parseReturnStatement():" << std::endl;
@@ -676,9 +700,10 @@ std::string Parser::parseLogicalOrExpr() {
     std::string type = parseLogicalAndExpr();
     while (getSymb().lexeme == "||") {
         SymbolRow op = getSymb();
+        size_t lEnd = curMod ? curMod->postfixCode.size() : 0;
         parseToken("||", "logical_op");
         std::string rType = parseLogicalAndExpr();
-        type = checkBinaryOp(type, op.lexeme, rType, op.line);
+        type = genBinaryOp(type, op.lexeme, rType, lEnd, op.line);
     }
     if (trace) predIndt();
     return type;
@@ -690,9 +715,10 @@ std::string Parser::parseLogicalAndExpr() {
     std::string type = parseEqualityExpr();
     while (getSymb().lexeme == "&&") {
         SymbolRow op = getSymb();
+        size_t lEnd = curMod ? curMod->postfixCode.size() : 0;
         parseToken("&&", "logical_op");
         std::string rType = parseEqualityExpr();
-        type = checkBinaryOp(type, op.lexeme, rType, op.line);
+        type = genBinaryOp(type, op.lexeme, rType, lEnd, op.line);
     }
     if (trace) predIndt();
     return type;
@@ -704,9 +730,10 @@ std::string Parser::parseEqualityExpr() {
     std::string type = parseRelationalExpr();
     while (getSymb().lexeme == "==" || getSymb().lexeme == "!=") {
         SymbolRow op = getSymb();
+        size_t lEnd = curMod ? curMod->postfixCode.size() : 0;
         parseToken(op.lexeme, "rel_op");
         std::string rType = parseRelationalExpr();
-        type = checkBinaryOp(type, op.lexeme, rType, op.line);
+        type = genBinaryOp(type, op.lexeme, rType, lEnd, op.line);
     }
     if (trace) predIndt();
     return type;
@@ -719,9 +746,10 @@ std::string Parser::parseRelationalExpr() {
     while (getSymb().lexeme == "<" || getSymb().lexeme == "<=" || 
            getSymb().lexeme == ">" || getSymb().lexeme == ">=") {
         SymbolRow op = getSymb();
+        size_t lEnd = curMod ? curMod->postfixCode.size() : 0;
         parseToken(op.lexeme, "rel_op");
         std::string rType = parseAddExpr();
-        type = checkBinaryOp(type, op.lexeme, rType, op.line);
+        type = genBinaryOp(type, op.lexeme, rType, lEnd, op.line);
     }
     if (trace) predIndt();
     return type;
@@ -733,9 +761,10 @@ std::string Parser::parseAddExpr() {
     std::string type = parseMultExpr();
     while (getSymb().lexeme == "+" || getSymb().lexeme == "-") {
         SymbolRow op = getSymb();
+        size_t lEnd = curMod ? curMod->postfixCode.size() : 0;
         parseToken(op.lexeme, "add_op");
         std::string rType = parseMultExpr();
-        type = checkBinaryOp(type, op.lexeme, rType, op.line);
+        type = genBinaryOp(type, op.lexeme, rType, lEnd, op.line);
     }
     if (trace) predIndt();
     return type;
@@ -747,40 +776,45 @@ std::string Parser::parseMultExpr() {
     std::string type = parsePowerExpr();
     while (getSymb().lexeme == "*" || getSymb().lexeme == "/" || getSymb().lexeme == "%") {
         SymbolRow op = getSymb();
+        size_t lEnd = curMod ? curMod->postfixCode.size() : 0;
         parseToken(op.lexeme, "mult_op");
         std::string rType = parsePowerExpr();
-        type = checkBinaryOp(type, op.lexeme, rType, op.line);
+        type = genBinaryOp(type, op.lexeme, rType, lEnd, op.line);
     }
     if (trace) predIndt();
     return type;
 }
 
-// Рівень 8: PowerExpr -> UnaryExpr [ '**' PowerExpr ] (правоасоціативне!)
+// Рівень 8: PowerExpr -> UnaryExpr [ '**' PowerExpr ] (Правоасоціативний!)
 std::string Parser::parsePowerExpr() {
     if (trace) std::cout << nextIndt() << "parsePowerExpr():" << std::endl;
     std::string type = parseUnaryExpr();
     if (getSymb().lexeme == "**") {
         SymbolRow op = getSymb();
+        size_t lEnd = curMod ? curMod->postfixCode.size() : 0;
         parseToken("**", "exp_op");
         std::string rType = parsePowerExpr();
-        type = checkBinaryOp(type, op.lexeme, rType, op.line);
+        type = genBinaryOp(type, op.lexeme, rType, lEnd, op.line);
     }
     if (trace) predIndt();
     return type;
 }
 
-// Рівень 9: UnaryExpr -> [ '+' | '-' | '!' ] PostfixExpr
+// Рівень 9: UnaryExpr -> ('+' | '-' | '!') UnaryExpr | PostfixExpr
 std::string Parser::parseUnaryExpr() {
-    if (trace) std::cout << nextIndt() << "parseUnaryExpr():" << std::endl;
     SymbolRow s = getSymb();
+    if (trace) std::cout << nextIndt() << "parseUnaryExpr():" << std::endl;
+
     std::string type = "";
 
     if (s.lexeme == "+" || s.lexeme == "-") {
         parseToken(s.lexeme, "add_op");
         type = parseUnaryExpr();
+        if (s.lexeme == "-") postfixCodeGen("NEG", "math_op");   // КП4
     } else if (s.lexeme == "!") {
         parseToken("!", "logical_op");
         type = parseUnaryExpr();
+        postfixCodeGen("NOT", "bool_op");                         // КП4
     } else {
         type = parsePostfixExpr();
     }
@@ -788,7 +822,6 @@ std::string Parser::parseUnaryExpr() {
 
     return type;
 }
-
 // Рівень 10: PostfixExpr -> PrimaryExpr { FunctionCall | ArrayAccess | FieldAccess }
 std::string Parser::parsePostfixExpr() {
     if (trace) std::cout << nextIndt() << "parsePostfixExpr():" << std::endl;
@@ -855,6 +888,7 @@ std::string Parser::parsePostfixExpr() {
 
     return type;
 }
+
 // Рівень 11: PrimaryExpr -> Const | Identifier | '(' Expression ')'
 std::string Parser::parsePrimaryExpr() {
     SymbolRow s = getSymb();
@@ -865,15 +899,25 @@ std::string Parser::parsePrimaryExpr() {
     if (s.token == "unsigned_int"){
         returned_value = "Int";
         parseToken(s.lexeme, s.token);
+        std::string clean = s.lexeme;                                 // КП4: 1_000 -> 1000
+        clean.erase(std::remove(clean.begin(), clean.end(), '_'), clean.end());
+        postfixCodeGen(clean, "int");
     } else if (s.token == "unsigned_double"){
         returned_value = "Double";
         parseToken(s.lexeme, s.token);
+        std::string clean = s.lexeme;                                 // КП4
+        clean.erase(std::remove(clean.begin(), clean.end(), '_'), clean.end());
+        postfixCodeGen(clean, "float");
     } else if (s.token == "bool_const"){
         returned_value = "Bool";
         parseToken(s.lexeme, s.token);
+        postfixCodeGen(s.lexeme, "bool");                             // КП4
     } else if(s.token == "string_const"){
         returned_value = "String";
         parseToken(s.lexeme, s.token);
+        std::string str = s.lexeme;                                   // КП4: PSM вимагає "..."
+        if (str.size() < 2 || str.front() != '"' || str.back() != '"') str = "\"" + str + "\"";
+        postfixCodeGen(str, "string");
     } else if (s.token == "identifier") {
         FuncSymb* fn = sem.findFunc(s.lexeme);
         if (fn) {
@@ -882,19 +926,19 @@ std::string Parser::parsePrimaryExpr() {
         } else {
             returned_value = sem.useVar(s.lexeme, s.line);
             parseToken("", "identifier");
+            postfixCodeGen(psmName(s.lexeme), "r-val");               // КП4
         }
     } else if (s.lexeme == "(") {
         parseToken("(", "brackets_op");
         returned_value = parseExpression();
         parseToken(")", "brackets_op");
     } else {
-        failParse("unexpected element in an expression", "constant, identifier or '('");
+        failParse("expected primal expression", "constant, identifier or '('");
     }
     if (trace) predIndt();
 
     return returned_value;
 }
-
 // Arguments = Argument { ',' Argument }
 int Parser::parseArguments() {
     if (trace) std::cout << nextIndt() << "parseArguments():" << std::endl;
