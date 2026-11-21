@@ -1,0 +1,67 @@
+.target: Postfix Machine
+.version: 0.3
+
+.vars(
+	x1	float
+	y1	float
+	x2	float
+	y2	float
+	dx	float
+	dy	float
+)
+
+.globVarList(
+	PI
+	LIMIT
+	callCounter
+	ox
+	oy
+	tx
+	ty
+	distSq
+	circleArea
+	intDiv
+	negVal
+	i
+	__forEnd
+	f
+	idx
+	done
+	userInput
+)
+
+.funcs(
+	greet	void	1
+	distanceSquared	float	4
+	factorial	int	1
+	isEven	bool	1
+)
+
+.labels(
+)
+
+.code(
+	dx	l-val
+	x2	r-val
+	x1	r-val
+	-	math_op
+	=	assign_op
+	dy	l-val
+	y2	r-val
+	y1	r-val
+	-	math_op
+	=	assign_op
+	callCounter	l-val
+	callCounter	r-val
+	1	int
+	+	math_op
+	=	assign_op
+	dx	r-val
+	2.0	float
+	^	pow_op
+	dy	r-val
+	2.0	float
+	^	pow_op
+	+	math_op
+	RET
+)

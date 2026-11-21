@@ -1,4 +1,4 @@
-File: program.nif opened succesfully! And contained 1074 bytes!
+File: program.nif opened succesfully! And contained 2003 bytes!
 
 Lexical analyse finished succesfully
 
@@ -9,272 +9,372 @@ Lexical analyse finished succesfully
 ---------------------------------------------------------------------------
 1     1       import                keyword                         
 2     1       Standard              identifier          1           
-3     2       typealias             keyword                         
-4     2       Coordinate            identifier          2           
-5     2       =                     assign_op                       
-6     2       Double                type_name                       
-7     3       typealias             keyword                         
-8     3       Counter               identifier          3           
-9     3       =                     assign_op                       
-10    3       Int                   type_name                       
-11    4       record                keyword                         
-12    4       Point                 identifier          4           
-13    4       {                     brackets_op                     
-14    5       var                   keyword                         
-15    5       x                     identifier          5           
-16    5       :                     punct                           
-17    5       Coordinate            identifier          2           
-18    6       var                   keyword                         
-19    6       y                     identifier          6           
-20    6       :                     punct                           
-21    6       Coordinate            identifier          2           
-22    7       }                     brackets_op                     
-23    8       let                   keyword                         
-24    8       PI                    identifier          7           
-25    8       :                     punct                           
-26    8       Double                type_name                       
-27    8       =                     assign_op                       
-28    8       3.14159               unsigned_double     1           
-29    9       let                   keyword                         
-30    9       MAX_POINTS            identifier          8           
-31    9       :                     punct                           
-32    9       Int                   type_name                       
-33    9       =                     assign_op                       
-34    9       100                   unsigned_int        2           
-35    10      fun                   keyword                         
-36    10      resetPoint            identifier          9           
-37    10      (                     brackets_op                     
-38    10      ref                   keyword                         
-39    10      p                     identifier          10          
-40    10      :                     punct                           
-41    10      Point                 identifier          4           
-42    10      )                     brackets_op                     
-43    10      :                     punct                           
-44    10      Void                  type_name                       
-45    10      {                     brackets_op                     
-46    11      p                     identifier          10          
-47    11      .                     punct                           
-48    11      x                     identifier          5           
-49    11      =                     assign_op                       
-50    11      0.0                   unsigned_double     3           
-51    12      p                     identifier          10          
-52    12      .                     punct                           
-53    12      y                     identifier          6           
-54    12      =                     assign_op                       
-55    12      0.0                   unsigned_double     3           
-56    13      return                keyword                         
-57    14      }                     brackets_op                     
-58    15      fun                   keyword                         
-59    15      distanceSquared       identifier          11          
-60    15      (                     brackets_op                     
-61    15      p1                    identifier          12          
-62    15      :                     punct                           
-63    15      Point                 identifier          4           
-64    15      ,                     punct                           
-65    15      p2                    identifier          13          
-66    15      :                     punct                           
-67    15      Point                 identifier          4           
-68    15      )                     brackets_op                     
-69    15      :                     punct                           
-70    15      Double                type_name                       
-71    15      {                     brackets_op                     
-72    16      var                   keyword                         
-73    16      dx                    identifier          14          
-74    16      :                     punct                           
-75    16      Double                type_name                       
-76    16      =                     assign_op                       
-77    16      p2                    identifier          13          
-78    16      .                     punct                           
-79    16      x                     identifier          5           
-80    16      -                     add_op                          
-81    16      p1                    identifier          12          
-82    16      .                     punct                           
-83    16      x                     identifier          5           
-84    17      var                   keyword                         
-85    17      dy                    identifier          15          
-86    17      :                     punct                           
-87    17      Double                type_name                       
-88    17      =                     assign_op                       
-89    17      p2                    identifier          13          
-90    17      .                     punct                           
-91    17      y                     identifier          6           
-92    17      -                     add_op                          
-93    17      p1                    identifier          12          
-94    17      .                     punct                           
-95    17      y                     identifier          6           
-96    18      return                keyword                         
-97    18      dx                    identifier          14          
-98    18      **                    exp_op                          
-99    18      2.0                   unsigned_double     4           
-100   18      +                     add_op                          
-101   18      dy                    identifier          15          
-102   18      **                    exp_op                          
-103   18      2.0                   unsigned_double     4           
-104   19      }                     brackets_op                     
-105   20      fun                   keyword                         
-106   20      factorial             identifier          16          
-107   20      (                     brackets_op                     
-108   20      n                     identifier          17          
-109   20      :                     punct                           
-110   20      Int                   type_name                       
-111   20      )                     brackets_op                     
-112   20      :                     punct                           
-113   20      Int                   type_name                       
-114   20      {                     brackets_op                     
-115   21      if                    keyword                         
-116   21      n                     identifier          17          
-117   21      <=                    rel_op                          
-118   21      1                     unsigned_int        5           
-119   21      {                     brackets_op                     
-120   22      return                keyword                         
-121   22      1                     unsigned_int        5           
-122   23      }                     brackets_op                     
-123   23      else                  keyword                         
-124   23      {                     brackets_op                     
-125   24      return                keyword                         
-126   24      n                     identifier          17          
-127   24      *                     mult_op                         
-128   24      factorial             identifier          16          
-129   24      (                     brackets_op                     
-130   24      n                     identifier          17          
-131   24      -                     add_op                          
-132   24      1                     unsigned_int        5           
-133   24      )                     brackets_op                     
-134   25      }                     brackets_op                     
-135   26      }                     brackets_op                     
-136   27      fun                   keyword                         
-137   27      main                  identifier          18          
-138   27      (                     brackets_op                     
-139   27      )                     brackets_op                     
-140   27      :                     punct                           
-141   27      Void                  type_name                       
-142   27      {                     brackets_op                     
-143   28      var                   keyword                         
-144   28      origin                identifier          19          
-145   28      :                     punct                           
-146   28      Point                 identifier          4           
-147   29      origin                identifier          19          
-148   29      .                     punct                           
-149   29      x                     identifier          5           
-150   29      =                     assign_op                       
-151   29      10.5                  unsigned_double     6           
-152   30      origin                identifier          19          
-153   30      .                     punct                           
-154   30      y                     identifier          6           
-155   30      =                     assign_op                       
-156   30      20.5                  unsigned_double     7           
-157   31      resetPoint            identifier          9           
-158   31      (                     brackets_op                     
-159   31      &                     ref_op                          
-160   31      origin                identifier          19          
-161   31      )                     brackets_op                     
-162   32      var                   keyword                         
-163   32      target                identifier          20          
-164   32      :                     punct                           
-165   32      Point                 identifier          4           
-166   33      target                identifier          20          
-167   33      .                     punct                           
-168   33      x                     identifier          5           
-169   33      =                     assign_op                       
-170   33      3.0                   unsigned_double     8           
-171   34      target                identifier          20          
-172   34      .                     punct                           
-173   34      y                     identifier          6           
-174   34      =                     assign_op                       
-175   34      4.0                   unsigned_double     9           
-176   35      var                   keyword                         
-177   35      dist                  identifier          21          
-178   35      :                     punct                           
-179   35      Double                type_name                       
-180   35      =                     assign_op                       
-181   35      distanceSquared       identifier          11          
-182   35      (                     brackets_op                     
-183   35      origin                identifier          19          
-184   35      ,                     punct                           
-185   35      target                identifier          20          
-186   35      )                     brackets_op                     
-187   36      var                   keyword                         
-188   36      numbers               identifier          22          
-189   36      :                     punct                           
-190   36      [                     brackets_op                     
-191   36      Int                   type_name                       
-192   36      ]                     brackets_op                     
-193   37      for                   keyword                         
-194   37      i                     identifier          23          
-195   37      in                    keyword                         
-196   37      0                     unsigned_int        10          
-197   37      ..                    range_op                        
-198   37      5                     unsigned_int        11          
-199   37      {                     brackets_op                     
-200   38      numbers               identifier          22          
-201   38      [                     brackets_op                     
-202   38      i                     identifier          23          
-203   38      ]                     brackets_op                     
-204   38      =                     assign_op                       
-205   38      factorial             identifier          16          
-206   38      (                     brackets_op                     
-207   38      i                     identifier          23          
-208   38      )                     brackets_op                     
-209   39      }                     brackets_op                     
-210   40      var                   keyword                         
-211   40      idx                   identifier          24          
-212   40      :                     punct                           
-213   40      Int                   type_name                       
-214   40      =                     assign_op                       
-215   40      0                     unsigned_int        10          
-216   41      while                 keyword                         
-217   41      idx                   identifier          24          
-218   41      <                     rel_op                          
-219   41      5                     unsigned_int        11          
-220   41      {                     brackets_op                     
-221   42      if                    keyword                         
-222   42      numbers               identifier          22          
-223   42      [                     brackets_op                     
-224   42      idx                   identifier          24          
-225   42      ]                     brackets_op                     
-226   42      >                     rel_op                          
-227   42      10                    unsigned_int        12          
-228   42      {                     brackets_op                     
-229   43      print                 keyword                         
-230   43      (                     brackets_op                     
-231   43      numbers               identifier          22          
-232   43      [                     brackets_op                     
-233   43      idx                   identifier          24          
-234   43      ]                     brackets_op                     
-235   43      )                     brackets_op                     
-236   44      }                     brackets_op                     
-237   45      idx                   identifier          24          
-238   45      =                     assign_op                       
-239   45      idx                   identifier          24          
-240   45      +                     add_op                          
-241   45      1                     unsigned_int        5           
-242   46      }                     brackets_op                     
-243   47      var                   keyword                         
-244   47      userInput             identifier          25          
-245   47      :                     punct                           
-246   47      Int                   type_name                       
-247   47      =                     assign_op                       
-248   47      0                     unsigned_int        10          
-249   48      read                  keyword                         
-250   48      (                     brackets_op                     
-251   48      &                     ref_op                          
-252   48      userInput             identifier          25          
-253   48      )                     brackets_op                     
-254   49      print                 keyword                         
-255   49      (                     brackets_op                     
-256   49      origin                identifier          19          
-257   49      .                     punct                           
-258   49      x                     identifier          5           
-259   49      ,                     punct                           
-260   49      origin                identifier          19          
-261   49      .                     punct                           
-262   49      y                     identifier          6           
-263   49      ,                     punct                           
-264   49      dist                  identifier          21          
-265   49      ,                     punct                           
-266   49      userInput             identifier          25          
-267   49      )                     brackets_op                     
-268   50      }                     brackets_op                     
+3     3       typealias             keyword                         
+4     3       Coordinate            identifier          2           
+5     3       =                     assign_op                       
+6     3       Double                type_name                       
+7     4       typealias             keyword                         
+8     4       Counter               identifier          3           
+9     4       =                     assign_op                       
+10    4       Int                   type_name                       
+11    5       typealias             keyword                         
+12    5       Flag                  identifier          4           
+13    5       =                     assign_op                       
+14    5       Bool                  type_name                       
+15    7       let                   keyword                         
+16    7       PI                    identifier          5           
+17    7       :                     punct                           
+18    7       Double                type_name                       
+19    7       =                     assign_op                       
+20    7       3.14159               unsigned_double     1           
+21    8       let                   keyword                         
+22    8       LIMIT                 identifier          6           
+23    8       :                     punct                           
+24    8       Counter               identifier          3           
+25    8       =                     assign_op                       
+26    8       1_000                 unsigned_int        2           
+27    9       var                   keyword                         
+28    9       callCounter           identifier          7           
+29    9       :                     punct                           
+30    9       Counter               identifier          3           
+31    9       =                     assign_op                       
+32    9       0                     unsigned_int        3           
+33    11      fun                   keyword                         
+34    11      greet                 identifier          8           
+35    11      (                     brackets_op                     
+36    11      name                  identifier          9           
+37    11      :                     punct                           
+38    11      String                type_name                       
+39    11      )                     brackets_op                     
+40    11      :                     punct                           
+41    11      Void                  type_name                       
+42    11      {                     brackets_op                     
+43    12      print                 keyword                         
+44    12      (                     brackets_op                     
+45    12      "Hello, "             string_const        4           
+46    12      +                     add_op                          
+47    12      name                  identifier          9           
+48    12      +                     add_op                          
+49    12      "!"                   string_const        5           
+50    12      )                     brackets_op                     
+51    13      return                keyword                         
+52    14      }                     brackets_op                     
+53    16      fun                   keyword                         
+54    16      distanceSquared       identifier          10          
+55    16      (                     brackets_op                     
+56    16      x1                    identifier          11          
+57    16      :                     punct                           
+58    16      Coordinate            identifier          2           
+59    16      ,                     punct                           
+60    16      y1                    identifier          12          
+61    16      :                     punct                           
+62    16      Coordinate            identifier          2           
+63    16      ,                     punct                           
+64    16      x2                    identifier          13          
+65    16      :                     punct                           
+66    16      Coordinate            identifier          2           
+67    16      ,                     punct                           
+68    16      y2                    identifier          14          
+69    16      :                     punct                           
+70    16      Coordinate            identifier          2           
+71    16      )                     brackets_op                     
+72    16      :                     punct                           
+73    16      Double                type_name                       
+74    16      {                     brackets_op                     
+75    17      var                   keyword                         
+76    17      dx                    identifier          15          
+77    17      :                     punct                           
+78    17      Double                type_name                       
+79    17      =                     assign_op                       
+80    17      x2                    identifier          13          
+81    17      -                     add_op                          
+82    17      x1                    identifier          11          
+83    18      var                   keyword                         
+84    18      dy                    identifier          16          
+85    18      :                     punct                           
+86    18      Double                type_name                       
+87    18      =                     assign_op                       
+88    18      y2                    identifier          14          
+89    18      -                     add_op                          
+90    18      y1                    identifier          12          
+91    19      callCounter           identifier          7           
+92    19      =                     assign_op                       
+93    19      callCounter           identifier          7           
+94    19      +                     add_op                          
+95    19      1                     unsigned_int        6           
+96    20      return                keyword                         
+97    20      dx                    identifier          15          
+98    20      **                    exp_op                          
+99    20      2.0                   unsigned_double     7           
+100   20      +                     add_op                          
+101   20      dy                    identifier          16          
+102   20      **                    exp_op                          
+103   20      2.0                   unsigned_double     7           
+104   21      }                     brackets_op                     
+105   23      fun                   keyword                         
+106   23      factorial             identifier          17          
+107   23      (                     brackets_op                     
+108   23      n                     identifier          18          
+109   23      :                     punct                           
+110   23      Counter               identifier          3           
+111   23      )                     brackets_op                     
+112   23      :                     punct                           
+113   23      Int                   type_name                       
+114   23      {                     brackets_op                     
+115   24      if                    keyword                         
+116   24      n                     identifier          18          
+117   24      <=                    rel_op                          
+118   24      1                     unsigned_int        6           
+119   24      {                     brackets_op                     
+120   25      return                keyword                         
+121   25      1                     unsigned_int        6           
+122   26      }                     brackets_op                     
+123   26      else                  keyword                         
+124   26      {                     brackets_op                     
+125   27      return                keyword                         
+126   27      n                     identifier          18          
+127   27      *                     mult_op                         
+128   27      factorial             identifier          17          
+129   27      (                     brackets_op                     
+130   27      n                     identifier          18          
+131   27      -                     add_op                          
+132   27      1                     unsigned_int        6           
+133   27      )                     brackets_op                     
+134   28      }                     brackets_op                     
+135   29      }                     brackets_op                     
+136   31      fun                   keyword                         
+137   31      isEven                identifier          19          
+138   31      (                     brackets_op                     
+139   31      n                     identifier          18          
+140   31      :                     punct                           
+141   31      Int                   type_name                       
+142   31      )                     brackets_op                     
+143   31      :                     punct                           
+144   31      Flag                  identifier          4           
+145   31      {                     brackets_op                     
+146   32      return                keyword                         
+147   32      n                     identifier          18          
+148   32      %                     mult_op                         
+149   32      2                     unsigned_int        8           
+150   32      ==                    rel_op                          
+151   32      0                     unsigned_int        3           
+152   33      }                     brackets_op                     
+153   35      fun                   keyword                         
+154   35      main                  identifier          20          
+155   35      (                     brackets_op                     
+156   35      )                     brackets_op                     
+157   35      :                     punct                           
+158   35      Void                  type_name                       
+159   35      {                     brackets_op                     
+160   36      greet                 identifier          8           
+161   36      (                     brackets_op                     
+162   36      "Nif"                 string_const        9           
+163   36      )                     brackets_op                     
+164   39      var                   keyword                         
+165   39      ox                    identifier          21          
+166   39      :                     punct                           
+167   39      Coordinate            identifier          2           
+168   39      =                     assign_op                       
+169   39      0.0                   unsigned_double     10          
+170   40      var                   keyword                         
+171   40      oy                    identifier          22          
+172   40      :                     punct                           
+173   40      Coordinate            identifier          2           
+174   40      =                     assign_op                       
+175   40      0.0                   unsigned_double     10          
+176   41      var                   keyword                         
+177   41      tx                    identifier          23          
+178   41      :                     punct                           
+179   41      Coordinate            identifier          2           
+180   41      =                     assign_op                       
+181   41      3.0                   unsigned_double     11          
+182   42      var                   keyword                         
+183   42      ty                    identifier          24          
+184   42      :                     punct                           
+185   42      Coordinate            identifier          2           
+186   42      =                     assign_op                       
+187   42      4.0                   unsigned_double     12          
+188   43      var                   keyword                         
+189   43      distSq                identifier          25          
+190   43      :                     punct                           
+191   43      Double                type_name                       
+192   43      =                     assign_op                       
+193   43      distanceSquared       identifier          10          
+194   43      (                     brackets_op                     
+195   43      ox                    identifier          21          
+196   43      ,                     punct                           
+197   43      oy                    identifier          22          
+198   43      ,                     punct                           
+199   43      tx                    identifier          23          
+200   43      ,                     punct                           
+201   43      ty                    identifier          24          
+202   43      )                     brackets_op                     
+203   44      var                   keyword                         
+204   44      circleArea            identifier          26          
+205   44      :                     punct                           
+206   44      Double                type_name                       
+207   44      =                     assign_op                       
+208   44      PI                    identifier          5           
+209   44      *                     mult_op                         
+210   44      (                     brackets_op                     
+211   44      2                     unsigned_int        8           
+212   44      **                    exp_op                          
+213   44      2                     unsigned_int        8           
+214   44      )                     brackets_op                     
+215   45      var                   keyword                         
+216   45      intDiv                identifier          27          
+217   45      :                     punct                           
+218   45      Int                   type_name                       
+219   45      =                     assign_op                       
+220   45      7                     unsigned_int        13          
+221   45      /                     mult_op                         
+222   45      2                     unsigned_int        8           
+223   46      var                   keyword                         
+224   46      negVal                identifier          28          
+225   46      :                     punct                           
+226   46      Int                   type_name                       
+227   46      =                     assign_op                       
+228   46      -                     add_op                          
+229   46      intDiv                identifier          27          
+230   46      +                     add_op                          
+231   46      10                    unsigned_int        14          
+232   48      print                 keyword                         
+233   48      (                     brackets_op                     
+234   48      "distSq, circleArea, 7/2, negVal:"string_const        15          
+235   48      )                     brackets_op                     
+236   49      print                 keyword                         
+237   49      (                     brackets_op                     
+238   49      distSq                identifier          25          
+239   49      ,                     punct                           
+240   49      circleArea            identifier          26          
+241   49      ,                     punct                           
+242   49      intDiv                identifier          27          
+243   49      ,                     punct                           
+244   49      negVal                identifier          28          
+245   49      )                     brackets_op                     
+246   52      for                   keyword                         
+247   52      i                     identifier          29          
+248   52      in                    keyword                         
+249   52      0                     unsigned_int        3           
+250   52      ..                    range_op                        
+251   52      6                     unsigned_int        16          
+252   52      {                     brackets_op                     
+253   53      if                    keyword                         
+254   53      i                     identifier          29          
+255   53      ==                    rel_op                          
+256   53      0                     unsigned_int        3           
+257   53      {                     brackets_op                     
+258   54      continue              keyword                         
+259   55      }                     brackets_op                     
+260   56      var                   keyword                         
+261   56      f                     identifier          30          
+262   56      :                     punct                           
+263   56      Int                   type_name                       
+264   56      =                     assign_op                       
+265   56      factorial             identifier          17          
+266   56      (                     brackets_op                     
+267   56      i                     identifier          29          
+268   56      )                     brackets_op                     
+269   57      if                    keyword                         
+270   57      isEven                identifier          19          
+271   57      (                     brackets_op                     
+272   57      f                     identifier          30          
+273   57      )                     brackets_op                     
+274   57      &&                    logical_op                      
+275   57      f                     identifier          30          
+276   57      <                     rel_op                          
+277   57      LIMIT                 identifier          6           
+278   57      {                     brackets_op                     
+279   58      print                 keyword                         
+280   58      (                     brackets_op                     
+281   58      "even factorial:"     string_const        17          
+282   58      ,                     punct                           
+283   58      i                     identifier          29          
+284   58      ,                     punct                           
+285   58      f                     identifier          30          
+286   58      )                     brackets_op                     
+287   59      }                     brackets_op                     
+288   59      else                  keyword                         
+289   59      if                    keyword                         
+290   59      f                     identifier          30          
+291   59      >=                    rel_op                          
+292   59      LIMIT                 identifier          6           
+293   59      {                     brackets_op                     
+294   60      break                 keyword                         
+295   61      }                     brackets_op                     
+296   61      else                  keyword                         
+297   61      {                     brackets_op                     
+298   62      print                 keyword                         
+299   62      (                     brackets_op                     
+300   62      "odd factorial:"      string_const        18          
+301   62      ,                     punct                           
+302   62      i                     identifier          29          
+303   62      ,                     punct                           
+304   62      f                     identifier          30          
+305   62      )                     brackets_op                     
+306   63      }                     brackets_op                     
+307   64      }                     brackets_op                     
+308   67      var                   keyword                         
+309   67      idx                   identifier          31          
+310   67      :                     punct                           
+311   67      Int                   type_name                       
+312   67      =                     assign_op                       
+313   67      3                     unsigned_int        19          
+314   68      var                   keyword                         
+315   68      done                  identifier          32          
+316   68      :                     punct                           
+317   68      Flag                  identifier          4           
+318   68      =                     assign_op                       
+319   68      false                 bool_const          20          
+320   69      while                 keyword                         
+321   69      !                     logical_op                      
+322   69      done                  identifier          32          
+323   69      &&                    logical_op                      
+324   69      idx                   identifier          31          
+325   69      >                     rel_op                          
+326   69      0                     unsigned_int        3           
+327   69      {                     brackets_op                     
+328   70      idx                   identifier          31          
+329   70      =                     assign_op                       
+330   70      idx                   identifier          31          
+331   70      -                     add_op                          
+332   70      1                     unsigned_int        6           
+333   71      if                    keyword                         
+334   71      idx                   identifier          31          
+335   71      ==                    rel_op                          
+336   71      0                     unsigned_int        3           
+337   71      {                     brackets_op                     
+338   72      done                  identifier          32          
+339   72      =                     assign_op                       
+340   72      true                  bool_const          21          
+341   73      }                     brackets_op                     
+342   74      }                     brackets_op                     
+343   77      var                   keyword                         
+344   77      userInput             identifier          33          
+345   77      :                     punct                           
+346   77      Int                   type_name                       
+347   77      =                     assign_op                       
+348   77      0                     unsigned_int        3           
+349   78      print                 keyword                         
+350   78      (                     brackets_op                     
+351   78      "Enter an integer:"   string_const        22          
+352   78      )                     brackets_op                     
+353   79      read                  keyword                         
+354   79      (                     brackets_op                     
+355   79      &                     ref_op                          
+356   79      userInput             identifier          33          
+357   79      )                     brackets_op                     
+358   80      print                 keyword                         
+359   80      (                     brackets_op                     
+360   80      "Input * 2 + calls:"  string_const        23          
+361   80      ,                     punct                           
+362   80      userInput             identifier          33          
+363   80      *                     mult_op                         
+364   80      2                     unsigned_int        8           
+365   80      ,                     punct                           
+366   80      callCounter           identifier          7           
+367   80      )                     brackets_op                     
+368   81      }                     brackets_op                     
 
 =======================================================
           ТАБЛИЦЯ ІДЕНТИФІКАТОРІВ (tableOfId)          
@@ -283,47 +383,66 @@ Lexical analyse finished succesfully
 -------------------------------------------------------
 2         Coordinate               
 3         Counter                  
-8         MAX_POINTS               
-7         PI                       
-4         Point                    
+4         Flag                     
+6         LIMIT                    
+5         PI                       
 1         Standard                 
-21        dist                     
-11        distanceSquared          
-14        dx                       
-15        dy                       
-16        factorial                
-23        i                        
-24        idx                      
-18        main                     
-17        n                        
-22        numbers                  
-19        origin                   
-10        p                        
-12        p1                       
-13        p2                       
-9         resetPoint               
-20        target                   
-25        userInput                
-5         x                        
-6         y                        
+7         callCounter              
+26        circleArea               
+25        distSq                   
+10        distanceSquared          
+32        done                     
+15        dx                       
+16        dy                       
+30        f                        
+17        factorial                
+8         greet                    
+29        i                        
+31        idx                      
+27        intDiv                   
+19        isEven                   
+20        main                     
+18        n                        
+9         name                     
+28        negVal                   
+21        ox                       
+22        oy                       
+23        tx                       
+24        ty                       
+33        userInput                
+11        x1                       
+13        x2                       
+12        y1                       
+14        y2                       
 
 =======================================================
              ТАБЛИЦЯ КОНСТАНТ (tableOfConst)           
 =======================================================
 ІндексТип         Значення         
 -------------------------------------------------------
-10        Int            0                        
-3         Double         0.0                      
-5         Int            1                        
-12        Int            10                       
-6         Double         10.5                     
-2         Int            100                      
-4         Double         2.0                      
-7         Double         20.5                     
-8         Double         3.0                      
+5         String         "!"                      
+22        String         "Enter an integer:"      
+4         String         "Hello, "                
+23        String         "Input * 2 + calls:"     
+9         String         "Nif"                    
+15        String         "distSq, circleArea, 7/2, negVal:"
+17        String         "even factorial:"        
+18        String         "odd factorial:"         
+3         Int            0                        
+10        Double         0.0                      
+6         Int            1                        
+14        Int            10                       
+2         Int            1000                     
+8         Int            2                        
+7         Double         2.0                      
+19        Int            3                        
+11        Double         3.0                      
 1         Double         3.14159                  
-9         Double         4.0                      
-11        Int            5                        
+12        Double         4.0                      
+16        Int            6                        
+13        Int            7                        
+20        Bool           false                    
+21        Bool           true                     
 =======================================================
 
 >>> Початок семантичного аналізу <<<
@@ -334,41 +453,52 @@ Lexical analyse finished succesfully
         parseToken: In line 1 found ('Standard', identifier)
     parseModuleItem():
       parseTypeAliasDeclaration():
-        parseToken: In line 2 found ('typealias', keyword)
-        parseToken: In line 2 found ('Coordinate', identifier)
-        parseToken: In line 2 found ('=', assign_op)
-        parseType():
-          parseToken: In line 2 found ('Double', type_name)
-    parseModuleItem():
-      parseTypeAliasDeclaration():
         parseToken: In line 3 found ('typealias', keyword)
-        parseToken: In line 3 found ('Counter', identifier)
+        parseToken: In line 3 found ('Coordinate', identifier)
         parseToken: In line 3 found ('=', assign_op)
         parseType():
-          parseToken: In line 3 found ('Int', type_name)
+          parseToken: In line 3 found ('Double', type_name)
     parseModuleItem():
-      parseRecordDeclaration():
-        parseToken: In line 4 found ('record', keyword)
-        parseToken: In line 4 found ('Point', identifier)
-        parseToken: In line 4 found ('{', brackets_op)
-        parseToken: In line 5 found ('var', keyword)
-        parseToken: In line 5 found ('x', identifier)
-        parseToken: In line 5 found (':', punct)
+      parseTypeAliasDeclaration():
+        parseToken: In line 4 found ('typealias', keyword)
+        parseToken: In line 4 found ('Counter', identifier)
+        parseToken: In line 4 found ('=', assign_op)
         parseType():
-          parseToken: In line 5 found ('Coordinate', identifier)
-        parseToken: In line 6 found ('var', keyword)
-        parseToken: In line 6 found ('y', identifier)
-        parseToken: In line 6 found (':', punct)
+          parseToken: In line 4 found ('Int', type_name)
+    parseModuleItem():
+      parseTypeAliasDeclaration():
+        parseToken: In line 5 found ('typealias', keyword)
+        parseToken: In line 5 found ('Flag', identifier)
+        parseToken: In line 5 found ('=', assign_op)
         parseType():
-          parseToken: In line 6 found ('Coordinate', identifier)
-        parseToken: In line 7 found ('}', brackets_op)
+          parseToken: In line 5 found ('Bool', type_name)
+    parseModuleItem():
+      parseConstantDeclaration():
+        parseToken: In line 7 found ('let', keyword)
+        parseToken: In line 7 found ('PI', identifier)
+        parseToken: In line 7 found (':', punct)
+        parseType():
+          parseToken: In line 7 found ('Double', type_name)
+        parseToken: In line 7 found ('=', assign_op)
+        parseExpression():
+          parseLogicalOrExpr():
+            parseLogicalAndExpr():
+              parseEqualityExpr():
+                parseRelationalExpr():
+                  parseAddExpr():
+                    parseMultExpr():
+                      parsePowerExpr():
+                        parseUnaryExpr():
+                          parsePostfixExpr():
+                            parsePrimaryExpr():
+                              parseToken: In line 7 found ('3.14159', unsigned_double)
     parseModuleItem():
       parseConstantDeclaration():
         parseToken: In line 8 found ('let', keyword)
-        parseToken: In line 8 found ('PI', identifier)
+        parseToken: In line 8 found ('LIMIT', identifier)
         parseToken: In line 8 found (':', punct)
         parseType():
-          parseToken: In line 8 found ('Double', type_name)
+          parseToken: In line 8 found ('Counter', identifier)
         parseToken: In line 8 found ('=', assign_op)
         parseExpression():
           parseLogicalOrExpr():
@@ -381,14 +511,14 @@ Lexical analyse finished succesfully
                         parseUnaryExpr():
                           parsePostfixExpr():
                             parsePrimaryExpr():
-                              parseToken: In line 8 found ('3.14159', unsigned_double)
+                              parseToken: In line 8 found ('1_000', unsigned_int)
     parseModuleItem():
-      parseConstantDeclaration():
-        parseToken: In line 9 found ('let', keyword)
-        parseToken: In line 9 found ('MAX_POINTS', identifier)
+      parseVariableDeclaration():
+        parseToken: In line 9 found ('var', keyword)
+        parseToken: In line 9 found ('callCounter', identifier)
         parseToken: In line 9 found (':', punct)
         parseType():
-          parseToken: In line 9 found ('Int', type_name)
+          parseToken: In line 9 found ('Counter', identifier)
         parseToken: In line 9 found ('=', assign_op)
         parseExpression():
           parseLogicalOrExpr():
@@ -401,12 +531,1586 @@ Lexical analyse finished succesfully
                         parseUnaryExpr():
                           parsePostfixExpr():
                             parsePrimaryExpr():
-                              parseToken: In line 9 found ('100', unsigned_int)
+                              parseToken: In line 9 found ('0', unsigned_int)
     parseModuleItem():
       parseFunctionDeclaration():
-        parseToken: In line 10 found ('fun', keyword)
-        parseToken: In line 10 found ('resetPoint', identifier)
-        parseToken: In line 10 found ('(', brackets_op)
+        parseToken: In line 11 found ('fun', keyword)
+        parseToken: In line 11 found ('greet', identifier)
+        parseToken: In line 11 found ('(', brackets_op)
         parseParameters():
           parseParameter():
-            parseToken: In line 10 found ('ref', keyword)
+            parseToken: In line 11 found ('name', identifier)
+            parseToken: In line 11 found (':', punct)
+            parseType():
+              parseToken: In line 11 found ('String', type_name)
+        parseToken: In line 11 found (')', brackets_op)
+        parseToken: In line 11 found (':', punct)
+        parseReturnType():
+          parseToken: In line 11 found ('Void', type_name)
+        parseBlock():
+          parseToken: In line 11 found ('{', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseOutputStatement():
+                parseToken: In line 12 found ('print', keyword)
+                parseToken: In line 12 found ('(', brackets_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 12 found ('"Hello, "', string_const)
+                            parseToken: In line 12 found ('+', add_op)
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 12 found ('name', identifier)
+                            parseToken: In line 12 found ('+', add_op)
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 12 found ('"!"', string_const)
+                parseToken: In line 12 found (')', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseReturnStatement():
+                parseToken: In line 13 found ('return', keyword)
+          parseToken: In line 14 found ('}', brackets_op)
+    parseModuleItem():
+      parseFunctionDeclaration():
+        parseToken: In line 16 found ('fun', keyword)
+        parseToken: In line 16 found ('distanceSquared', identifier)
+        parseToken: In line 16 found ('(', brackets_op)
+        parseParameters():
+          parseParameter():
+            parseToken: In line 16 found ('x1', identifier)
+            parseToken: In line 16 found (':', punct)
+            parseType():
+              parseToken: In line 16 found ('Coordinate', identifier)
+          parseToken: In line 16 found (',', punct)
+          parseParameter():
+            parseToken: In line 16 found ('y1', identifier)
+            parseToken: In line 16 found (':', punct)
+            parseType():
+              parseToken: In line 16 found ('Coordinate', identifier)
+          parseToken: In line 16 found (',', punct)
+          parseParameter():
+            parseToken: In line 16 found ('x2', identifier)
+            parseToken: In line 16 found (':', punct)
+            parseType():
+              parseToken: In line 16 found ('Coordinate', identifier)
+          parseToken: In line 16 found (',', punct)
+          parseParameter():
+            parseToken: In line 16 found ('y2', identifier)
+            parseToken: In line 16 found (':', punct)
+            parseType():
+              parseToken: In line 16 found ('Coordinate', identifier)
+        parseToken: In line 16 found (')', brackets_op)
+        parseToken: In line 16 found (':', punct)
+        parseReturnType():
+          parseType():
+            parseToken: In line 16 found ('Double', type_name)
+        parseBlock():
+          parseToken: In line 16 found ('{', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 17 found ('var', keyword)
+              parseToken: In line 17 found ('dx', identifier)
+              parseToken: In line 17 found (':', punct)
+              parseType():
+                parseToken: In line 17 found ('Double', type_name)
+              parseToken: In line 17 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 17 found ('x2', identifier)
+                          parseToken: In line 17 found ('-', add_op)
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 17 found ('x1', identifier)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 18 found ('var', keyword)
+              parseToken: In line 18 found ('dy', identifier)
+              parseToken: In line 18 found (':', punct)
+              parseType():
+                parseToken: In line 18 found ('Double', type_name)
+              parseToken: In line 18 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 18 found ('y2', identifier)
+                          parseToken: In line 18 found ('-', add_op)
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 18 found ('y1', identifier)
+          parseBlockItem():
+            parseStatement():
+              parseIdentifierStatement():
+                parseToken: In line 19 found ('callCounter', identifier)
+                parseToken: In line 19 found ('=', assign_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 19 found ('callCounter', identifier)
+                            parseToken: In line 19 found ('+', add_op)
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 19 found ('1', unsigned_int)
+          parseBlockItem():
+            parseStatement():
+              parseReturnStatement():
+                parseToken: In line 20 found ('return', keyword)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 20 found ('dx', identifier)
+                                parseToken: In line 20 found ('**', exp_op)
+                                parsePowerExpr():
+                                  parseUnaryExpr():
+                                    parsePostfixExpr():
+                                      parsePrimaryExpr():
+                                        parseToken: In line 20 found ('2.0', unsigned_double)
+                            parseToken: In line 20 found ('+', add_op)
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 20 found ('dy', identifier)
+                                parseToken: In line 20 found ('**', exp_op)
+                                parsePowerExpr():
+                                  parseUnaryExpr():
+                                    parsePostfixExpr():
+                                      parsePrimaryExpr():
+                                        parseToken: In line 20 found ('2.0', unsigned_double)
+          parseToken: In line 21 found ('}', brackets_op)
+    parseModuleItem():
+      parseFunctionDeclaration():
+        parseToken: In line 23 found ('fun', keyword)
+        parseToken: In line 23 found ('factorial', identifier)
+        parseToken: In line 23 found ('(', brackets_op)
+        parseParameters():
+          parseParameter():
+            parseToken: In line 23 found ('n', identifier)
+            parseToken: In line 23 found (':', punct)
+            parseType():
+              parseToken: In line 23 found ('Counter', identifier)
+        parseToken: In line 23 found (')', brackets_op)
+        parseToken: In line 23 found (':', punct)
+        parseReturnType():
+          parseType():
+            parseToken: In line 23 found ('Int', type_name)
+        parseBlock():
+          parseToken: In line 23 found ('{', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseIfStatement():
+                parseToken: In line 24 found ('if', keyword)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 24 found ('n', identifier)
+                          parseToken: In line 24 found ('<=', rel_op)
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 24 found ('1', unsigned_int)
+                parseBlock():
+                  parseToken: In line 24 found ('{', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseReturnStatement():
+                        parseToken: In line 25 found ('return', keyword)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 25 found ('1', unsigned_int)
+                  parseToken: In line 26 found ('}', brackets_op)
+                parseToken: In line 26 found ('else', keyword)
+                parseBlock():
+                  parseToken: In line 26 found ('{', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseReturnStatement():
+                        parseToken: In line 27 found ('return', keyword)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 27 found ('n', identifier)
+                                      parseToken: In line 27 found ('*', mult_op)
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 27 found ('factorial', identifier)
+                                            parseToken: In line 27 found ('(', brackets_op)
+                                            parseArguments():
+                                              parseArgument():
+                                                parseExpression():
+                                                  parseLogicalOrExpr():
+                                                    parseLogicalAndExpr():
+                                                      parseEqualityExpr():
+                                                        parseRelationalExpr():
+                                                          parseAddExpr():
+                                                            parseMultExpr():
+                                                              parsePowerExpr():
+                                                                parseUnaryExpr():
+                                                                  parsePostfixExpr():
+                                                                    parsePrimaryExpr():
+                                                                      parseToken: In line 27 found ('n', identifier)
+                                                            parseToken: In line 27 found ('-', add_op)
+                                                            parseMultExpr():
+                                                              parsePowerExpr():
+                                                                parseUnaryExpr():
+                                                                  parsePostfixExpr():
+                                                                    parsePrimaryExpr():
+                                                                      parseToken: In line 27 found ('1', unsigned_int)
+                                            parseToken: In line 27 found (')', brackets_op)
+                  parseToken: In line 28 found ('}', brackets_op)
+          parseToken: In line 29 found ('}', brackets_op)
+    parseModuleItem():
+      parseFunctionDeclaration():
+        parseToken: In line 31 found ('fun', keyword)
+        parseToken: In line 31 found ('isEven', identifier)
+        parseToken: In line 31 found ('(', brackets_op)
+        parseParameters():
+          parseParameter():
+            parseToken: In line 31 found ('n', identifier)
+            parseToken: In line 31 found (':', punct)
+            parseType():
+              parseToken: In line 31 found ('Int', type_name)
+        parseToken: In line 31 found (')', brackets_op)
+        parseToken: In line 31 found (':', punct)
+        parseReturnType():
+          parseType():
+            parseToken: In line 31 found ('Flag', identifier)
+        parseBlock():
+          parseToken: In line 31 found ('{', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseReturnStatement():
+                parseToken: In line 32 found ('return', keyword)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 32 found ('n', identifier)
+                              parseToken: In line 32 found ('%', mult_op)
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 32 found ('2', unsigned_int)
+                        parseToken: In line 32 found ('==', rel_op)
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 32 found ('0', unsigned_int)
+          parseToken: In line 33 found ('}', brackets_op)
+    parseModuleItem():
+      parseFunctionDeclaration():
+        parseToken: In line 35 found ('fun', keyword)
+        parseToken: In line 35 found ('main', identifier)
+        parseToken: In line 35 found ('(', brackets_op)
+        parseToken: In line 35 found (')', brackets_op)
+        parseToken: In line 35 found (':', punct)
+        parseReturnType():
+          parseToken: In line 35 found ('Void', type_name)
+        parseBlock():
+          parseToken: In line 35 found ('{', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseIdentifierStatement():
+                parseToken: In line 36 found ('greet', identifier)
+                parseToken: In line 36 found ('(', brackets_op)
+                parseArguments():
+                  parseArgument():
+                    parseExpression():
+                      parseLogicalOrExpr():
+                        parseLogicalAndExpr():
+                          parseEqualityExpr():
+                            parseRelationalExpr():
+                              parseAddExpr():
+                                parseMultExpr():
+                                  parsePowerExpr():
+                                    parseUnaryExpr():
+                                      parsePostfixExpr():
+                                        parsePrimaryExpr():
+                                          parseToken: In line 36 found ('"Nif"', string_const)
+                parseToken: In line 36 found (')', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 39 found ('var', keyword)
+              parseToken: In line 39 found ('ox', identifier)
+              parseToken: In line 39 found (':', punct)
+              parseType():
+                parseToken: In line 39 found ('Coordinate', identifier)
+              parseToken: In line 39 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 39 found ('0.0', unsigned_double)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 40 found ('var', keyword)
+              parseToken: In line 40 found ('oy', identifier)
+              parseToken: In line 40 found (':', punct)
+              parseType():
+                parseToken: In line 40 found ('Coordinate', identifier)
+              parseToken: In line 40 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 40 found ('0.0', unsigned_double)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 41 found ('var', keyword)
+              parseToken: In line 41 found ('tx', identifier)
+              parseToken: In line 41 found (':', punct)
+              parseType():
+                parseToken: In line 41 found ('Coordinate', identifier)
+              parseToken: In line 41 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 41 found ('3.0', unsigned_double)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 42 found ('var', keyword)
+              parseToken: In line 42 found ('ty', identifier)
+              parseToken: In line 42 found (':', punct)
+              parseType():
+                parseToken: In line 42 found ('Coordinate', identifier)
+              parseToken: In line 42 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 42 found ('4.0', unsigned_double)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 43 found ('var', keyword)
+              parseToken: In line 43 found ('distSq', identifier)
+              parseToken: In line 43 found (':', punct)
+              parseType():
+                parseToken: In line 43 found ('Double', type_name)
+              parseToken: In line 43 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 43 found ('distanceSquared', identifier)
+                                  parseToken: In line 43 found ('(', brackets_op)
+                                  parseArguments():
+                                    parseArgument():
+                                      parseExpression():
+                                        parseLogicalOrExpr():
+                                          parseLogicalAndExpr():
+                                            parseEqualityExpr():
+                                              parseRelationalExpr():
+                                                parseAddExpr():
+                                                  parseMultExpr():
+                                                    parsePowerExpr():
+                                                      parseUnaryExpr():
+                                                        parsePostfixExpr():
+                                                          parsePrimaryExpr():
+                                                            parseToken: In line 43 found ('ox', identifier)
+                                    parseToken: In line 43 found (',', punct)
+                                    parseArgument():
+                                      parseExpression():
+                                        parseLogicalOrExpr():
+                                          parseLogicalAndExpr():
+                                            parseEqualityExpr():
+                                              parseRelationalExpr():
+                                                parseAddExpr():
+                                                  parseMultExpr():
+                                                    parsePowerExpr():
+                                                      parseUnaryExpr():
+                                                        parsePostfixExpr():
+                                                          parsePrimaryExpr():
+                                                            parseToken: In line 43 found ('oy', identifier)
+                                    parseToken: In line 43 found (',', punct)
+                                    parseArgument():
+                                      parseExpression():
+                                        parseLogicalOrExpr():
+                                          parseLogicalAndExpr():
+                                            parseEqualityExpr():
+                                              parseRelationalExpr():
+                                                parseAddExpr():
+                                                  parseMultExpr():
+                                                    parsePowerExpr():
+                                                      parseUnaryExpr():
+                                                        parsePostfixExpr():
+                                                          parsePrimaryExpr():
+                                                            parseToken: In line 43 found ('tx', identifier)
+                                    parseToken: In line 43 found (',', punct)
+                                    parseArgument():
+                                      parseExpression():
+                                        parseLogicalOrExpr():
+                                          parseLogicalAndExpr():
+                                            parseEqualityExpr():
+                                              parseRelationalExpr():
+                                                parseAddExpr():
+                                                  parseMultExpr():
+                                                    parsePowerExpr():
+                                                      parseUnaryExpr():
+                                                        parsePostfixExpr():
+                                                          parsePrimaryExpr():
+                                                            parseToken: In line 43 found ('ty', identifier)
+                                  parseToken: In line 43 found (')', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 44 found ('var', keyword)
+              parseToken: In line 44 found ('circleArea', identifier)
+              parseToken: In line 44 found (':', punct)
+              parseType():
+                parseToken: In line 44 found ('Double', type_name)
+              parseToken: In line 44 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 44 found ('PI', identifier)
+                            parseToken: In line 44 found ('*', mult_op)
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 44 found ('(', brackets_op)
+                                    parseExpression():
+                                      parseLogicalOrExpr():
+                                        parseLogicalAndExpr():
+                                          parseEqualityExpr():
+                                            parseRelationalExpr():
+                                              parseAddExpr():
+                                                parseMultExpr():
+                                                  parsePowerExpr():
+                                                    parseUnaryExpr():
+                                                      parsePostfixExpr():
+                                                        parsePrimaryExpr():
+                                                          parseToken: In line 44 found ('2', unsigned_int)
+                                                    parseToken: In line 44 found ('**', exp_op)
+                                                    parsePowerExpr():
+                                                      parseUnaryExpr():
+                                                        parsePostfixExpr():
+                                                          parsePrimaryExpr():
+                                                            parseToken: In line 44 found ('2', unsigned_int)
+                                    parseToken: In line 44 found (')', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 45 found ('var', keyword)
+              parseToken: In line 45 found ('intDiv', identifier)
+              parseToken: In line 45 found (':', punct)
+              parseType():
+                parseToken: In line 45 found ('Int', type_name)
+              parseToken: In line 45 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 45 found ('7', unsigned_int)
+                            parseToken: In line 45 found ('/', mult_op)
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 45 found ('2', unsigned_int)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 46 found ('var', keyword)
+              parseToken: In line 46 found ('negVal', identifier)
+              parseToken: In line 46 found (':', punct)
+              parseType():
+                parseToken: In line 46 found ('Int', type_name)
+              parseToken: In line 46 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parseToken: In line 46 found ('-', add_op)
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 46 found ('intDiv', identifier)
+                          parseToken: In line 46 found ('+', add_op)
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 46 found ('10', unsigned_int)
+          parseBlockItem():
+            parseStatement():
+              parseOutputStatement():
+                parseToken: In line 48 found ('print', keyword)
+                parseToken: In line 48 found ('(', brackets_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 48 found ('"distSq, circleArea, 7/2, negVal:"', string_const)
+                parseToken: In line 48 found (')', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseOutputStatement():
+                parseToken: In line 49 found ('print', keyword)
+                parseToken: In line 49 found ('(', brackets_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 49 found ('distSq', identifier)
+                parseToken: In line 49 found (',', punct)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 49 found ('circleArea', identifier)
+                parseToken: In line 49 found (',', punct)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 49 found ('intDiv', identifier)
+                parseToken: In line 49 found (',', punct)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 49 found ('negVal', identifier)
+                parseToken: In line 49 found (')', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseForStatement():
+                parseToken: In line 52 found ('for', keyword)
+                parseToken: In line 52 found ('i', identifier)
+                parseToken: In line 52 found ('in', keyword)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 52 found ('0', unsigned_int)
+                parseToken: In line 52 found ('..', range_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 52 found ('6', unsigned_int)
+                parseBlock():
+                  parseToken: In line 52 found ('{', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseIfStatement():
+                        parseToken: In line 53 found ('if', keyword)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 53 found ('i', identifier)
+                                parseToken: In line 53 found ('==', rel_op)
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 53 found ('0', unsigned_int)
+                        parseBlock():
+                          parseToken: In line 53 found ('{', brackets_op)
+                          parseBlockItem():
+                            parseStatement():
+                              parseContinueStatement():
+                                parseToken: In line 54 found ('continue', keyword)
+                          parseToken: In line 55 found ('}', brackets_op)
+                  parseBlockItem():
+                    parseVariableDeclaration():
+                      parseToken: In line 56 found ('var', keyword)
+                      parseToken: In line 56 found ('f', identifier)
+                      parseToken: In line 56 found (':', punct)
+                      parseType():
+                        parseToken: In line 56 found ('Int', type_name)
+                      parseToken: In line 56 found ('=', assign_op)
+                      parseExpression():
+                        parseLogicalOrExpr():
+                          parseLogicalAndExpr():
+                            parseEqualityExpr():
+                              parseRelationalExpr():
+                                parseAddExpr():
+                                  parseMultExpr():
+                                    parsePowerExpr():
+                                      parseUnaryExpr():
+                                        parsePostfixExpr():
+                                          parsePrimaryExpr():
+                                            parseToken: In line 56 found ('factorial', identifier)
+                                          parseToken: In line 56 found ('(', brackets_op)
+                                          parseArguments():
+                                            parseArgument():
+                                              parseExpression():
+                                                parseLogicalOrExpr():
+                                                  parseLogicalAndExpr():
+                                                    parseEqualityExpr():
+                                                      parseRelationalExpr():
+                                                        parseAddExpr():
+                                                          parseMultExpr():
+                                                            parsePowerExpr():
+                                                              parseUnaryExpr():
+                                                                parsePostfixExpr():
+                                                                  parsePrimaryExpr():
+                                                                    parseToken: In line 56 found ('i', identifier)
+                                          parseToken: In line 56 found (')', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseIfStatement():
+                        parseToken: In line 57 found ('if', keyword)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 57 found ('isEven', identifier)
+                                            parseToken: In line 57 found ('(', brackets_op)
+                                            parseArguments():
+                                              parseArgument():
+                                                parseExpression():
+                                                  parseLogicalOrExpr():
+                                                    parseLogicalAndExpr():
+                                                      parseEqualityExpr():
+                                                        parseRelationalExpr():
+                                                          parseAddExpr():
+                                                            parseMultExpr():
+                                                              parsePowerExpr():
+                                                                parseUnaryExpr():
+                                                                  parsePostfixExpr():
+                                                                    parsePrimaryExpr():
+                                                                      parseToken: In line 57 found ('f', identifier)
+                                            parseToken: In line 57 found (')', brackets_op)
+                              parseToken: In line 57 found ('&&', logical_op)
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 57 found ('f', identifier)
+                                  parseToken: In line 57 found ('<', rel_op)
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 57 found ('LIMIT', identifier)
+                        parseBlock():
+                          parseToken: In line 57 found ('{', brackets_op)
+                          parseBlockItem():
+                            parseStatement():
+                              parseOutputStatement():
+                                parseToken: In line 58 found ('print', keyword)
+                                parseToken: In line 58 found ('(', brackets_op)
+                                parseExpression():
+                                  parseLogicalOrExpr():
+                                    parseLogicalAndExpr():
+                                      parseEqualityExpr():
+                                        parseRelationalExpr():
+                                          parseAddExpr():
+                                            parseMultExpr():
+                                              parsePowerExpr():
+                                                parseUnaryExpr():
+                                                  parsePostfixExpr():
+                                                    parsePrimaryExpr():
+                                                      parseToken: In line 58 found ('"even factorial:"', string_const)
+                                parseToken: In line 58 found (',', punct)
+                                parseExpression():
+                                  parseLogicalOrExpr():
+                                    parseLogicalAndExpr():
+                                      parseEqualityExpr():
+                                        parseRelationalExpr():
+                                          parseAddExpr():
+                                            parseMultExpr():
+                                              parsePowerExpr():
+                                                parseUnaryExpr():
+                                                  parsePostfixExpr():
+                                                    parsePrimaryExpr():
+                                                      parseToken: In line 58 found ('i', identifier)
+                                parseToken: In line 58 found (',', punct)
+                                parseExpression():
+                                  parseLogicalOrExpr():
+                                    parseLogicalAndExpr():
+                                      parseEqualityExpr():
+                                        parseRelationalExpr():
+                                          parseAddExpr():
+                                            parseMultExpr():
+                                              parsePowerExpr():
+                                                parseUnaryExpr():
+                                                  parsePostfixExpr():
+                                                    parsePrimaryExpr():
+                                                      parseToken: In line 58 found ('f', identifier)
+                                parseToken: In line 58 found (')', brackets_op)
+                          parseToken: In line 59 found ('}', brackets_op)
+                        parseToken: In line 59 found ('else', keyword)
+                        parseIfStatement():
+                          parseToken: In line 59 found ('if', keyword)
+                          parseExpression():
+                            parseLogicalOrExpr():
+                              parseLogicalAndExpr():
+                                parseEqualityExpr():
+                                  parseRelationalExpr():
+                                    parseAddExpr():
+                                      parseMultExpr():
+                                        parsePowerExpr():
+                                          parseUnaryExpr():
+                                            parsePostfixExpr():
+                                              parsePrimaryExpr():
+                                                parseToken: In line 59 found ('f', identifier)
+                                    parseToken: In line 59 found ('>=', rel_op)
+                                    parseAddExpr():
+                                      parseMultExpr():
+                                        parsePowerExpr():
+                                          parseUnaryExpr():
+                                            parsePostfixExpr():
+                                              parsePrimaryExpr():
+                                                parseToken: In line 59 found ('LIMIT', identifier)
+                          parseBlock():
+                            parseToken: In line 59 found ('{', brackets_op)
+                            parseBlockItem():
+                              parseStatement():
+                                parseBreakStatement():
+                                  parseToken: In line 60 found ('break', keyword)
+                            parseToken: In line 61 found ('}', brackets_op)
+                          parseToken: In line 61 found ('else', keyword)
+                          parseBlock():
+                            parseToken: In line 61 found ('{', brackets_op)
+                            parseBlockItem():
+                              parseStatement():
+                                parseOutputStatement():
+                                  parseToken: In line 62 found ('print', keyword)
+                                  parseToken: In line 62 found ('(', brackets_op)
+                                  parseExpression():
+                                    parseLogicalOrExpr():
+                                      parseLogicalAndExpr():
+                                        parseEqualityExpr():
+                                          parseRelationalExpr():
+                                            parseAddExpr():
+                                              parseMultExpr():
+                                                parsePowerExpr():
+                                                  parseUnaryExpr():
+                                                    parsePostfixExpr():
+                                                      parsePrimaryExpr():
+                                                        parseToken: In line 62 found ('"odd factorial:"', string_const)
+                                  parseToken: In line 62 found (',', punct)
+                                  parseExpression():
+                                    parseLogicalOrExpr():
+                                      parseLogicalAndExpr():
+                                        parseEqualityExpr():
+                                          parseRelationalExpr():
+                                            parseAddExpr():
+                                              parseMultExpr():
+                                                parsePowerExpr():
+                                                  parseUnaryExpr():
+                                                    parsePostfixExpr():
+                                                      parsePrimaryExpr():
+                                                        parseToken: In line 62 found ('i', identifier)
+                                  parseToken: In line 62 found (',', punct)
+                                  parseExpression():
+                                    parseLogicalOrExpr():
+                                      parseLogicalAndExpr():
+                                        parseEqualityExpr():
+                                          parseRelationalExpr():
+                                            parseAddExpr():
+                                              parseMultExpr():
+                                                parsePowerExpr():
+                                                  parseUnaryExpr():
+                                                    parsePostfixExpr():
+                                                      parsePrimaryExpr():
+                                                        parseToken: In line 62 found ('f', identifier)
+                                  parseToken: In line 62 found (')', brackets_op)
+                            parseToken: In line 63 found ('}', brackets_op)
+                  parseToken: In line 64 found ('}', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 67 found ('var', keyword)
+              parseToken: In line 67 found ('idx', identifier)
+              parseToken: In line 67 found (':', punct)
+              parseType():
+                parseToken: In line 67 found ('Int', type_name)
+              parseToken: In line 67 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 67 found ('3', unsigned_int)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 68 found ('var', keyword)
+              parseToken: In line 68 found ('done', identifier)
+              parseToken: In line 68 found (':', punct)
+              parseType():
+                parseToken: In line 68 found ('Flag', identifier)
+              parseToken: In line 68 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 68 found ('false', bool_const)
+          parseBlockItem():
+            parseStatement():
+              parseWhileStatement():
+                parseToken: In line 69 found ('while', keyword)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parseToken: In line 69 found ('!', logical_op)
+                                  parseUnaryExpr():
+                                    parsePostfixExpr():
+                                      parsePrimaryExpr():
+                                        parseToken: In line 69 found ('done', identifier)
+                      parseToken: In line 69 found ('&&', logical_op)
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 69 found ('idx', identifier)
+                          parseToken: In line 69 found ('>', rel_op)
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 69 found ('0', unsigned_int)
+                parseBlock():
+                  parseToken: In line 69 found ('{', brackets_op)
+                  parseBlockItem():
+                    parseStatement():
+                      parseIdentifierStatement():
+                        parseToken: In line 70 found ('idx', identifier)
+                        parseToken: In line 70 found ('=', assign_op)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 70 found ('idx', identifier)
+                                    parseToken: In line 70 found ('-', add_op)
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 70 found ('1', unsigned_int)
+                  parseBlockItem():
+                    parseStatement():
+                      parseIfStatement():
+                        parseToken: In line 71 found ('if', keyword)
+                        parseExpression():
+                          parseLogicalOrExpr():
+                            parseLogicalAndExpr():
+                              parseEqualityExpr():
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 71 found ('idx', identifier)
+                                parseToken: In line 71 found ('==', rel_op)
+                                parseRelationalExpr():
+                                  parseAddExpr():
+                                    parseMultExpr():
+                                      parsePowerExpr():
+                                        parseUnaryExpr():
+                                          parsePostfixExpr():
+                                            parsePrimaryExpr():
+                                              parseToken: In line 71 found ('0', unsigned_int)
+                        parseBlock():
+                          parseToken: In line 71 found ('{', brackets_op)
+                          parseBlockItem():
+                            parseStatement():
+                              parseIdentifierStatement():
+                                parseToken: In line 72 found ('done', identifier)
+                                parseToken: In line 72 found ('=', assign_op)
+                                parseExpression():
+                                  parseLogicalOrExpr():
+                                    parseLogicalAndExpr():
+                                      parseEqualityExpr():
+                                        parseRelationalExpr():
+                                          parseAddExpr():
+                                            parseMultExpr():
+                                              parsePowerExpr():
+                                                parseUnaryExpr():
+                                                  parsePostfixExpr():
+                                                    parsePrimaryExpr():
+                                                      parseToken: In line 72 found ('true', bool_const)
+                          parseToken: In line 73 found ('}', brackets_op)
+                  parseToken: In line 74 found ('}', brackets_op)
+          parseBlockItem():
+            parseVariableDeclaration():
+              parseToken: In line 77 found ('var', keyword)
+              parseToken: In line 77 found ('userInput', identifier)
+              parseToken: In line 77 found (':', punct)
+              parseType():
+                parseToken: In line 77 found ('Int', type_name)
+              parseToken: In line 77 found ('=', assign_op)
+              parseExpression():
+                parseLogicalOrExpr():
+                  parseLogicalAndExpr():
+                    parseEqualityExpr():
+                      parseRelationalExpr():
+                        parseAddExpr():
+                          parseMultExpr():
+                            parsePowerExpr():
+                              parseUnaryExpr():
+                                parsePostfixExpr():
+                                  parsePrimaryExpr():
+                                    parseToken: In line 77 found ('0', unsigned_int)
+          parseBlockItem():
+            parseStatement():
+              parseOutputStatement():
+                parseToken: In line 78 found ('print', keyword)
+                parseToken: In line 78 found ('(', brackets_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 78 found ('"Enter an integer:"', string_const)
+                parseToken: In line 78 found (')', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseInputStatement():
+                parseToken: In line 79 found ('read', keyword)
+                parseToken: In line 79 found ('(', brackets_op)
+                parseToken: In line 79 found ('&', ref_op)
+                parseToken: In line 79 found ('userInput', identifier)
+                parseToken: In line 79 found (')', brackets_op)
+          parseBlockItem():
+            parseStatement():
+              parseOutputStatement():
+                parseToken: In line 80 found ('print', keyword)
+                parseToken: In line 80 found ('(', brackets_op)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 80 found ('"Input * 2 + calls:"', string_const)
+                parseToken: In line 80 found (',', punct)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 80 found ('userInput', identifier)
+                              parseToken: In line 80 found ('*', mult_op)
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 80 found ('2', unsigned_int)
+                parseToken: In line 80 found (',', punct)
+                parseExpression():
+                  parseLogicalOrExpr():
+                    parseLogicalAndExpr():
+                      parseEqualityExpr():
+                        parseRelationalExpr():
+                          parseAddExpr():
+                            parseMultExpr():
+                              parsePowerExpr():
+                                parseUnaryExpr():
+                                  parsePostfixExpr():
+                                    parsePrimaryExpr():
+                                      parseToken: In line 80 found ('callCounter', identifier)
+                parseToken: In line 80 found (')', brackets_op)
+          parseToken: In line 81 found ('}', brackets_op)
+
+>>> Семантичний аналіз завершився успішно! <<<
+
+========== КП4: Трансляція у ПОЛІЗ ==========
+
+----------------------------------------
+Модуль: distanceSquared (тип повернення: float, параметрів: 4)
+----------------------------------------
+Таблиця змінних (.vars):
+  x1              float
+  y1              float
+  x2              float
+  y2              float
+  dx              float
+  dy              float
+Таблиця міток (.labels):
+Код у постфіксній формі (.code):
+     0  ('dx', 'l-val')
+     1  ('x2', 'r-val')
+     2  ('x1', 'r-val')
+     3  ('-', 'math_op')
+     4  ('=', 'assign_op')
+     5  ('dy', 'l-val')
+     6  ('y2', 'r-val')
+     7  ('y1', 'r-val')
+     8  ('-', 'math_op')
+     9  ('=', 'assign_op')
+    10  ('callCounter', 'l-val')
+    11  ('callCounter', 'r-val')
+    12  ('1', 'int')
+    13  ('+', 'math_op')
+    14  ('=', 'assign_op')
+    15  ('dx', 'r-val')
+    16  ('2.0', 'float')
+    17  ('^', 'pow_op')
+    18  ('dy', 'r-val')
+    19  ('2.0', 'float')
+    20  ('^', 'pow_op')
+    21  ('+', 'math_op')
+    22  ('RET', 'RET')
+
+----------------------------------------
+Модуль: factorial (тип повернення: int, параметрів: 1)
+----------------------------------------
+Таблиця змінних (.vars):
+  n               int
+Таблиця міток (.labels):
+  m1      9
+  m2      18
+Код у постфіксній формі (.code):
+     0  ('n', 'r-val')
+     1  ('1', 'int')
+     2  ('<=', 'rel_op')
+     3  ('m1', 'label')
+     4  ('JF', 'jf')
+     5  ('1', 'int')
+     6  ('RET', 'RET')
+     7  ('m2', 'label')
+     8  ('JMP', 'jump')
+     9  ('m1', 'label')
+    10  (':', 'colon')
+    11  ('n', 'r-val')
+    12  ('n', 'r-val')
+    13  ('1', 'int')
+    14  ('-', 'math_op')
+    15  ('factorial', 'CALL')
+    16  ('*', 'math_op')
+    17  ('RET', 'RET')
+    18  ('m2', 'label')
+    19  (':', 'colon')
+
+----------------------------------------
+Модуль: greet (тип повернення: void, параметрів: 1)
+----------------------------------------
+Таблиця змінних (.vars):
+  name            string
+Таблиця міток (.labels):
+Код у постфіксній формі (.code):
+     0  ('"Hello, "', 'string')
+     1  ('name', 'r-val')
+     2  ('CAT', 'cat_op')
+     3  ('"!"', 'string')
+     4  ('CAT', 'cat_op')
+     5  ('OUT', 'out_op')
+     6  ('RET', 'RET')
+
+----------------------------------------
+Модуль: isEven (тип повернення: bool, параметрів: 1)
+----------------------------------------
+Таблиця змінних (.vars):
+  n               int
+Таблиця міток (.labels):
+Код у постфіксній формі (.code):
+     0  ('n', 'r-val')
+     1  ('2', 'int')
+     2  ('%', 'math_op')
+     3  ('0', 'int')
+     4  ('==', 'rel_op')
+     5  ('RET', 'RET')
+
+----------------------------------------
+Модуль: main (тип повернення: void, параметрів: 0)
+----------------------------------------
+Таблиця змінних (.vars):
+  PI              float
+  LIMIT           int
+  callCounter     int
+  ox              float
+  oy              float
+  tx              float
+  ty              float
+  distSq          float
+  circleArea      float
+  intDiv          int
+  negVal          int
+  i               int
+  __forEnd        int
+  f               int
+  idx             int
+  done            bool
+  userInput       int
+Таблиця міток (.labels):
+  m10     124
+  m11     145
+  m12     172
+  m13     168
+  m3      69
+  m4      128
+  m5      137
+  m6      83
+  m7      105
+  m8      126
+  m9      116
+Код у постфіксній формі (.code):
+     0  ('PI', 'l-val')
+     1  ('3.14159', 'float')
+     2  ('=', 'assign_op')
+     3  ('LIMIT', 'l-val')
+     4  ('1000', 'int')
+     5  ('=', 'assign_op')
+     6  ('callCounter', 'l-val')
+     7  ('0', 'int')
+     8  ('=', 'assign_op')
+     9  ('"Nif"', 'string')
+    10  ('greet', 'CALL')
+    11  ('ox', 'l-val')
+    12  ('0.0', 'float')
+    13  ('=', 'assign_op')
+    14  ('oy', 'l-val')
+    15  ('0.0', 'float')
+    16  ('=', 'assign_op')
+    17  ('tx', 'l-val')
+    18  ('3.0', 'float')
+    19  ('=', 'assign_op')
+    20  ('ty', 'l-val')
+    21  ('4.0', 'float')
+    22  ('=', 'assign_op')
+    23  ('distSq', 'l-val')
+    24  ('ox', 'r-val')
+    25  ('oy', 'r-val')
+    26  ('tx', 'r-val')
+    27  ('ty', 'r-val')
+    28  ('distanceSquared', 'CALL')
+    29  ('=', 'assign_op')
+    30  ('circleArea', 'l-val')
+    31  ('PI', 'r-val')
+    32  ('2', 'int')
+    33  ('i2f', 'conv')
+    34  ('2', 'int')
+    35  ('i2f', 'conv')
+    36  ('^', 'pow_op')
+    37  ('f2i', 'conv')
+    38  ('i2f', 'conv')
+    39  ('*', 'math_op')
+    40  ('=', 'assign_op')
+    41  ('intDiv', 'l-val')
+    42  ('7', 'int')
+    43  ('2', 'int')
+    44  ('/', 'math_op')
+    45  ('f2i', 'conv')
+    46  ('=', 'assign_op')
+    47  ('negVal', 'l-val')
+    48  ('intDiv', 'r-val')
+    49  ('NEG', 'math_op')
+    50  ('10', 'int')
+    51  ('+', 'math_op')
+    52  ('=', 'assign_op')
+    53  ('"distSq, circleArea, 7/2, negVal:"', 'string')
+    54  ('OUT', 'out_op')
+    55  ('distSq', 'r-val')
+    56  ('OUT', 'out_op')
+    57  ('circleArea', 'r-val')
+    58  ('OUT', 'out_op')
+    59  ('intDiv', 'r-val')
+    60  ('OUT', 'out_op')
+    61  ('negVal', 'r-val')
+    62  ('OUT', 'out_op')
+    63  ('i', 'l-val')
+    64  ('0', 'int')
+    65  ('=', 'assign_op')
+    66  ('__forEnd', 'l-val')
+    67  ('6', 'int')
+    68  ('=', 'assign_op')
+    69  ('m3', 'label')
+    70  (':', 'colon')
+    71  ('i', 'r-val')
+    72  ('__forEnd', 'r-val')
+    73  ('<=', 'rel_op')
+    74  ('m5', 'label')
+    75  ('JF', 'jf')
+    76  ('i', 'r-val')
+    77  ('0', 'int')
+    78  ('==', 'rel_op')
+    79  ('m6', 'label')
+    80  ('JF', 'jf')
+    81  ('m4', 'label')
+    82  ('JMP', 'jump')
+    83  ('m6', 'label')
+    84  (':', 'colon')
+    85  ('f', 'l-val')
+    86  ('i', 'r-val')
+    87  ('factorial', 'CALL')
+    88  ('=', 'assign_op')
+    89  ('f', 'r-val')
+    90  ('isEven', 'CALL')
+    91  ('f', 'r-val')
+    92  ('LIMIT', 'r-val')
+    93  ('<', 'rel_op')
+    94  ('AND', 'bool_op')
+    95  ('m7', 'label')
+    96  ('JF', 'jf')
+    97  ('"even factorial:"', 'string')
+    98  ('OUT', 'out_op')
+    99  ('i', 'r-val')
+   100  ('OUT', 'out_op')
+   101  ('f', 'r-val')
+   102  ('OUT', 'out_op')
+   103  ('m8', 'label')
+   104  ('JMP', 'jump')
+   105  ('m7', 'label')
+   106  (':', 'colon')
+   107  ('f', 'r-val')
+   108  ('LIMIT', 'r-val')
+   109  ('>=', 'rel_op')
+   110  ('m9', 'label')
+   111  ('JF', 'jf')
+   112  ('m5', 'label')
+   113  ('JMP', 'jump')
+   114  ('m10', 'label')
+   115  ('JMP', 'jump')
+   116  ('m9', 'label')
+   117  (':', 'colon')
+   118  ('"odd factorial:"', 'string')
+   119  ('OUT', 'out_op')
+   120  ('i', 'r-val')
+   121  ('OUT', 'out_op')
+   122  ('f', 'r-val')
+   123  ('OUT', 'out_op')
+   124  ('m10', 'label')
+   125  (':', 'colon')
+   126  ('m8', 'label')
+   127  (':', 'colon')
+   128  ('m4', 'label')
+   129  (':', 'colon')
+   130  ('i', 'l-val')
+   131  ('i', 'r-val')
+   132  ('1', 'int')
+   133  ('+', 'math_op')
+   134  ('=', 'assign_op')
+   135  ('m3', 'label')
+   136  ('JMP', 'jump')
+   137  ('m5', 'label')
+   138  (':', 'colon')
+   139  ('idx', 'l-val')
+   140  ('3', 'int')
+   141  ('=', 'assign_op')
+   142  ('done', 'l-val')
+   143  ('false', 'bool')
+   144  ('=', 'assign_op')
+   145  ('m11', 'label')
+   146  (':', 'colon')
+   147  ('done', 'r-val')
+   148  ('NOT', 'bool_op')
+   149  ('idx', 'r-val')
+   150  ('0', 'int')
+   151  ('>', 'rel_op')
+   152  ('AND', 'bool_op')
+   153  ('m12', 'label')
+   154  ('JF', 'jf')
+   155  ('idx', 'l-val')
+   156  ('idx', 'r-val')
+   157  ('1', 'int')
+   158  ('-', 'math_op')
+   159  ('=', 'assign_op')
+   160  ('idx', 'r-val')
+   161  ('0', 'int')
+   162  ('==', 'rel_op')
+   163  ('m13', 'label')
+   164  ('JF', 'jf')
+   165  ('done', 'l-val')
+   166  ('true', 'bool')
+   167  ('=', 'assign_op')
+   168  ('m13', 'label')
+   169  (':', 'colon')
+   170  ('m11', 'label')
+   171  ('JMP', 'jump')
+   172  ('m12', 'label')
+   173  (':', 'colon')
+   174  ('userInput', 'l-val')
+   175  ('0', 'int')
+   176  ('=', 'assign_op')
+   177  ('"Enter an integer:"', 'string')
+   178  ('OUT', 'out_op')
+   179  ('userInput', 'l-val')
+   180  ('INP', 'inp_op')
+   181  ('s2i', 'conv')
+   182  ('=', 'assign_op')
+   183  ('"Input * 2 + calls:"', 'string')
+   184  ('OUT', 'out_op')
+   185  ('userInput', 'r-val')
+   186  ('2', 'int')
+   187  ('*', 'math_op')
+   188  ('OUT', 'out_op')
+   189  ('callCounter', 'r-val')
+   190  ('OUT', 'out_op')
+Module saved: program$distanceSquared.postfix
+Module saved: program$factorial.postfix
+Module saved: program$greet.postfix
+Module saved: program$isEven.postfix
+
+Postfix-code saved in file: program.postfix

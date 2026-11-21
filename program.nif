@@ -1,50 +1,81 @@
 import Standard
+
 typealias Coordinate = Double
 typealias Counter = Int
-record Point {
-    var x: Coordinate
-    var y: Coordinate
-}
+typealias Flag = Bool
+
 let PI: Double = 3.14159
-let MAX_POINTS: Int = 100
-fun resetPoint(ref p: Point): Void {
-    p.x = 0.0
-    p.y = 0.0
+let LIMIT: Counter = 1_000
+var callCounter: Counter = 0
+
+fun greet(name: String): Void {
+    print("Hello, " + name + "!")
     return
 }
-fun distanceSquared(p1: Point, p2: Point): Double {
-    var dx: Double = p2.x - p1.x
-    var dy: Double = p2.y - p1.y
+
+fun distanceSquared(x1: Coordinate, y1: Coordinate, x2: Coordinate, y2: Coordinate): Double {
+    var dx: Double = x2 - x1
+    var dy: Double = y2 - y1
+    callCounter = callCounter + 1
     return dx ** 2.0 + dy ** 2.0
 }
-fun factorial(n: Int): Int {
+
+fun factorial(n: Counter): Int {
     if n <= 1 {
         return 1
     } else {
         return n * factorial(n - 1)
     }
 }
+
+fun isEven(n: Int): Flag {
+    return n % 2 == 0
+}
+
 fun main(): Void {
-    var origin: Point
-    origin.x = 10.5
-    origin.y = 20.5
-    resetPoint(&origin)
-    var target: Point
-    target.x = 3.0
-    target.y = 4.0
-    var dist: Double = distanceSquared(origin, target)
-    var numbers: [Int]
-    for i in 0..5 {
-        numbers[i] = factorial(i)
-    }
-    var idx: Int = 0
-    while idx < 5 {
-        if numbers[idx] > 10 {
-            print(numbers[idx])
+    greet("Nif")
+
+    // 1. Робота з числами, степенем, діленням та приведенням типів
+    var ox: Coordinate = 0.0
+    var oy: Coordinate = 0.0
+    var tx: Coordinate = 3.0
+    var ty: Coordinate = 4.0
+    var distSq: Double = distanceSquared(ox, oy, tx, ty)
+    var circleArea: Double = PI * (2 ** 2)
+    var intDiv: Int = 7 / 2
+    var negVal: Int = -intDiv + 10
+
+    print("distSq, circleArea, 7/2, negVal:")
+    print(distSq, circleArea, intDiv, negVal)
+
+    // 2. Цикл for, рекурсія, умови, continue/break та логічні операції
+    for i in 0..6 {
+        if i == 0 {
+            continue
         }
-        idx = idx + 1
+        var f: Int = factorial(i)
+        if isEven(f) && f < LIMIT {
+            print("even factorial:", i, f)
+        } else if f >= LIMIT {
+            break
+        } else {
+            print("odd factorial:", i, f)
+        }
     }
+
+    // 3. Цикл while та заперечення !
+    var idx: Int = 3
+    var done: Flag = false
+    while !done && idx > 0 {
+        idx = idx - 1
+        if idx == 0 {
+            done = true
+        }
+    }
+
+    // 4. Введення та виведення
     var userInput: Int = 0
+    print("Enter an integer:")
     read(&userInput)
-    print(origin.x, origin.y, dist, userInput)
+    print("Input * 2 + calls:", userInput * 2, callCounter)
 }

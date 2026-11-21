@@ -1,0 +1,45 @@
+.target: Postfix Machine
+.version: 0.3
+
+.vars(
+	n	int
+)
+
+.globVarList(
+	PI
+	LIMIT
+	callCounter
+	ox
+	oy
+	tx
+	ty
+	distSq
+	circleArea
+	intDiv
+	negVal
+	i
+	__forEnd
+	f
+	idx
+	done
+	userInput
+)
+
+.funcs(
+	greet	void	1
+	distanceSquared	float	4
+	factorial	int	1
+	isEven	bool	1
+)
+
+.labels(
+)
+
+.code(
+	n	r-val
+	2	int
+	%	math_op
+	0	int
+	==	rel_op
+	RET
+)

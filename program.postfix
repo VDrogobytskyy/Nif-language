@@ -2,13 +2,236 @@
 .version: 0.3
 
 .vars(
+	PI	float
+	LIMIT	int
+	callCounter	int
+	ox	float
+	oy	float
+	tx	float
+	ty	float
+	distSq	float
+	circleArea	float
+	intDiv	int
+	negVal	int
+	i	int
+	__forEnd	int
+	f	int
+	idx	int
+	done	bool
+	userInput	int
 )
 
 .funcs(
+	greet	void	1
+	distanceSquared	float	4
+	factorial	int	1
+	isEven	bool	1
 )
 
 .labels(
+	m10	124
+	m11	145
+	m12	172
+	m13	168
+	m3	69
+	m4	128
+	m5	137
+	m6	83
+	m7	105
+	m8	126
+	m9	116
 )
 
 .code(
+	PI	l-val
+	3.14159	float
+	=	assign_op
+	LIMIT	l-val
+	1000	int
+	=	assign_op
+	callCounter	l-val
+	0	int
+	=	assign_op
+	"Nif"	string
+	greet	CALL
+	ox	l-val
+	0.0	float
+	=	assign_op
+	oy	l-val
+	0.0	float
+	=	assign_op
+	tx	l-val
+	3.0	float
+	=	assign_op
+	ty	l-val
+	4.0	float
+	=	assign_op
+	distSq	l-val
+	ox	r-val
+	oy	r-val
+	tx	r-val
+	ty	r-val
+	distanceSquared	CALL
+	=	assign_op
+	circleArea	l-val
+	PI	r-val
+	2	int
+	i2f	conv
+	2	int
+	i2f	conv
+	^	pow_op
+	f2i	conv
+	i2f	conv
+	*	math_op
+	=	assign_op
+	intDiv	l-val
+	7	int
+	2	int
+	/	math_op
+	f2i	conv
+	=	assign_op
+	negVal	l-val
+	intDiv	r-val
+	NEG	math_op
+	10	int
+	+	math_op
+	=	assign_op
+	"distSq, circleArea, 7/2, negVal:"	string
+	OUT	out_op
+	distSq	r-val
+	OUT	out_op
+	circleArea	r-val
+	OUT	out_op
+	intDiv	r-val
+	OUT	out_op
+	negVal	r-val
+	OUT	out_op
+	i	l-val
+	0	int
+	=	assign_op
+	__forEnd	l-val
+	6	int
+	=	assign_op
+	m3	label
+	:	colon
+	i	r-val
+	__forEnd	r-val
+	<=	rel_op
+	m5	label
+	JF	jf
+	i	r-val
+	0	int
+	==	rel_op
+	m6	label
+	JF	jf
+	m4	label
+	JMP	jump
+	m6	label
+	:	colon
+	f	l-val
+	i	r-val
+	factorial	CALL
+	=	assign_op
+	f	r-val
+	isEven	CALL
+	f	r-val
+	LIMIT	r-val
+	<	rel_op
+	AND	bool_op
+	m7	label
+	JF	jf
+	"even factorial:"	string
+	OUT	out_op
+	i	r-val
+	OUT	out_op
+	f	r-val
+	OUT	out_op
+	m8	label
+	JMP	jump
+	m7	label
+	:	colon
+	f	r-val
+	LIMIT	r-val
+	>=	rel_op
+	m9	label
+	JF	jf
+	m5	label
+	JMP	jump
+	m10	label
+	JMP	jump
+	m9	label
+	:	colon
+	"odd factorial:"	string
+	OUT	out_op
+	i	r-val
+	OUT	out_op
+	f	r-val
+	OUT	out_op
+	m10	label
+	:	colon
+	m8	label
+	:	colon
+	m4	label
+	:	colon
+	i	l-val
+	i	r-val
+	1	int
+	+	math_op
+	=	assign_op
+	m3	label
+	JMP	jump
+	m5	label
+	:	colon
+	idx	l-val
+	3	int
+	=	assign_op
+	done	l-val
+	false	bool
+	=	assign_op
+	m11	label
+	:	colon
+	done	r-val
+	NOT	bool_op
+	idx	r-val
+	0	int
+	>	rel_op
+	AND	bool_op
+	m12	label
+	JF	jf
+	idx	l-val
+	idx	r-val
+	1	int
+	-	math_op
+	=	assign_op
+	idx	r-val
+	0	int
+	==	rel_op
+	m13	label
+	JF	jf
+	done	l-val
+	true	bool
+	=	assign_op
+	m13	label
+	:	colon
+	m11	label
+	JMP	jump
+	m12	label
+	:	colon
+	userInput	l-val
+	0	int
+	=	assign_op
+	"Enter an integer:"	string
+	OUT	out_op
+	userInput	l-val
+	INP	inp_op
+	s2i	conv
+	=	assign_op
+	"Input * 2 + calls:"	string
+	OUT	out_op
+	userInput	r-val
+	2	int
+	*	math_op
+	OUT	out_op
+	callCounter	r-val
+	OUT	out_op
 )
