@@ -93,15 +93,10 @@ class Parser {
 
         std::string checkBinaryOp(const std::string& lType, const std::string& op, const std::string& rType, int line);
 
-        std::vector<std::pair<std::string, std::string>> postfixCode;   // (лексема, токен)
-        std::map<std::string, int> tableOfLabels;                       // мітка -> індекс у .code
-        std::vector<std::pair<std::string, std::string>> psmVars;       // (ім'я, тип PSM)
-        std::map<std::string, std::string> psmVarTypes;                 // для унікальності імен
-        std::unordered_map<std::string, std::string> pendingPsmNames;   // psm-ім'я ітератора for
-        std::vector<std::pair<std::string, std::string>> loopLabels;    // (мітка continue, мітка break)
+        std::map<std::string, CodeModule> modules;
+        CodeModule* curMod = nullptr;
 
         int labelCounter = 0;
-        bool genEnabled = true;       // false - всередині функцій, відмінних від main
 
         std::string exitLabel;        // мітка кінця програми (для return у main)
         void postfixCodeGen(const std::string& lex, const std::string& tok);
@@ -121,4 +116,5 @@ class Parser {
 
         void printPostfixCode();
         bool savePostfixCode(const std::string& fileName);
+        void saveModule(const CodeModule& mod, const std::string& filePath, const std::string& baseName);
 };
