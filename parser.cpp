@@ -197,8 +197,35 @@ void Parser::parseFunctionDeclaration() {
 
     sem.declareFunc(fn.lexeme, return_type, pendingParams, fn.line);
 
+    // ===== КП4: перемикання активного модуля на модуль функції =====
+    std::string fnName = fn.lexeme;
+    bool isMain = (fnName == "main");
+    CodeModule* prevMod = curMod;
+    if (!isMain) {
+        CodeModule& newMod = modules[fnName];
+        newMod.name = fnName;
+        newMod.returnType = toPsmType(return_type, fn.line);
+        newMod.arity = static_cast<int>(pendingParams.size());
+        newMod.exitLabel = "";
+        curMod = &newMod;
+    }
     hasReturn = false;
     parseBlock();
+    if (!isMain) {
+        // Якщо функція типу Void не завершилась інструкцією RET — додаємо її автоматично
+        if (curMod->postfixCode.empty() || curMod->postfixCode.back().first != "RET") {
+            if (return_type == "Void") {
+                postfixCodeGen("RET", "RET");
+            }
+        }
+        if (!curMod->exitLabel.empty()) {
+            placeLabel(curMod->exitLabel);
+            if (return_type == "Void" && (curMod->postfixCode.empty() || curMod->postfixCode.back().first != "RET")) {
+                postfixCodeGen("RET", "RET");
+            }
+        }
+        curMod = prevMod; // повертаємо генерацію назад у головний модуль (main)
+    }
 
     if (return_type != "Void" && !hasReturn) {
         std::cerr << "[Semantic Error]\nIn line: " << fn.line 
@@ -330,7 +357,20 @@ void Parser::parseBlock() {
     for (const auto& p : pendingParams) {
         sem.declareVar(p.name, p.type, false, getSymb().line);
         VarSymb* v = sem.findVar(p.name);
-        if (v) v->isAssigned = true;
+        if (v) {
+            v->isAssigned = true;
+            // КП4: прив'язка PSM-імені для параметра функції або ітератора циклу for
+            if (curMod) {
+                auto it = curMod->pendingPsmNames.find(p.name);
+                if (it != curMod->pendingPsmNames.end()) {
+                    v->psmName = it->second;
+                    curMod->pendingPsmNames.erase(it);
+                } else {
+                    std::string pName = registerPsmVar(p.name, p.type, getSymb().line);
+                    v->psmName = pName;
+                }
+            }
+        }
     }
 
     pendingParams.clear();
@@ -481,8 +521,21 @@ void Parser::parseReturnStatement() {
     if (trace) std::cout << nextIndt() << "parseReturnStatement():" << std::endl;
     hasReturn = true;
     parseToken("return", "keyword");
-    if (isStartOfExpression(getSymb())) {
-        parseExpression();
+    if (curMod && curMod->name != "main") {
+        if (isStartOfExpression(getSymb())) {
+            parseExpression();
+        }
+        postfixCodeGen("RET", "RET");
+    } else {
+        if (isStartOfExpression(getSymb())) {
+            parseExpression();
+            postfixCodeGen("POP", "stack_op");
+        }
+        if (curMod) {
+            if (curMod->exitLabel.empty()) curMod->exitLabel = createLabel();
+            postfixCodeGen(curMod->exitLabel, "label");
+            postfixCodeGen("JMP", "jump");
+        }
     }
     if (trace) predIndt();
 }
@@ -516,6 +569,7 @@ void Parser::parseIdentifierStatement() {
 
     // Обробка суфіксів доступу до масиву [expr] або поля .field
     while (getSymb().lexeme == "[" || getSymb().lexeme == ".") {
+        genUnsupported("array element / record field assignment", id.line);   // КП4
         if (getSymb().lexeme == "[") {
             SymbolRow bracket = getSymb();
             parseToken("[", "brackets_op");
@@ -549,6 +603,7 @@ void Parser::parseIdentifierStatement() {
 
     if (getSymb().lexeme == "=") {
         parseToken("=", "assign_op");
+        postfixCodeGen(psmName(id.lexeme), "l-val");          // КП4
         std::string expr_Type = parseExpression();
         if (currentType != "" && currentType != (varInfo ? varInfo->VarType : "")) {
             bool all_good = (currentType == expr_Type) || (currentType == "Double" && expr_Type == "Int");
@@ -561,6 +616,9 @@ void Parser::parseIdentifierStatement() {
         } else {
             sem.checkAssignType(id.lexeme, expr_Type, id.line);
         }
+        if (currentType == "Double" && expr_Type == "Int")    // КП4: Int -> Double
+            postfixCodeGen("i2f", "conv");
+        postfixCodeGen("=", "assign_op");                     // КП4
     } else if (getSymb().lexeme == "(") {
         SymbolRow paren = getSymb();
 
@@ -582,12 +640,17 @@ void Parser::parseIdentifierStatement() {
             }
         }
 
+        // КП4: генерація виклику функції
+        postfixCodeGen(id.lexeme, "CALL");
+        if (curMod) curMod->calledFuncs.insert(id.lexeme);
+        if (fn && fn->returnType != "Void") {
+            postfixCodeGen("POP", "stack_op");
+        }
     } else {
         failParse("unexpected token after identifier", "'=' (appropriation) або '(' (function call)");
     }
     if (trace) predIndt();
 }
-
 // Рівень 1: Expression -> LogicalOrExpr
 std::string Parser::parseExpression() {
     if (trace) std::cout << nextIndt() << "parseExpression():" << std::endl;
@@ -742,8 +805,12 @@ std::string Parser::parsePostfixExpr() {
                     exit(1);
                 }
             }
+            // КП4: виклик функції у виразі (результат залишається на стеку)
+            postfixCodeGen(fnRow.lexeme, "CALL");
+            if (curMod) curMod->calledFuncs.insert(fnRow.lexeme);
         } else if (getSymb().lexeme == "[") {
             SymbolRow bracket = getSymb();
+            genUnsupported("array element access", bracket.line);  // КП4
             parseToken("[", "brackets_op");
             std::string idxType = parseExpression();
             if (idxType != "Int") {
@@ -757,6 +824,7 @@ std::string Parser::parsePostfixExpr() {
             }
         } else if (getSymb().lexeme == ".") {
             SymbolRow dot = getSymb();
+            genUnsupported("record field access", dot.line);       // КП4
             parseToken(".", "punct");
             SymbolRow field = getSymb();
             parseToken("", "identifier");
@@ -777,7 +845,6 @@ std::string Parser::parsePostfixExpr() {
 
     return type;
 }
-
 // Рівень 11: PrimaryExpr -> Const | Identifier | '(' Expression ')'
 std::string Parser::parsePrimaryExpr() {
     SymbolRow s = getSymb();

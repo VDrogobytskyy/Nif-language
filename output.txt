@@ -1,4 +1,4 @@
-File: program.nif opened succesfully! And contained 213 bytes!
+File: program.nif opened succesfully! And contained 41 bytes!
 
 Lexical analyse finished succesfully
 
@@ -15,21 +15,12 @@ Lexical analyse finished succesfully
 6     1       Void                  type_name                       
 7     1       {                     brackets_op                     
 8     2       var                   keyword                         
-9     2       score                 identifier          2           
+9     2       x                     identifier          2           
 10    2       :                     punct                           
 11    2       Int                   type_name                       
 12    2       =                     assign_op                       
-13    2       100                   unsigned_int        1           
-14    4       score                 identifier          2           
-15    4       =                     assign_op                       
-16    4       score                 identifier          2           
-17    4       +                     add_op                          
-18    4       "123"                 string_const        2           
-19    5       print                 keyword                         
-20    5       (                     brackets_op                     
-21    5       score                 identifier          2           
-22    5       )                     brackets_op                     
-23    6       }                     brackets_op                     
+13    2       42                    unsigned_int        1           
+14    3       }                     brackets_op                     
 
 =======================================================
           ТАБЛИЦЯ ІДЕНТИФІКАТОРІВ (tableOfId)          
@@ -37,15 +28,14 @@ Lexical analyse finished succesfully
 ІндексІдентифікатор
 -------------------------------------------------------
 1         main                     
-2         score                    
+2         x                        
 
 =======================================================
              ТАБЛИЦЯ КОНСТАНТ (tableOfConst)           
 =======================================================
 ІндексТип         Значення         
 -------------------------------------------------------
-2         String         "123"                    
-1         Int            100                      
+1         Int            42                       
 =======================================================
 
 >>> Початок семантичного аналізу <<<
@@ -64,7 +54,7 @@ Lexical analyse finished succesfully
           parseBlockItem():
             parseVariableDeclaration():
               parseToken: In line 2 found ('var', keyword)
-              parseToken: In line 2 found ('score', identifier)
+              parseToken: In line 2 found ('x', identifier)
               parseToken: In line 2 found (':', punct)
               parseType():
                 parseToken: In line 2 found ('Int', type_name)
@@ -80,28 +70,18 @@ Lexical analyse finished succesfully
                               parseUnaryExpr():
                                 parsePostfixExpr():
                                   parsePrimaryExpr():
-                                    parseToken: In line 2 found ('100', unsigned_int)
-          parseBlockItem():
-            parseStatement():
-              parseIdentifierStatement():
-                parseToken: In line 4 found ('score', identifier)
-                parseToken: In line 4 found ('=', assign_op)
-                parseExpression():
-                  parseLogicalOrExpr():
-                    parseLogicalAndExpr():
-                      parseEqualityExpr():
-                        parseRelationalExpr():
-                          parseAddExpr():
-                            parseMultExpr():
-                              parsePowerExpr():
-                                parseUnaryExpr():
-                                  parsePostfixExpr():
-                                    parsePrimaryExpr():
-                                      parseToken: In line 4 found ('score', identifier)
-                            parseToken: In line 4 found ('+', add_op)
-                            parseMultExpr():
-                              parsePowerExpr():
-                                parseUnaryExpr():
-                                  parsePostfixExpr():
-                                    parsePrimaryExpr():
-                                      parseToken: In line 4 found ('"123"', string_const)
+                                    parseToken: In line 2 found ('42', unsigned_int)
+          parseToken: In line 3 found ('}', brackets_op)
+
+>>> Семантичний аналіз завершився успішно! <<<
+
+========== КП4: Трансляція у ПОЛІЗ ==========
+
+----------------------------------------
+Модуль: main (тип повернення: void, параметрів: 0)
+----------------------------------------
+Таблиця змінних (.vars):
+Таблиця міток (.labels):
+Код у постфіксній формі (.code):
+
+Postfix-code saved in file: program.postfix
