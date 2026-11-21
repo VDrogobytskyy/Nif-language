@@ -448,14 +448,27 @@ void Parser::parseIfStatement() {
         exit(1);
     }
 
+    // КП4: ПОЛІЗ(cond) mElse JF ПОЛІЗ(then) [mEnd JMP mElse : ПОЛІЗ(else) mEnd :] | [mElse :]
+    std::string mElse = createLabel();
+    postfixCodeGen(mElse, "label");
+    postfixCodeGen("JF", "jf");
+
     parseBlock();
     if (numRow < len_tableOfSymb && getSymb().lexeme == "else") {
+        std::string mEnd = createLabel();
+        postfixCodeGen(mEnd, "label");
+        postfixCodeGen("JMP", "jump");
+        placeLabel(mElse);
+
         parseToken("else", "keyword");
         if (getSymb().lexeme == "if") {
             parseIfStatement();
         } else {
             parseBlock();
         }
+        placeLabel(mEnd);
+    } else {
+        placeLabel(mElse);
     }
     if (trace) predIndt();
 }
@@ -468,13 +481,26 @@ void Parser::parseWhileStatement() {
     parseToken("while", "keyword");
     sem.enter_loop();
 
+    // КП4: mStart : ПОЛІЗ(cond) mEnd JF ПОЛІЗ(body) mStart JMP mEnd :
+    std::string mStart = createLabel();
+    std::string mEnd = createLabel();
+    placeLabel(mStart);
+
     std::string type = parseExpression();
     if(type != "Bool"){
         std::cerr << "[Semantic Error]\nIn line: " << s.line << ": NonBooleanCondition - require Bool type, got " << type << "\n" << std::endl;
         exit(1);
     }
+    postfixCodeGen(mEnd, "label");
+    postfixCodeGen("JF", "jf");
 
+    if (curMod) curMod->loopLabels.push_back({mStart, mEnd});
     parseBlock();
+    if (curMod) curMod->loopLabels.pop_back();
+
+    postfixCodeGen(mStart, "label");
+    postfixCodeGen("JMP", "jump");
+    placeLabel(mEnd);
     sem.exit_loop();
     if (trace) predIndt();
 }
@@ -487,16 +513,58 @@ void Parser::parseForStatement() {
     SymbolRow iter = getSymb();
     parseToken("", "identifier");
     parseToken("in", "keyword");
-    parseExpression();
+
+    // КП4: i = start; __forEnd = end;
+    //      mCond : i __forEnd <= mEnd JF  body  mStep : i i 1 + =  mCond JMP  mEnd :
+    std::string iName   = registerPsmVar(iter.lexeme, "Int", iter.line);
+    std::string endName = registerPsmVar("__forEnd", "Int", iter.line);
+
+    postfixCodeGen(iName, "l-val");
+    std::string startType = parseExpression();
+    postfixCodeGen("=", "assign_op");
+
     parseToken("..", "range_op");
-    parseExpression();
+
+    postfixCodeGen(endName, "l-val");
+    std::string endType = parseExpression();
+    postfixCodeGen("=", "assign_op");
+
+    if (startType != "Int" || endType != "Int") {
+        std::cerr << "[Semantic Error]\nIn line: " << iter.line << ": NonIntegerRange - range bounds must be Int, got "
+                  << startType << " .. " << endType << "\n" << std::endl;
+        exit(1);
+    }
+
+    std::string mCond = createLabel();
+    std::string mStep = createLabel();
+    std::string mEnd  = createLabel();
+
+    placeLabel(mCond);
+    postfixCodeGen(iName, "r-val");
+    postfixCodeGen(endName, "r-val");
+    postfixCodeGen("<=", "rel_op");
+    postfixCodeGen(mEnd, "label");
+    postfixCodeGen("JF", "jf");
 
     pendingParams.push_back({iter.lexeme, "Int", false});
+    if (curMod) curMod->pendingPsmNames[iter.lexeme] = iName;
+    if (curMod) curMod->loopLabels.push_back({mStep, mEnd});
     parseBlock();
+    if (curMod) curMod->loopLabels.pop_back();
+
+    placeLabel(mStep);
+    postfixCodeGen(iName, "l-val");
+    postfixCodeGen(iName, "r-val");
+    postfixCodeGen("1", "int");
+    postfixCodeGen("+", "math_op");
+    postfixCodeGen("=", "assign_op");
+    postfixCodeGen(mCond, "label");
+    postfixCodeGen("JMP", "jump");
+    placeLabel(mEnd);
+
     sem.exit_loop();
     if (trace) predIndt();
 }
-
 // read ( & LValue )
 void Parser::parseInputStatement() {
     if (trace) std::cout << nextIndt() << "parseInputStatement():" << std::endl;
@@ -579,6 +647,10 @@ void Parser::parseBreakStatement() {
     SymbolRow s = getSymb();
     sem.loop_control(s.lexeme, s.line);
     parseToken("break", "keyword");
+    if (curMod && !curMod->loopLabels.empty()) {
+        postfixCodeGen(curMod->loopLabels.back().second, "label");
+        postfixCodeGen("JMP", "jump");
+    }
     if (trace) predIndt();
 }
 
@@ -587,9 +659,12 @@ void Parser::parseContinueStatement() {
     SymbolRow s = getSymb();
     sem.loop_control(s.lexeme, s.line);
     parseToken("continue", "keyword");
+    if (curMod && !curMod->loopLabels.empty()) {
+        postfixCodeGen(curMod->loopLabels.back().first, "label");
+        postfixCodeGen("JMP", "jump");
+    }
     if (trace) predIndt();
 }
-
 // LValue '=' Expression  АБО  FunctionCall
 void Parser::parseIdentifierStatement() {
     if (trace) std::cout << nextIndt() << "parseIdentifierStatement():" << std::endl;
